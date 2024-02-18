@@ -2,19 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
 
 import styles from "./navbar.module.css";
 
-export default function PostNav() {
-  const [contentFulfiled, setContentFulfiled] = useState(false);
-
-  const handleContentFulfiled = () => {
-    setContentFulfiled((prevState) => !prevState);
-  };
-
-  const registrationClass = contentFulfiled ? `${styles.registration} ${styles.fulfiled}` : styles.registration;
-
+export default function PostNav({ title }: { title: string }) {
   return (
     <nav className={styles.navbar}>
       <div className={styles.backPage}>
@@ -22,13 +13,8 @@ export default function PostNav() {
           <Image src="/image5.png" alt="Page 1" width={24} height={24} />
         </Link>
       </div>
-      <div className={styles.writing}>
-        <p>Writing</p>
-      </div>
-      <div className={registrationClass} onClick={handleContentFulfiled}>
-        <Link href="/">
-          <p>등록</p>
-        </Link>
+      <div className={styles.title}>
+        <p>{title}</p>
       </div>
     </nav>
   );

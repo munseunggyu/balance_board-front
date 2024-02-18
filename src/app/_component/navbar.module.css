@@ -14,14 +14,14 @@
   top: 18px;
 }
 
-.writing {
+.title {
   position: absolute;
   left: calc(20px + 24px + 20px);
   top: 20px;
   font-size: 20px;
   font-weight: 700;
 }
-
+/* 
 .registration {
   width: 58px;
   height: 34px;
@@ -38,12 +38,4 @@
 
 .registration p {
   color: var(--body-600);
-}
-
-.fulfiled {
-  background-color: var(--main-primary-500);
-}
-
-.fulfiled p {
-  color: var(--body-100);
-}
+} */
