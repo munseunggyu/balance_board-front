@@ -21,7 +21,7 @@
   font-size: 20px;
   font-weight: 700;
 }
-/* 
+
 .registration {
   width: 58px;
   height: 34px;
@@ -36,6 +36,19 @@
   font-weight: 700;
 }
 
-.registration p {
+.registration button {
   color: var(--body-600);
-} */
+}
+
+.fulfilled {
+  background-color: var(--main-primary-500);
+}
+
+.fulfilled button {
+  color: var(--body-100);
+}
+
+.profileButton {
+  margin-left: auto;
+  margin-right: 20px;
+}

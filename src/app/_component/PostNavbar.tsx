@@ -2,10 +2,39 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import React, { useState } from "react";
 
 import styles from "./navbar.module.css";
 
-export default function PostNav({ title }: { title: string }) {
+export default function PostNav({ title, titleButton }: { title: string; titleButton: string }) {
+  const [contentFulfilled, setContentFulfilled] = useState(false);
+
+  const handleContentFulfilled = () => {
+    setContentFulfilled((prevState) => !prevState);
+  };
+
+  const registrationClass = contentFulfilled ? `${styles.registration} ${styles.fulfilled}` : styles.registration;
+
+  let buttonElement;
+
+  if (titleButton === "Writing") {
+    buttonElement = (
+      <div className={registrationClass} onClick={handleContentFulfilled}>
+        <Link href="/">
+          <button>등록</button>
+        </Link>
+      </div>
+    );
+  } else if (titleButton === "Profile") {
+    buttonElement = (
+      <div className={styles.profileButton}>
+        <Link href="/">
+          <Image src="/image6.png" alt="Page 1" width={24} height={24} />
+        </Link>
+      </div>
+    );
+  } else buttonElement = null;
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.backPage}>
@@ -16,6 +45,7 @@ export default function PostNav({ title }: { title: string }) {
       <div className={styles.title}>
         <p>{title}</p>
       </div>
+      {buttonElement}
     </nav>
   );
 }
