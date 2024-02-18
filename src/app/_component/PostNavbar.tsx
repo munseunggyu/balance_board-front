@@ -2,38 +2,37 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
 
 import styles from "./navbar.module.css";
 
-export default function PostNav({ title, titleButton }: { title: string; titleButton: string }) {
-  const [contentFulfilled, setContentFulfilled] = useState(false);
+export default function PostNav({ title, children }: { title: string; children: React.ReactNode }) {
+  // const [contentFulfilled, setContentFulfilled] = useState(false);
 
-  const handleContentFulfilled = () => {
-    setContentFulfilled((prevState) => !prevState);
-  };
+  // const handleContentFulfilled = () => {
+  //   setContentFulfilled((prevState) => !prevState);
+  // };
 
-  const registrationClass = contentFulfilled ? `${styles.registration} ${styles.fulfilled}` : styles.registration;
+  // const registrationClass = contentFulfilled ? `${styles.registration} ${styles.fulfilled}` : styles.registration;
 
-  let buttonElement;
+  // let buttonElement;
 
-  if (titleButton === "Writing") {
-    buttonElement = (
-      <div className={registrationClass} onClick={handleContentFulfilled}>
-        <Link href="/">
-          <button>등록</button>
-        </Link>
-      </div>
-    );
-  } else if (titleButton === "Profile") {
-    buttonElement = (
-      <div className={styles.profileButton}>
-        <Link href="/">
-          <Image src="/image6.png" alt="Page 1" width={24} height={24} />
-        </Link>
-      </div>
-    );
-  } else buttonElement = null;
+  // if (titleButton === "Writing") {
+  //   buttonElement = (
+  //     <div className={registrationClass} onClick={handleContentFulfilled}>
+  //       <Link href="/">
+  //         <button>등록</button>
+  //       </Link>
+  //     </div>
+  //   );
+  // } else if (titleButton === "Profile") {
+  //   buttonElement = (
+  //     <div className={styles.profileButton}>
+  //       <Link href="/">
+  //         <Image src="/image6.png" alt="Page 1" width={24} height={24} />
+  //       </Link>
+  //     </div>
+  //   );
+  // } else buttonElement = null;
 
   return (
     <nav className={styles.navbar}>
@@ -45,7 +44,7 @@ export default function PostNav({ title, titleButton }: { title: string; titleBu
       <div className={styles.title}>
         <p>{title}</p>
       </div>
-      {buttonElement}
+      {children}
     </nav>
   );
 }
