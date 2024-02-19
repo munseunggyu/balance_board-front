@@ -8,6 +8,7 @@ interface IButton extends ComponentPropsWithRef<"button"> {
   rounded?: "none" | "rounded" | "large";
   border?: "none" | "primary" | "gray" | "orange";
   color?: "none" | "primary";
+  size?: "normal" | "small";
   fullWidth?: boolean;
   children?: React.ReactNode;
 }
@@ -20,13 +21,22 @@ export default function Button({
   fullWidth = true,
   border = "none",
   color = "none",
+  size = "normal",
   children,
   className,
   ...props
 }: IButton) {
-  const style = cx("button", `bg_${bgColor}`, `color_${color}`, `radius_${rounded}`, `border_${border}`, {
-    w_100: fullWidth,
-  });
+  const style = cx(
+    "button",
+    `bg_${bgColor}`,
+    `color_${color}`,
+    `radius_${rounded}`,
+    `border_${border}`,
+    `size_${size}`,
+    {
+      w_100: fullWidth,
+    },
+  );
   return (
     <button className={`${style} ${className}`} {...props}>
       {children}
