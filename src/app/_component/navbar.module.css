@@ -14,12 +14,10 @@
   top: 18px;
 }
 
-.title {
+.navLogo {
   position: absolute;
   left: calc(20px + 24px + 20px);
   top: 20px;
-  font-size: 20px;
-  font-weight: 700;
 }
 
 .registration {
