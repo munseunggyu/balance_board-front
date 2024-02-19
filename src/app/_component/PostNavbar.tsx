@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import styles from "./navbar.module.css";
 
-export default function PostNav({ title, children }: { title: string; children: React.ReactNode }) {
+export default function PostNav({ title, children }: { title?: string; children: React.ReactNode }) {
   // const [contentFulfilled, setContentFulfilled] = useState(false);
 
   // const handleContentFulfilled = () => {
@@ -41,9 +41,15 @@ export default function PostNav({ title, children }: { title: string; children: 
           <Image src="/image5.png" alt="Page 1" width={24} height={24} />
         </Link>
       </div>
-      <div className={styles.title}>
-        <p>{title}</p>
-      </div>
+      {title === "join" ? (
+        <div className={styles.title}>{title}</div>
+      ) : (
+        <div className={styles.navLogo}>
+          <Link href="/">
+            <Image src="/image2.png" alt="Page 1" width={183} height={23} />
+          </Link>
+        </div>
+      )}
       {children}
     </nav>
   );
