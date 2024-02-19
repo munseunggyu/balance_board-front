@@ -1,2 +1,9 @@
 @import url("./reset.css");
 @import url("./variable.css");
+
+body {
+  max-width: 450px;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
