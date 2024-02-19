@@ -1,0 +1,65 @@
+.loginModal {
+  width: 290px;
+  height: 390px;
+  background-color: var(--body-200);
+}
+
+.imageWrapper {
+  text-align: center;
+}
+
+.imageWrapper img {
+  margin: 38px auto 30px;
+}
+
+.easyloginMessage {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: center;
+  color: var(--title-400);
+}
+
+.shareloginMessage {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  margin-top: 12px;
+  text-align: center;
+  color: var(--body-900);
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.loginButton {
+  width: 250px;
+  height: 52px;
+  background-color: var(--main-primary-500);
+  border-radius: 6px;
+}
+
+.loginButton span {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--main-secondary-100);
+}
+
+.nextLoginButton {
+  margin-top: 10px;
+  width: 250px;
+  height: 52px;
+  background-color: var(--body-200);
+  border-radius: 6px;
+}
+
+.nextLoginButton span {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--main-primary-500);
+}
