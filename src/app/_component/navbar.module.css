@@ -14,10 +14,12 @@
   top: 18px;
 }
 
-.navLogo {
+.title {
   position: absolute;
   left: calc(20px + 24px + 20px);
   top: 20px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .navLogo {
