@@ -1,0 +1,38 @@
+.container {
+  padding: 0 20px;
+}
+.h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  padding-top: 98px;
+}
+
+.submit_btn {
+  position: absolute;
+  bottom: 30px;
+  width: calc(100% - 40px);
+  color: var(--body-950);
+}
+
+.nav {
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid var(--line-100);
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  gap: 20px;
+  font-weight: 700;
+  line-height: 150%;
+}
+.back_btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  position: relative;
+  top: 2px;
+}
