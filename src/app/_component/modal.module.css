@@ -160,3 +160,36 @@
   background-color: var(--body-200);
   color: var(--main-primary-500);
 }
+
+.DeleteModal {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  width: 290px;
+  height: 236px;
+  background-color: var(--body-200);
+  border-radius: 26px;
+}
+
+.DeleteImageWrapper {
+  margin-top: 30px;
+}
+
+.DeleteModalMessage {
+  margin-top: 17px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+}
+
+.DeleteButton {
+  margin-top: 18px;
+  width: 250px;
+  height: 52px;
+  background-color: var(--main-primary-500);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--main-secondary-100);
+}
