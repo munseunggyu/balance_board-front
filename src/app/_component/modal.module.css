@@ -234,3 +234,33 @@
   font-weight: 700;
   color: var(--main-secondary-100);
 }
+
+.upLoadModal {
+  display: flex;
+  flex-direction: column;
+  width: 290px;
+  height: 388px;
+  background-color: var(--body-200);
+  border-radius: 26px;
+}
+
+.upLoadImageWrapper {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.upLoadMessage {
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  color: var(--title-400);
+}
+
+.waitResultMessage {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--body-950);
+}
