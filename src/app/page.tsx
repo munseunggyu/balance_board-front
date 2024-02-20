@@ -1,3 +1,9 @@
+import DeleteCheckModal from "./_component/DeleteCheckModal";
+
 export default function Home() {
-  return <main>main</main>;
+  return (
+    <main>
+      <DeleteCheckModal />
+    </main>
+  );
 }
