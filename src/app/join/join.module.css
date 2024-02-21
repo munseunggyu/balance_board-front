@@ -13,6 +13,17 @@
   bottom: 30px;
   width: calc(100% - 40px);
   color: var(--body-950);
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  justify-content: space-between;
+}
+.submit_btn_txt {
+  position: relative;
+  top: 3px;
+}
+.primary_txt {
+  color: var(--main-primary-500);
 }
 
 .nav {
@@ -30,6 +41,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  padding-left: 15px;
 }
 
 .title {

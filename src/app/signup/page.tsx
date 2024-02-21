@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-import GoogleLoginBtn from "./_component/GoogleLoginBtn";
+import LoginForm from "./_component/LoginForm";
 import styles from "./signup.module.css";
 
 export default function SingUp() {
@@ -11,7 +12,8 @@ export default function SingUp() {
         <h1 className={styles.h1}>세상의 모든 이슈에 투표하다</h1>
         <Image src="/image2.png" alt="Balance Board 로고" width={268} height={30} priority />
       </div>
-      <GoogleLoginBtn />
+      <LoginForm />
+      <Link href={"/join"}>회원가입</Link>
     </div>
   );
 }

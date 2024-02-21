@@ -3,16 +3,12 @@ import React from "react";
 
 import Button from "@/app/_component/Button";
 
+import { ISetSumbitProps } from "../page";
 import styles from "./joinGenderSelect.module.css";
 
-interface IProps {
-  setGender: React.Dispatch<React.SetStateAction<string>>;
-  gender: string;
-}
-
-export default function JoinGenderSelect({ gender, setGender }: IProps) {
+export default function JoinGenderSelect({ setVisibleBtn, setSubmitData, submitData }: ISetSumbitProps) {
   const selectGender = (value: string) => {
-    setGender(value);
+    // setGender(value);
   };
   return (
     <div>
@@ -21,14 +17,14 @@ export default function JoinGenderSelect({ gender, setGender }: IProps) {
         <Button
           onClick={() => selectGender("man")}
           className={styles.button}
-          bgColor={gender === "man" ? "primary" : "background_200"}
+          bgColor={submitData?.gender === "man" ? "primary" : "background_200"}
         >
           남성
         </Button>
         <Button
           onClick={() => selectGender("girl")}
           className={styles.button}
-          bgColor={gender === "girl" ? "primary" : "background_200"}
+          bgColor={submitData?.gender === "girl" ? "primary" : "background_200"}
         >
           여성
         </Button>
