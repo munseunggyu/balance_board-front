@@ -50,3 +50,11 @@
 .border_orange {
   border: 1px solid var(--state-notification-orange-200);
 }
+
+.size_normal {
+  height: 52px;
+}
+
+.size_small {
+  height: 48px;
+}
