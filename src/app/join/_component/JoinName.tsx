@@ -4,22 +4,24 @@ import React, { ChangeEvent, useState } from "react";
 
 import Input from "@/app/_component/Input";
 
-import { ISetSumbitProps } from "../page";
+import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./joinName.module.css";
 
-export default function JoinName({ setVisibleBtn, setSubmitData, submitData }: ISetSumbitProps) {
+export default function JoinName() {
+  const {
+    data: { submitData },
+    setDataField,
+    setVisibleBtn,
+  } = useJoinDataContext();
   const [validation, setValidation] = useState({
     len: false,
     space: false,
     duplication: 0, // 0 1 2
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVisibleBtn((prev) => !prev);
+    setVisibleBtn(true);
     const { name, value } = e.target;
-    setSubmitData((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+    setDataField(name, value);
     setVisibleBtn(false);
   };
   const checkDuplication = () => {
@@ -31,6 +33,8 @@ export default function JoinName({ setVisibleBtn, setSubmitData, submitData }: I
       };
     });
   };
+  const { data } = useJoinDataContext();
+  console.log(data);
 
   return (
     <div className={styles.join_name_container}>

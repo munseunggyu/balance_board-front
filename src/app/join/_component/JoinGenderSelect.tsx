@@ -3,10 +3,15 @@ import React from "react";
 
 import Button from "@/app/_component/Button";
 
-import { ISetSumbitProps } from "../page";
+import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./joinGenderSelect.module.css";
 
-export default function JoinGenderSelect({ setVisibleBtn, setSubmitData, submitData }: ISetSumbitProps) {
+export default function JoinGenderSelect() {
+  const {
+    data: { submitData },
+    setDataField,
+    setVisibleBtn,
+  } = useJoinDataContext();
   const selectGender = (value: string) => {
     // setGender(value);
   };

@@ -3,16 +3,15 @@ import React, { ChangeEvent } from "react";
 
 import Input from "@/app/_component/Input";
 
-import { ISetSumbitProps } from "../page";
+import { useJoinDataContext } from "../_context/JoinContext";
 
-export default function SignupInputs({ setSubmitData, setVisibleBtn }: ISetSumbitProps) {
+export default function SignupInputs() {
+  const { setDataField, setVisibleBtn } = useJoinDataContext();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVisibleBtn((prev) => !prev);
+    setVisibleBtn(false);
     const { name, value } = e.target;
-    setSubmitData((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+    setDataField(name, value);
   };
   return (
     <div>

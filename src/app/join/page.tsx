@@ -7,29 +7,15 @@ import JoinGenderSelect from "./_component/JoinGenderSelect";
 import JoinName from "./_component/JoinName";
 import InputForm from "./_component/MultiInput";
 import SignupInputs from "./_component/SignupInputs";
-import useJoinSubmitData from "./_hook/useJoinSubmitData";
+import { useJoinDataContext } from "./_context/JoinContext";
 import styles from "./join.module.css";
 
-// type ISetSumbitData{
-
-// }
-interface ISubmitData {
-  email: string;
-  password: string;
-  nickname: string;
-  gender: string;
-  birthYear: string;
-  duplicateEmail: number;
-  duplicateName: number;
-}
-export interface ISetSumbitProps {
-  setSubmitData: React.Dispatch<React.SetStateAction<ISubmitData>>;
-  setVisibleBtn: React.Dispatch<React.SetStateAction<boolean>>;
-  submitData?: ISubmitData;
-}
-
 export default function Join() {
-  const { submitData, setSubmitData, processType, visibleBtn, setVisibleBtn } = useJoinSubmitData();
+  // const { submitData, setSubmitData, processType, visibleBtn, setVisibleBtn } = useJoinSubmitData();
+
+  const {
+    data: { submitData, visibleBtn, processType },
+  } = useJoinDataContext();
 
   // const signup = async () => {
   //   const res = await fetch(constant.apiUrl + "api/user/register", {
@@ -90,11 +76,11 @@ export default function Join() {
           )}
         </h2>
         {processType === 0 ? (
-          <SignupInputs setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <SignupInputs />
         ) : processType === 1 ? (
-          <JoinName setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <JoinName />
         ) : processType === 2 ? (
-          <JoinGenderSelect setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <JoinGenderSelect />
         ) : (
           <InputForm />
         )}
