@@ -18,9 +18,42 @@ export default function JoinName() {
     space: false,
     duplication: 0, // 0 1 2
   });
+  const regex = /\s/;
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVisibleBtn(true);
     const { name, value } = e.target;
+    if (value.length > 1) {
+      setValidation((prev) => {
+        return {
+          ...prev,
+          len: true,
+        };
+      });
+      if (!regex.test(value)) {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            space: true,
+          };
+        });
+      } else {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            space: false,
+          };
+        });
+      }
+    } else {
+      setValidation((prev) => {
+        return {
+          ...prev,
+          len: false,
+          space: false,
+          duplication: 1,
+        };
+      });
+    }
     setDataField(name, value);
     setVisibleBtn(false);
   };
@@ -33,8 +66,6 @@ export default function JoinName() {
       };
     });
   };
-  const { data } = useJoinDataContext();
-  console.log(data);
 
   return (
     <div className={styles.join_name_container}>
@@ -43,7 +74,7 @@ export default function JoinName() {
           <Input
             className={styles.input}
             placeholder="닉네임을 입력해주세요."
-            value={submitData?.nickname}
+            value={submitData.nickname}
             onChange={handleChange}
             name="nickname"
           />
@@ -72,7 +103,13 @@ export default function JoinName() {
           2자리 이상
         </li>
         <li className={styles.check_list_item}>
-          <Image className={styles.ico} src="/check-md.svg" alt="닫기 아이콘" width={24} height={24} />
+          <Image
+            className={styles.ico}
+            src={validation.space ? "/check-pressed-md.svg" : "/check-md.svg"}
+            alt="닫기 아이콘"
+            width={24}
+            height={24}
+          />
           공백 없음
         </li>
         <li className={styles.check_list_item}>

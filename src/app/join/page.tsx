@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import React from "react";
 
-import Button from "../_component/Button";
 import JoinGenderSelect from "./_component/JoinGenderSelect";
 import JoinName from "./_component/JoinName";
 import InputForm from "./_component/MultiInput";
+// import NextBtn from "./_component/NextBtn";
 import SignupInputs from "./_component/SignupInputs";
 import { useJoinDataContext } from "./_context/JoinContext";
 import styles from "./join.module.css";
@@ -14,8 +13,12 @@ export default function Join() {
   // const { submitData, setSubmitData, processType, visibleBtn, setVisibleBtn } = useJoinSubmitData();
 
   const {
-    data: { submitData, visibleBtn, processType },
+    data: { submitData, processType },
   } = useJoinDataContext();
+
+  // if (processType === 0 && visibleBtn) {
+  //   setNowVisibleBtn(true);
+  // }
 
   // const signup = async () => {
   //   const res = await fetch(constant.apiUrl + "api/user/register", {
@@ -85,20 +88,7 @@ export default function Join() {
           <InputForm />
         )}
 
-        <Button
-          className={styles.submit_btn}
-          bgColor={!visibleBtn ? "body_200" : "background_100"}
-          border={!visibleBtn ? "gray" : "primary"}
-        >
-          <span className={`${styles.submit_btn_txt} ${visibleBtn && styles.primary_txt}`}>다음</span>
-          <Image
-            className={styles.ico}
-            src={!visibleBtn ? "/direction-next-md.svg" : "/direction-next-md-primary.svg"}
-            alt="오른쪽 화살표 아이콘"
-            width={24}
-            height={24}
-          />
-        </Button>
+        {/* <NextBtn /> */}
       </main>
     </div>
   );

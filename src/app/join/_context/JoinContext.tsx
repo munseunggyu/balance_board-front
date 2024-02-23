@@ -6,8 +6,10 @@ interface InitialData {
   processType: number;
   visibleBtn: boolean;
   submitData: {
-    email: string;
+    emailFont: string;
+    emailBack: string;
     password: string;
+    passwordConfirm: string;
     nickname: string;
     gender: string;
     birthYear: string;
@@ -21,8 +23,10 @@ const initialData: InitialData = {
   processType: 0,
   visibleBtn: false,
   submitData: {
-    email: "",
+    emailFont: "",
+    emailBack: "선택",
     password: "",
+    passwordConfirm: "",
     nickname: "",
     gender: "",
     birthYear: "",
@@ -36,7 +40,7 @@ interface DataContextType {
   data: InitialData;
   setProcessType: (type: number) => void;
   setVisibleBtn: (visible: boolean) => void;
-  setDataField: (fieldName: string, value: string) => void;
+  setDataField: (fieldName: string, value: string | number) => void;
 }
 
 // createContext를 사용하여 새로운 컨텍스트를 생성
@@ -45,7 +49,6 @@ export const DataContext = createContext<DataContextType | undefined>(undefined)
 // 컨텍스트를 사용하는 커스텀 훅
 export const useJoinDataContext = () => {
   const context = useContext(DataContext);
-  console.log(context);
   if (!context) {
     throw new Error("useJoinDataContext must be used within a JoinContextProvider");
   }
@@ -65,14 +68,16 @@ export const JoinContextProvider = ({ children }: { children: React.ReactNode })
     setData((prevData) => ({ ...prevData, visibleBtn: visible }));
   };
 
-  const setDataField = (fieldName: string, value: string) => {
-    setData((prevData) => ({
-      ...prevData,
-      data: {
-        ...prevData.submitData,
-        [fieldName]: value,
-      },
-    }));
+  const setDataField = (fieldName: string, value: string | number) => {
+    setData((prevData) => {
+      return {
+        ...prevData,
+        submitData: {
+          ...prevData.submitData,
+          [fieldName]: value,
+        },
+      };
+    });
   };
 
   return (

@@ -15,7 +15,6 @@ export default function InputForm() {
     if (value !== "" && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
-    console.log(inputValues);
   };
 
   return (
