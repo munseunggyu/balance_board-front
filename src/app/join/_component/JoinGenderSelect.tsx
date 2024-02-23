@@ -1,39 +1,58 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import Button from "@/app/_component/Button";
 
 import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./joinGenderSelect.module.css";
+import NextBtn from "./NextBtn";
 
 export default function JoinGenderSelect() {
   const {
-    data: { submitData },
+    data: { submitData, visibleBtn, processType },
     setDataField,
     setVisibleBtn,
+    setProcessType,
   } = useJoinDataContext();
   const selectGender = (value: string) => {
     // setGender(value);
+    console.log(processType);
+    setDataField("gender", value);
+    setVisibleBtn(true);
   };
+
+  const handleNext = () => {
+    if (visibleBtn && processType === 2) {
+      setProcessType(3);
+    }
+  };
+
+  useEffect(() => {
+    if (!submitData.gender) {
+      setVisibleBtn(false);
+    }
+  }, []);
+
   return (
     <div>
       <p className={styles.txt01}>더 정확한 투표 결과를 알려드릴게요.</p>
       <div className={styles.btn_container}>
         <Button
-          onClick={() => selectGender("man")}
+          onClick={() => selectGender("male")}
           className={styles.button}
-          bgColor={submitData?.gender === "man" ? "primary" : "background_200"}
+          bgColor={submitData?.gender === "male" ? "primary" : "background_200"}
         >
           남성
         </Button>
         <Button
-          onClick={() => selectGender("girl")}
+          onClick={() => selectGender("female")}
           className={styles.button}
-          bgColor={submitData?.gender === "girl" ? "primary" : "background_200"}
+          bgColor={submitData?.gender === "female" ? "primary" : "background_200"}
         >
           여성
         </Button>
       </div>
+      <NextBtn handleNext={handleNext} />
     </div>
   );
 }

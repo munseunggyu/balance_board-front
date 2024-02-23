@@ -28,7 +28,14 @@ export default function NextBtn({ handleNext }: IProps) {
       } else {
         setNowVisibleBtn(false);
       }
+    } else if (processType === 2) {
+      if (visibleBtn) {
+        setNowVisibleBtn(true);
+      } else {
+        setNowVisibleBtn(false);
+      }
     }
+    console.log("visibleBtn", visibleBtn);
   }, [visibleBtn]);
   return (
     <Button
