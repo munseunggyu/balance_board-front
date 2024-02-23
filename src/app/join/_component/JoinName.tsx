@@ -130,6 +130,9 @@ export default function JoinName() {
           )}
         </div>
         {validation.duplication === 1 && <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>}
+        {validation.duplication === 2 && (
+          <p className={`${styles.validation_txt} ${styles.pass}`}>{submitData.nickname}님, 멋진 이름이네요!</p>
+        )}
         <ul className={styles.check_list}>
           <li className={styles.check_list_item}>
             <Image
