@@ -22,6 +22,12 @@ export default function NextBtn({ handleNext }: IProps) {
       } else {
         setNowVisibleBtn(false);
       }
+    } else if (processType === 1) {
+      if (visibleBtn) {
+        setNowVisibleBtn(true);
+      } else {
+        setNowVisibleBtn(false);
+      }
     }
   }, [visibleBtn]);
   return (

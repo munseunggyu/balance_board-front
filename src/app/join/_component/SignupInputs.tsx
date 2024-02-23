@@ -28,6 +28,7 @@ export default function SignupInputs() {
   const notEqualPassword = submitData.password !== submitData.passwordConfirm;
 
   const activeNextBtn = () => {
+    console.log("signup");
     setVisibleBtn(false);
     if (!submitData.emailFont) return;
     if (submitData.emailBack === "선택") return;
