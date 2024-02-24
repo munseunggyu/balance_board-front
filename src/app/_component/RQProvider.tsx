@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React, { useState } from "react";
 
 type Props = {
@@ -26,7 +26,7 @@ function RQProvider({ children }: Props) {
   return (
     <QueryClientProvider client={client}>
       {children}
-      <ReactQueryDevtools initialIsOpen={process.env.NEXT_PUBLIC_MODE === "local"} />
+      {/* <ReactQueryDevtools initialIsOpen={process.env.NEXT_PUBLIC_MODE === "local"} /> */}
     </QueryClientProvider>
   );
 }

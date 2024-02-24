@@ -82,10 +82,13 @@ export default function MultiInput() {
           }),
         });
         // setProcessType(0)
-        const data = await res.json();
-
-        router.push("/login");
-        alert("회원가입이 완료 되었습니다");
+        const data: { duplicate: boolean } = await res.json();
+        if (data.duplicate) {
+          alert("회원가입에 실패하였습니다");
+        } else {
+          router.push("/login");
+          alert("회원가입이 완료 되었습니다");
+        }
       } catch (err) {
         console.error(err);
       }
