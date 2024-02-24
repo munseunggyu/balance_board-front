@@ -58,3 +58,22 @@
   margin-left: auto;
   margin-right: 20px;
 }
+
+.postDetailNavbar {
+  position: relative;
+  width: 450px;
+  height: 60px;
+  background-color: var(--background-100);
+}
+
+.postDetailNavbar .backPage {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+}
+
+.postDetailNavbar .search {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}

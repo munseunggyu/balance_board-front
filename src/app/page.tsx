@@ -1,10 +1,9 @@
-import Link from "next/link";
+import PostDetailNav from "./_component/postDetailNav";
 
 export default function Home() {
   return (
     <main>
-      main
-      <Link href={"/login"}>login</Link>
+      <PostDetailNav />
     </main>
   );
 }
