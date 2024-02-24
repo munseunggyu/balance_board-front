@@ -10,7 +10,7 @@ import { constant } from "@/utils/constant";
 
 import styles from "./loginForm.module.css";
 
-interface ILogin {
+export interface ILogin {
   email: string;
   password: string;
   message?: string;

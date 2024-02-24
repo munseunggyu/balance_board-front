@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
+import { useEffect } from "react";
 
 import JoinGenderSelect from "./_component/JoinGenderSelect";
 import JoinName from "./_component/JoinName";
-import InputForm from "./_component/MultiInput";
+import MultiInput from "./_component/MultiInput";
 // import NextBtn from "./_component/NextBtn";
 import SignupInputs from "./_component/SignupInputs";
 import { useJoinDataContext } from "./_context/JoinContext";
@@ -14,6 +15,7 @@ export default function Join() {
 
   const {
     data: { submitData, processType },
+    setProcessType,
   } = useJoinDataContext();
 
   // if (processType === 0 && visibleBtn) {
@@ -42,6 +44,21 @@ export default function Join() {
   //   // if(processType === 0 && )
   // };
 
+  useEffect(() => {
+    if (processType === 0) return;
+    console.log("hi");
+    const preventGoBack = () => {
+      // change start
+      history.pushState(null, "", location.href);
+      setProcessType(processType - 1);
+      // change end
+    };
+
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => window.removeEventListener("popstate", preventGoBack);
+  }, [processType]);
   return (
     <div>
       <nav className={styles.nav}>
@@ -85,7 +102,7 @@ export default function Join() {
         ) : processType === 2 ? (
           <JoinGenderSelect />
         ) : (
-          <InputForm />
+          <MultiInput />
         )}
 
         {/* <NextBtn /> */}

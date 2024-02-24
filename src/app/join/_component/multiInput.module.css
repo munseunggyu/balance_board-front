@@ -18,7 +18,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: 150%;
-  color: var(--state-notification-orange-500);
+  color: var(--main-primary-500);
   /* margin-top: 4px; */
   position: absolute;
   top: 64px;
@@ -31,4 +31,12 @@
   font-weight: 500;
   line-height: 150%;
   color: var(--body-950);
+}
+.wran_txt {
+  color: var(--State-Notification-Orange-500, #ff7517);
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 18px */
 }

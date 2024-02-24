@@ -7,8 +7,9 @@ import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "../join.module.css";
 interface IProps {
   handleNext: () => void;
+  txt?: string;
 }
-export default function NextBtn({ handleNext }: IProps) {
+export default function NextBtn({ handleNext, txt = "다음" }: IProps) {
   const {
     data: { visibleBtn, processType },
   } = useJoinDataContext();
@@ -34,17 +35,24 @@ export default function NextBtn({ handleNext }: IProps) {
       } else {
         setNowVisibleBtn(false);
       }
+    } else if (processType === 3) {
+      if (visibleBtn) {
+        setNowVisibleBtn(true);
+      } else {
+        setNowVisibleBtn(false);
+      }
     }
     console.log("visibleBtn", visibleBtn);
   }, [visibleBtn]);
   return (
     <Button
+      rounded={"large"}
       className={styles.submit_btn}
       bgColor={!nowVisibleBtn ? "body_200" : "background_100"}
       border={!nowVisibleBtn ? "gray" : "primary"}
       onClick={handleNext}
     >
-      <span className={`${styles.submit_btn_txt} ${nowVisibleBtn && styles.primary_txt}`}>다음</span>
+      <span className={`${styles.submit_btn_txt} ${nowVisibleBtn && styles.primary_txt}`}>{txt}</span>
       <Image
         className={styles.ico}
         src={!nowVisibleBtn ? "/direction-next-md.svg" : "/direction-next-md-primary.svg"}

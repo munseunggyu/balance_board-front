@@ -23,8 +23,14 @@ export default function JoinName() {
   });
   const regex = /\s/;
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVisibleBtn(true);
+    setVisibleBtn(false);
     const { name, value } = e.target;
+    setValidation((prev) => {
+      return {
+        ...prev,
+        duplication: 0,
+      };
+    });
     if (value.length > 1) {
       setValidation((prev) => {
         return {
@@ -58,7 +64,7 @@ export default function JoinName() {
       });
     }
     setDataField(name, value);
-    setVisibleBtn(false);
+    // setVisibleBtn(false);
   };
   const checkDuplication = async () => {
     const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
@@ -129,7 +135,8 @@ export default function JoinName() {
             </button>
           )}
         </div>
-        {validation.duplication === 1 && <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>}
+        {validation.duplication === 0 && <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>}
+        {validation.duplication === 1 && <p className={styles.validation_txt}>중복된 닉네임 입니다.</p>}
         {validation.duplication === 2 && (
           <p className={`${styles.validation_txt} ${styles.pass}`}>{submitData.nickname}님, 멋진 이름이네요!</p>
         )}
