@@ -1,19 +1,20 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
+import BackBtn from "./_component/BackBtn";
 import LoginForm from "./_component/LoginForm";
-import styles from "./signup.module.css";
+import styles from "./login.module.css";
 
 export default function SingUp() {
   return (
-    <div className={styles.container}>
-      <div>
-        <h1 className={styles.h1}>세상의 모든 이슈에 투표하다</h1>
+    <div className={styles.wrapper}>
+      <nav className={styles.nav}>
+        <BackBtn />
+      </nav>
+      <div className={styles.container}>
         <Image src="/image2.png" alt="Balance Board 로고" width={268} height={30} priority />
+        <LoginForm />
       </div>
-      <LoginForm />
-      <Link href={"/join"}>회원가입</Link>
     </div>
   );
 }

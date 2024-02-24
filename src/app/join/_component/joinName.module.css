@@ -42,6 +42,9 @@
   position: absolute;
   top: 60px;
 }
+.validation_txt.pass {
+  color: var(--main-primary-500);
+}
 
 .check_list {
   margin-top: 40px;

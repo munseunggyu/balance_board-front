@@ -1,11 +1,30 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
+import { constant } from "@/utils/constant";
+
+import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./multiInput.module.css";
+import NextBtn from "./NextBtn";
 
-export default function InputForm() {
+export default function MultiInput() {
   const [inputValues, setInputValues] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<HTMLInputElement[]>([]);
+  const [birthYear, setBirthYear] = useState(0);
+  const [errMsg, setErrMsg] = useState("good");
 
+  const router = useRouter();
+  const {
+    data: { submitData, visibleBtn, processType },
+    setDataField,
+    setVisibleBtn,
+  } = useJoinDataContext();
+
+  const calculateKoreanAge = (birthYear: number) => {
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - birthYear + 1;
+    return age;
+  };
   const handleChange = (index: number, value: string) => {
     const newInputValues = [...inputValues];
     newInputValues[index] = value;
@@ -15,8 +34,66 @@ export default function InputForm() {
     if (value !== "" && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
-    console.log(inputValues);
+    console.log(newInputValues);
+    const arr = newInputValues.filter((item) => !!item);
+    if (arr.length >= 4) {
+      const year = parseInt(arr.join(""), 10);
+      console.log(year);
+      if (year > 1) {
+        const age = calculateKoreanAge(Number(year));
+        if (age < 125) {
+          setErrMsg("good");
+          setBirthYear(age);
+          setVisibleBtn(true);
+          setDataField("birthYear", age + "");
+        } else {
+          setErrMsg("태어난 년도를 제대로 입력해 주세요");
+        }
+      } else {
+        setErrMsg("태어난 년도를 제대로 입력해 주세요");
+      }
+    } else {
+      setBirthYear(0);
+      setVisibleBtn(false);
+      setDataField("birthYear", "");
+    }
   };
+
+  const handleNext = async () => {
+    if (!submitData.emailFont) return;
+    if (!submitData.emailBack) return;
+    if (!submitData.password) return;
+    if (!submitData.gender) return;
+    if (!submitData.birthYear) return;
+    if (visibleBtn) {
+      try {
+        const res = await fetch(constant.apiUrl + "api/user/register", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: submitData.emailFont + "@" + submitData.emailBack,
+            password: submitData.password,
+            nickname: submitData.nickname,
+            gender: submitData.gender,
+            birthYear: submitData.birthYear,
+          }),
+        });
+        // setProcessType(0)
+        const data = await res.json();
+
+        router.push("/login");
+        alert("회원가입이 완료 되었습니다");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+  useEffect(() => {
+    setVisibleBtn(false);
+  }, [processType]);
 
   return (
     <div>
@@ -33,8 +110,14 @@ export default function InputForm() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, e.target.value)}
           />
         ))}
-        <p className={styles.validation_txt}>더 정확한 투표 결과를 알려드릴게요.</p>
+        {birthYear > 0 && errMsg === "good" && (
+          <p className={styles.validation_txt}>
+            {birthYear}살 {submitData.nickname}님, 반가워요
+          </p>
+        )}
+        {errMsg !== "good" && <p className={`${styles.validation_txt} ${styles.wran_txt}`}>{errMsg}</p>}
       </div>
+      <NextBtn handleNext={handleNext} txt={visibleBtn ? "시작하기" : "다음"} />
     </div>
   );
 }

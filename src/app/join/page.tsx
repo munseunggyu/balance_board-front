@@ -1,35 +1,26 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import { useEffect } from "react";
 
-import Button from "../_component/Button";
 import JoinGenderSelect from "./_component/JoinGenderSelect";
 import JoinName from "./_component/JoinName";
-import InputForm from "./_component/MultiInput";
+import MultiInput from "./_component/MultiInput";
+// import NextBtn from "./_component/NextBtn";
 import SignupInputs from "./_component/SignupInputs";
-import useJoinSubmitData from "./_hook/useJoinSubmitData";
+import { useJoinDataContext } from "./_context/JoinContext";
 import styles from "./join.module.css";
 
-// type ISetSumbitData{
-
-// }
-interface ISubmitData {
-  email: string;
-  password: string;
-  nickname: string;
-  gender: string;
-  birthYear: string;
-  duplicateEmail: number;
-  duplicateName: number;
-}
-export interface ISetSumbitProps {
-  setSubmitData: React.Dispatch<React.SetStateAction<ISubmitData>>;
-  setVisibleBtn: React.Dispatch<React.SetStateAction<boolean>>;
-  submitData?: ISubmitData;
-}
-
 export default function Join() {
-  const { submitData, setSubmitData, processType, visibleBtn, setVisibleBtn } = useJoinSubmitData();
+  // const { submitData, setSubmitData, processType, visibleBtn, setVisibleBtn } = useJoinSubmitData();
+
+  const {
+    data: { submitData, processType },
+    setProcessType,
+  } = useJoinDataContext();
+
+  // if (processType === 0 && visibleBtn) {
+  //   setNowVisibleBtn(true);
+  // }
 
   // const signup = async () => {
   //   const res = await fetch(constant.apiUrl + "api/user/register", {
@@ -53,6 +44,21 @@ export default function Join() {
   //   // if(processType === 0 && )
   // };
 
+  useEffect(() => {
+    if (processType === 0) return;
+    console.log("hi");
+    const preventGoBack = () => {
+      // change start
+      history.pushState(null, "", location.href);
+      setProcessType(processType - 1);
+      // change end
+    };
+
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => window.removeEventListener("popstate", preventGoBack);
+  }, [processType]);
   return (
     <div>
       <nav className={styles.nav}>
@@ -90,29 +96,16 @@ export default function Join() {
           )}
         </h2>
         {processType === 0 ? (
-          <SignupInputs setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <SignupInputs />
         ) : processType === 1 ? (
-          <JoinName setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <JoinName />
         ) : processType === 2 ? (
-          <JoinGenderSelect setVisibleBtn={setVisibleBtn} setSubmitData={setSubmitData} />
+          <JoinGenderSelect />
         ) : (
-          <InputForm />
+          <MultiInput />
         )}
 
-        <Button
-          className={styles.submit_btn}
-          bgColor={!visibleBtn ? "body_200" : "background_100"}
-          border={!visibleBtn ? "gray" : "primary"}
-        >
-          <span className={`${styles.submit_btn_txt} ${visibleBtn && styles.primary_txt}`}>다음</span>
-          <Image
-            className={styles.ico}
-            src={!visibleBtn ? "/direction-next-md.svg" : "/direction-next-md-primary.svg"}
-            alt="오른쪽 화살표 아이콘"
-            width={24}
-            height={24}
-          />
-        </Button>
+        {/* <NextBtn /> */}
       </main>
     </div>
   );

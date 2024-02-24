@@ -1,6 +1,9 @@
 .input {
   border-radius: 6px;
 }
+.input::placeholder {
+  color: var(--body-800);
+}
 .border_body_500 {
   border: 1px solid var(--body-500);
 }
