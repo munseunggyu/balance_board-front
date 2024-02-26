@@ -8,11 +8,17 @@ export interface IPost {
   created: string;
   category: string;
   voteCount: number;
-  tags: string;
+  tags: ITag[];
   option1: string;
   option2: string;
   option1Count: number;
   option2Count: number;
   comments: IComment[];
   content: string;
+  commentCount: number;
+}
+
+export interface ITag {
+  tagId: number;
+  tagName: string;
 }

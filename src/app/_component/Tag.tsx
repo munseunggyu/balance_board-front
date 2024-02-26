@@ -13,5 +13,9 @@ interface IProps {
 
 export default function Tag({ color = "basic", className, tagName }: IProps) {
   const style = cx(color);
-  return <div className={`${styles.tag} ${style} ${className}`}>{tagName}</div>;
+  let tagValue = tagName;
+  if (tagName === "정치_경제") {
+    tagValue = "정치・경제";
+  }
+  return <div className={`${styles.tag} ${style} ${className}`}>{tagValue}</div>;
 }

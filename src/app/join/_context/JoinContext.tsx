@@ -20,7 +20,7 @@ interface InitialData {
 
 // 초기 데이터
 const initialData: InitialData = {
-  processType: 1,
+  processType: 0,
   visibleBtn: false,
   submitData: {
     emailFont: "",
