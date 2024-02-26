@@ -9,7 +9,7 @@ import Button from "../../_component/Button";
 import PostDetailNav from "../../_component/postDetailNav";
 import styles from "./postDetail.module.css";
 
-interface Comment {
+interface IComment {
   commentId: number;
   userId: number;
   content: string;
@@ -18,7 +18,7 @@ interface Comment {
   imageUrl: string;
 }
 
-interface postData {
+interface IpostData {
   postId: number;
   imageUrl: string;
   nickname: string;
@@ -33,7 +33,7 @@ interface postData {
   option2Count: number;
   tags: string[];
   commentCount: number;
-  comments: Comment[];
+  comments: IComment[];
   isUpVoted?: boolean;
   isDownVoted?: boolean;
 }
@@ -76,7 +76,7 @@ function formatRelativeTime(dateString: Date | string | number) {
 
 export default function PostDetail({ params }: { params: { postId: number } }) {
   const postId = params.postId;
-  const [postData, setPostData] = useState<postData | null>(null);
+  const [postData, setPostData] = useState<IpostData | null>(null);
   const [newComment, setNewComment] = useState<string>("");
 
   // 상세 페이지 데이터
@@ -86,7 +86,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
     async function fetchData(postId: number) {
       try {
         const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
-        const data: postData = await res.json();
+        const data: IpostData = await res.json();
         console.log(data);
         setPostData(data);
       } catch (error) {
@@ -117,7 +117,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
       });
       console.log(await res.json());
       const updateRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
-      const updatedData: postData = await updateRes.json();
+      const updatedData: IpostData = await updateRes.json();
 
       setPostData(updatedData);
       setNewComment("");
