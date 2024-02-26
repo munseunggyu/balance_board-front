@@ -1,0 +1,240 @@
+.postDetailContainer {
+  margin: 18px 20px 0 20px;
+}
+
+.userInfoContainer {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.userImageContainer {
+  margin-right: 10px;
+}
+
+.userName {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--title-200);
+  margin-right: 15px;
+}
+
+.userPostTime {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-900);
+}
+
+.topicContainer {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--main-primary-500);
+  padding: 4px 6px;
+  background-color: var(--body-200);
+  border-radius: 4px;
+  text-align: center;
+  margin-left: auto;
+}
+
+.postContainer {
+  height: 191px;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.postTitle {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  color: var(--title-400);
+}
+
+.postContent {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: var(--title-100);
+}
+
+.tagContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-950);
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--body-200);
+}
+
+.voteContainer {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  margin-top: 20px;
+  height: 180px;
+  border: 1px solid var(--body-300);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.voteButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.voteButtonImageContainer {
+  display: flex;
+  align-items: center;
+}
+
+.upButton {
+  width: 310px;
+  height: 52px;
+  margin-top: 20px;
+  border: 1px solid var(--main-primary-600);
+  background-color: #f5fffa;
+  color: var(--main-primary-500);
+}
+
+.upButton.upVoted {
+  color: var(--body-100);
+  background-color: var(--main-primary-400);
+}
+
+.downButton {
+  width: 310px;
+  height: 52px;
+  margin-top: 8px;
+  border: 1px solid var(--main-primary-600);
+  background-color: #f5fffa;
+  color: var(--main-primary-500);
+}
+
+.downButton.downVoted {
+  color: var(--body-100);
+  background-color: var(--main-primary-400);
+}
+
+.sumVoterContainer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 50px;
+}
+
+.sumVoter {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-800);
+}
+
+.seperator {
+  margin: 40px 0 20px;
+  border-bottom: 1px solid rgba(238, 238, 238, 0.93);
+}
+
+.commentCount {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  color: var(--title-400);
+  padding-top: 9px;
+}
+
+.commentCount span:first-child {
+  padding-right: 6px;
+}
+
+.commentRegContainer {
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  max-width: 410px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: var(--background-200);
+}
+
+.commentRegContainer input {
+  width: 100%;
+  overflow: auto;
+  padding-left: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-800);
+}
+
+.commentRegContainer button {
+  width: 44px;
+  height: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  background-color: var(--body-300);
+  color: var(--body-900);
+  border-radius: 2px;
+  margin-left: auto;
+}
+
+.commentListContainer {
+  margin-top: 14px;
+}
+
+.commentorInfo {
+  display: flex;
+  align-items: center;
+}
+
+.commentorName {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--title-200);
+  margin-left: 6px;
+}
+
+.verticalLine {
+  width: 1px;
+  height: 6px;
+  background-color: var(--body-500);
+  margin: 0 8px;
+}
+.commentTime,
+.commentDay {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-800);
+  margin-right: 4px;
+}
+
+.userComment {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--body-950);
+}
+
+.commentSeperator {
+  margin: 20px 0;
+  border-bottom: 1px solid rgba(238, 238, 238, 0.93);
+}
