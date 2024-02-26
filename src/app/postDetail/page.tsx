@@ -78,11 +78,13 @@ export default function PostDetail({ postId }: { postId: number }) {
   const [postData, setPostData] = useState<postData>("");
   const [newComment, setNewComment] = useState<string>("");
 
+  // 상세 페이지 데이터
   useEffect(() => {
     async function fetchData(postId: number) {
       try {
         const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
         const data = await res.json();
+        console.log(data);
         setPostData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -92,10 +94,30 @@ export default function PostDetail({ postId }: { postId: number }) {
     fetchData(postId);
   }, [postId]);
 
-  const handleCommentSubmit = () => {
+  // 댓글 작성
+  const handleCommentSubmit = async () => {
     if (newComment.trim() === "") return;
-    console.log(newComment);
-    setNewComment("");
+
+    try {
+      const res = await fetch(constant.apiUrl + `api/main/new/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: 1,
+          postId: postData.postId,
+          content: newComment,
+        }),
+      });
+      console.log(res.json());
+      const updateRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
+      const updatedData = await updateRes.json();
+      setPostData(updatedData);
+      setNewComment("");
+    } catch (error) {
+      console.error("댓글 추가 오류");
+    }
   };
 
   const UpVoted = postData.option1Count > postData.option2Count;
@@ -117,7 +139,6 @@ export default function PostDetail({ postId }: { postId: number }) {
   return (
     <div>
       <PostDetailNav />
-
       <div className={styles.postDetailContainer}>
         {postData ? (
           <>
@@ -199,7 +220,7 @@ export default function PostDetail({ postId }: { postId: number }) {
             <div className={styles.commentContainer}>
               <div className={styles.commentCount}>
                 <span>댓글</span>
-                <span>{postData.commentCount}</span>
+                <span>{postData.comments.length}</span>
               </div>
               <div className={styles.commentRegContainer}>
                 <div className={styles.voteButtonImageContainer}>
