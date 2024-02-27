@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 import RQProvider from "./_component/RQProvider";
+import TokenLoginComponent from "./_component/TokenLoginComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <RQProvider>
           <AuthContextProvider>
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <TokenLoginComponent />
+              {children}
+            </Suspense>
           </AuthContextProvider>
         </RQProvider>
       </body>
