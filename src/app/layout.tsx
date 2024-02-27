@@ -25,10 +25,11 @@ export default function RootLayout({
           <AuthContextProvider>
             <Suspense fallback={<div>Loading...</div>}>
               <TokenLoginComponent />
-              {children}
+              <div className="root_container">{children}</div>
             </Suspense>
           </AuthContextProvider>
         </RQProvider>
+        <div id="portal" />
       </body>
     </html>
   );

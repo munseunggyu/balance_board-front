@@ -4,7 +4,12 @@ import { useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
+import LoginModal from "@/app/_component/LoginModal";
+import ModalContainer from "@/app/_component/ModalContainer";
+import ModalPortal from "@/app/_component/ModalPortal";
 import PostCard from "@/app/_component/PostCard";
+import { useUserDataContext } from "@/context/AuthContext";
+import { useModal } from "@/hook/useModal";
 import { IPost } from "@/modal/Post";
 
 import { getCategoryPostList, getPostList } from "../_lib/getPosts";
@@ -13,6 +18,15 @@ import WriteFloating from "./WriteFloating";
 
 // import styles from './post'
 export default function PostCardList() {
+  const { userInfo } = useUserDataContext();
+  const { openModal, handleOpenMoal, handleCloseModal } = useModal();
+
+  const openLoginModal = () => {
+    if (!userInfo.isLogin) {
+      handleOpenMoal();
+    }
+  };
+
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
@@ -28,7 +42,10 @@ export default function PostCardList() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      return allPages.length + 1;
+      if (allPages[allPages.length - 1].length / 20 < 1) {
+        return undefined;
+      }
+      return allPages.length;
     },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -46,7 +63,6 @@ export default function PostCardList() {
   useEffect(() => {
     if (inView) {
       if (!isFetching && hasNextPage) {
-        console.log("aslkfn");
         void fetchNextPage();
       }
       // void !isFetching && hasNextPage && fetchNextPage();
@@ -72,7 +88,7 @@ export default function PostCardList() {
             <Fragment key={i}>
               {v.map((post) => (
                 <li className={styles.card_list} key={post.postId}>
-                  <PostCard post={post} />
+                  <PostCard openLoginModal={openLoginModal} post={post} />
                 </li>
               ))}
             </Fragment>
@@ -80,6 +96,13 @@ export default function PostCardList() {
       </ul>
       <div ref={ref} style={{ height: 50 }} />
       <WriteFloating />
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <LoginModal handleCloseModal={handleCloseModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }

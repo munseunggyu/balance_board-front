@@ -1,7 +1,10 @@
 .loginModal {
   width: 290px;
-  height: 390px;
+  /* height: 390px; */
   background-color: var(--body-200);
+  border-radius: 26px;
+  overflow: hidden;
+  padding-bottom: 20px;
 }
 
 .imageWrapper {
@@ -9,7 +12,7 @@
 }
 
 .imageWrapper img {
-  margin: 38px auto 30px;
+  margin: 30px auto 24px;
 }
 
 .easyloginMessage {
@@ -56,11 +59,12 @@
   height: 52px;
   background-color: var(--body-200);
   border-radius: 6px;
+  font-weight: 500;
 }
 
 .nextLoginButton span {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--main-primary-500);
 }
 
