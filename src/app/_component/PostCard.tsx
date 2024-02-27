@@ -67,7 +67,7 @@ export default function PostCard({ post }: IProps) {
           </li>
         ))}
       </ul>
-      <CommentInput />
+      <CommentInput postId={post.postId} />
     </div>
   );
 }
