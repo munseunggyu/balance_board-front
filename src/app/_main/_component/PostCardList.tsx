@@ -28,7 +28,10 @@ export default function PostCardList() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      return allPages.length + 1;
+      if (allPages[allPages.length - 1].length / 20 < 1) {
+        return undefined;
+      }
+      return allPages.length;
     },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -46,7 +49,6 @@ export default function PostCardList() {
   useEffect(() => {
     if (inView) {
       if (!isFetching && hasNextPage) {
-        console.log("aslkfn");
         void fetchNextPage();
       }
       // void !isFetching && hasNextPage && fetchNextPage();
