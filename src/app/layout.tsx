@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
+import { AuthContextProvider } from "@/context/AuthContext";
+
 import RQProvider from "./_component/RQProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <RQProvider>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <AuthContextProvider>
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          </AuthContextProvider>
         </RQProvider>
       </body>
     </html>

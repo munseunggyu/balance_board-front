@@ -6,21 +6,26 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import Button from "@/app/_component/Button";
 import Input from "@/app/_component/Input";
+import { useUserDataContext } from "@/context/AuthContext";
 import { constant } from "@/utils/constant";
 
 import styles from "./loginForm.module.css";
 
 export interface ILogin {
   email: string;
-  password: string;
-  message?: string;
-  jwtToken?: {
+  jwtToken: {
     accessToken: string;
+    refreshToken: string;
   };
+  nickname: string;
+  userId: number;
+  isLogin: boolean;
+  message?: string;
 }
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUserData } = useUserDataContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -54,6 +59,10 @@ export default function LoginForm() {
     }
     if (data.jwtToken) {
       localStorage.setItem("token", data.jwtToken?.accessToken);
+      setUserData({
+        ...data,
+        isLogin: true,
+      });
       router.push("/");
     }
     return data;
