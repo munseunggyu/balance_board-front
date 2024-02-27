@@ -1,12 +1,9 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
 import RQProvider from "./_component/RQProvider";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Balance Board",
@@ -20,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <RQProvider>
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </RQProvider>
