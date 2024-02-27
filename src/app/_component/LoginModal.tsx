@@ -2,12 +2,20 @@ import Image from "next/image";
 
 import styles from "./modal.module.css";
 
-export default function LoginModal() {
+interface IProps {
+  handleCloseModal: () => void;
+}
+
+export default function LoginModal({ handleCloseModal }: IProps) {
+  console.log(handleCloseModal);
+  const handleStopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
   return (
-    <div className={styles.loginModal}>
+    <div className={styles.loginModal} onClick={handleStopPropagation}>
       <div className={styles.contentWrapper}>
         <div className={styles.imageWrapper}>
-          <Image src="/Image7.png" alt="Login ModalImage" width={72} height={72} />
+          <Image src="/go-home.png" alt="Login ModalImage" width={115} height={95} />
         </div>
         <div className={styles.easyloginMessage}>
           <p>간편 로그인으로 더 많은</p>
@@ -19,7 +27,7 @@ export default function LoginModal() {
         <div className={styles.buttonWrapper}>
           <div className={styles.buttonContainer}>
             <button className={styles.loginButton}>
-              <span>구글 계정으로 3초만에 로그인</span>
+              <span>이메일 로그인</span>
             </button>
           </div>
           <div className={styles.buttonContainer}>

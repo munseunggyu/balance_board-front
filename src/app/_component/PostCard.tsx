@@ -11,8 +11,9 @@ import Tag from "./Tag";
 
 interface IProps {
   post: IPost;
+  openLoginModal?: () => void;
 }
-export default function PostCard({ post }: IProps) {
+export default function PostCard({ post, openLoginModal }: IProps) {
   return (
     <div className={styles.container}>
       <div className={styles.card_top}>
@@ -67,7 +68,9 @@ export default function PostCard({ post }: IProps) {
           </li>
         ))}
       </ul>
-      <CommentInput postId={post.postId} />
+      <div onClick={openLoginModal} className={styles.modal_btn}>
+        <CommentInput postId={post.postId} />
+      </div>
     </div>
   );
 }
