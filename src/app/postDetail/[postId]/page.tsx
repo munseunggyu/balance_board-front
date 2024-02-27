@@ -18,6 +18,11 @@ interface IComment {
   imageUrl: string;
 }
 
+interface ITag {
+  tagId: number;
+  tagName: string;
+}
+
 interface IpostData {
   postId: number;
   imageUrl: string;
@@ -31,7 +36,7 @@ interface IpostData {
   option1Count: number;
   option2: string;
   option2Count: number;
-  tags: string[];
+  tags: ITag[];
   commentCount: number;
   comments: IComment[];
   isUpVoted?: boolean;
@@ -143,6 +148,10 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
           ? (postData.option2Count / SumVoted) * 100
           : ((postData.option2Count / SumVoted) * 100).toFixed(1);
 
+    if (postData.category === "정치_경제") {
+      postData.category = "정치・경제";
+    }
+
     return (
       <div>
         <PostDetailNav />
@@ -168,7 +177,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                   {postData.tags &&
                     postData.tags.map((tag, index) => (
                       <span key={index} className={styles.tag}>
-                        {tag}
+                        {tag.tagName}
                       </span>
                     ))}
                 </div>
