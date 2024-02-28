@@ -84,6 +84,11 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
   const [postData, setPostData] = useState<IpostData | null>(null);
   const [newComment, setNewComment] = useState<string>("");
   const [isComment, setIsComment] = useState<boolean>(false);
+  const [showAllComments, setShowAllComments] = useState<boolean>(false);
+
+  const handleLoadMoreComments = () => {
+    setShowAllComments(true);
+  };
 
   // 상세 페이지 데이터
   useEffect(() => {
@@ -254,6 +259,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                       setNewComment(e.target.value); // 입력 필드의 변경을 감지하여 상태 업데이트
                       setIsComment(!!e.target.value); // 댓글이 들어오는지 확인
                     }}
+                    maxLength={50}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleCommentSubmit()
@@ -281,22 +287,43 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                   </button>
                 </div>
                 <div className={styles.commentListContainer}>
-                  {postData.comments.map((comment, index) => (
-                    <div key={index} className={styles.commentContainer}>
-                      <div className={styles.commentorInfo}>
-                        <div className={styles.commentorImageContainer}>
-                          <Image src="/profile-md.png" alt="댓글 쓴 사람 이미지" width={24} height={24} />
+                  {showAllComments
+                    ? postData.comments.map((comment, index) => (
+                        <div key={index} className={styles.commentContainer}>
+                          <div className={styles.commentorInfo}>
+                            <div className={styles.commentorImageContainer}>
+                              <Image src="/profile-md.png" alt="댓글 쓴 사람 이미지" width={24} height={24} />
+                            </div>
+                            <div className={styles.commentorName}>{comment.nickname}</div>
+                            <div className={styles.verticalLine}></div>
+                            <div className={styles.commentDay}>{formatDay(comment.created)}</div>
+                            <div className={styles.commentTime}>{formatTime(comment.created)}</div>
+                          </div>
+                          <div className={styles.userComment}>{comment.content}</div>
+                          <div className={styles.commentSeperator}></div>
                         </div>
-                        <div className={styles.commentorName}>{comment.nickname}</div>
-                        <div className={styles.verticalLine}></div>
-                        <div className={styles.commentDay}>{formatDay(comment.created)}</div>
-                        <div className={styles.commentTime}>{formatTime(comment.created)}</div>
-                      </div>
-                      <div className={styles.userComment}>{comment.content}</div>
-                      <div className={styles.commentSeperator}></div>
-                    </div>
-                  ))}
+                      ))
+                    : postData.comments.slice(0, 5).map((comment, index) => (
+                        <div key={index} className={styles.commentContainer}>
+                          <div className={styles.commentorInfo}>
+                            <div className={styles.commentorImageContainer}>
+                              <Image src="/profile-md.png" alt="댓글 쓴 사람 이미지" width={24} height={24} />
+                            </div>
+                            <div className={styles.commentorName}>{comment.nickname}</div>
+                            <div className={styles.verticalLine}></div>
+                            <div className={styles.commentDay}>{formatDay(comment.created)}</div>
+                            <div className={styles.commentTime}>{formatTime(comment.created)}</div>
+                          </div>
+                          <div className={styles.userComment}>{comment.content}</div>
+                          <div className={styles.commentSeperator}></div>
+                        </div>
+                      ))}
                 </div>
+                {!showAllComments && postData.comments.length > 5 && (
+                  <Button rounded="large" className={styles.moreCommentButton} onClick={handleLoadMoreComments}>
+                    + 댓글 더보기
+                  </Button>
+                )}
               </div>
             </>
           ) : (
