@@ -8,6 +8,7 @@ import { constant } from "@/utils/constant";
 import Button from "../../_component/Button";
 import PostDetailNav from "../../_component/postDetailNav";
 import styles from "./postDetail.module.css";
+let userToken: string | null = null;
 
 interface IComment {
   commentId: number;
@@ -39,8 +40,7 @@ interface IpostData {
   tags: ITag[];
   commentCount: number;
   comments: IComment[];
-  isUpVoted?: boolean;
-  isDownVoted?: boolean;
+  selectedOption: string;
 }
 
 function formatDay(dateString: Date | string | number) {
@@ -83,14 +83,20 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
   const postId = params.postId;
   const [postData, setPostData] = useState<IpostData | null>(null);
   const [newComment, setNewComment] = useState<string>("");
+  const [isComment, setIsComment] = useState<boolean>(false);
 
   // 상세 페이지 데이터
   useEffect(() => {
     if (postId === null) return; // postId가 null이면 종료
+    userToken = localStorage.getItem("token");
 
     async function fetchData(postId: number) {
       try {
-        const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
+        const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
+          headers: {
+            Authorization: `${userToken}`,
+          },
+        });
         const data: IpostData = await res.json();
         console.log(data);
         setPostData(data);
@@ -123,7 +129,6 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
       console.log(await res.json());
       const updateRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
       const updatedData: IpostData = await updateRes.json();
-
       setPostData(updatedData);
       setNewComment("");
     } catch (error) {
@@ -185,7 +190,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
               <div className={styles.voteContainer}>
                 <Button rounded="large" className={`${styles.upButton} ${UpVoted ? styles.upVoted : ""}`}>
                   <div className={styles.voteButtonContainer}>
-                    {postData.isUpVoted ? (
+                    {postData.selectedOption === postData.option1 ? (
                       UpVoted ? (
                         <div className={styles.voteButtonImageContainer}>
                           <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
@@ -200,12 +205,12 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                     ) : (
                       <div className={styles.buttonContentContainer}>{postData.option1}</div>
                     )}
-                    {`${UpPercent}%(${postData.option1Count}명)`}
+                    {`${UpPercent}(${postData.option1Count}명)`}
                   </div>
                 </Button>
                 <Button rounded="large" className={`${styles.downButton} ${DownVoted ? styles.downVoted : ""}`}>
                   <div className={styles.voteButtonContainer}>
-                    {postData.isDownVoted ? (
+                    {postData.selectedOption === postData.option2 ? (
                       DownVoted ? (
                         <div className={styles.voteButtonImageContainer}>
                           <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
@@ -220,7 +225,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                     ) : (
                       <div className={styles.buttonContentContainer}>{postData.option2}</div>
                     )}
-                    {`${DownPercent}%(${postData.option2Count}명)`}
+                    {`${DownPercent}(${postData.option2Count}명)`}
                   </div>
                 </Button>
                 <div className={styles.sumVoterContainer}>
@@ -245,7 +250,10 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                   <input
                     placeholder="댓글 달기..."
                     value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)} // 입력 필드의 변경을 감지하여 상태 업데이트
+                    onChange={(e) => {
+                      setNewComment(e.target.value); // 입력 필드의 변경을 감지하여 상태 업데이트
+                      setIsComment(!!e.target.value); // 댓글이 들어오는지 확인
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleCommentSubmit()
@@ -253,10 +261,22 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                           .catch((error) => {
                             console.error(error);
                           });
+                        setIsComment(false);
                       }
                     }}
                   />
-                  <button className={styles.commentReg} onClick={handleCommentSubmit}>
+                  <button
+                    className={`${styles.commentReg} ${isComment ? styles.isComment : ""}`}
+                    onClick={() => {
+                      handleCommentSubmit()
+                        .then(() => {
+                          setIsComment(false);
+                        })
+                        .catch((error) => {
+                          console.error(error);
+                        });
+                    }}
+                  >
                     등록
                   </button>
                 </div>

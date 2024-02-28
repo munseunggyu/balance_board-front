@@ -31,7 +31,7 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--main-primary-500);
-  padding: 4px 6px;
+  padding: 6px 6px;
   background-color: var(--body-200);
   border-radius: 4px;
   text-align: center;
@@ -88,6 +88,7 @@
   border: 1px solid var(--body-300);
   border-radius: 14px;
   text-align: center;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .voteButtonContainer {
@@ -135,6 +136,11 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 50px;
+}
+
+.sumVoterImageContainer {
+  display: flex;
+  align-items: center;
 }
 
 .sumVoter {
@@ -192,6 +198,10 @@
   color: var(--body-900);
   border-radius: 2px;
   margin-left: auto;
+}
+
+.commentReg.isComment {
+  color: var(--title-400);
 }
 
 .commentListContainer {
