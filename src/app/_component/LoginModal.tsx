@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "./modal.module.css";
 
@@ -7,7 +8,6 @@ interface IProps {
 }
 
 export default function LoginModal({ handleCloseModal }: IProps) {
-  console.log(handleCloseModal);
   const handleStopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -26,12 +26,12 @@ export default function LoginModal({ handleCloseModal }: IProps) {
         </div>
         <div className={styles.buttonWrapper}>
           <div className={styles.buttonContainer}>
-            <button className={styles.loginButton}>
+            <Link href={"/login"} className={styles.loginButton}>
               <span>이메일 로그인</span>
-            </button>
+            </Link>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.nextLoginButton}>
+            <button onClick={handleCloseModal} className={styles.nextLoginButton}>
               <span>다음에 할게요</span>
             </button>
           </div>
