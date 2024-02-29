@@ -94,7 +94,7 @@ export default function PostCardList() {
             </Fragment>
           ))}
       </ul>
-      <div ref={ref} style={{ height: 50 }} />
+      <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
       <WriteFloating />
       {openModal && (
         <ModalPortal>
