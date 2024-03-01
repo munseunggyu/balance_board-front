@@ -5,4 +5,5 @@ export interface IComment {
   created: string;
   nickname: string;
   imageUrl: string;
+  imageType: number;
 }
