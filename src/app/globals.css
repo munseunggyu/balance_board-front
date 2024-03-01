@@ -33,6 +33,7 @@ body {
 }
 
 body,
-button {
+button,
+textarea {
   font-family: "Pretendard";
 }
