@@ -6,7 +6,7 @@
 
 .contentContainer {
   position: relative;
-  width: 390px;
+  width: calc(100% - 40px);
   height: 210px;
   padding-left: 10px;
   font-size: 14px;
