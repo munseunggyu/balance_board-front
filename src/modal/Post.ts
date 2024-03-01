@@ -17,6 +17,7 @@ export interface IPost {
   content: string;
   commentCount: number;
   selectedOption?: string | null;
+  imageType: number;
 }
 
 export interface ITag {

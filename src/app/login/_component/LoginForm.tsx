@@ -20,6 +20,7 @@ export interface ILogin {
   userId: number;
   isLogin: boolean;
   message?: string;
+  imageType: number;
 }
 
 export default function LoginForm() {
