@@ -4,7 +4,7 @@ export interface IComment {
   content: string;
   created: string;
   nickname: string;
-  imageUrl: string;
+  imageType: number;
 }
 
 interface ITag {
@@ -29,4 +29,5 @@ export interface IPostData {
   commentCount: number;
   comments: IComment[];
   selectedOption: string;
+  imageType: number;
 }

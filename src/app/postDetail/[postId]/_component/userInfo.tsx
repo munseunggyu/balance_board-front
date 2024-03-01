@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { formatRelativeTime } from "@/utils/foramattime";
+import { userImgUrl } from "@/utils/userImgUrl";
 
 import { IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
@@ -13,7 +14,7 @@ export default function UserInfo({ postData }: IUserInfoProps) {
   return (
     <div className={styles.userInfoContainer}>
       <div className={styles.usermageContainer}>
-        <Image src="/participate-sm.png" alt="유저 이미지" width={24} height={24} />
+        <Image src={userImgUrl(postData.imageType)} alt="유저 이미지" width={24} height={24} />
       </div>
       <div className={styles.userInfoContainer}>
         <span className={styles.userName}>{postData.nickname}</span>
