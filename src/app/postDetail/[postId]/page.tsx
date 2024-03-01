@@ -75,6 +75,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
       const updatedData: IPostData = await updateRes.json();
       setPostData(updatedData);
       setNewComment("");
+      console.log(await res.json());
     } catch (error) {
       console.error("댓글 추가 오류");
     }
