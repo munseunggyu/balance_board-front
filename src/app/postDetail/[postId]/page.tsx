@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { useUserDataContext } from "@/context/AuthContext";
 import { constant } from "@/utils/constant";
 
 import PostDetailNav from "../../_component/postDetailNav";
@@ -15,6 +16,7 @@ import styles from "./postDetail.module.css";
 let userToken: string | null = null;
 
 export default function PostDetail({ params }: { params: { postId: number } }) {
+  const { userInfo } = useUserDataContext();
   const postId = params.postId;
   const [postData, setPostData] = useState<IPostData | null>(null);
   const [newComment, setNewComment] = useState<string>("");
@@ -33,13 +35,15 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
 
     async function fetchData(postId: number) {
       try {
+        const headers: { [key: string]: string } = {};
+        if (userInfo.isLogin === 1) {
+          headers.Authorization = `${userToken}`;
+        }
+
         const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
-          headers: {
-            Authorization: `${userToken}`,
-          },
+          headers: headers,
         });
         const data: IPostData = await res.json();
-        console.log(data);
         setPostData(data);
       } catch (error) {
         console.error(error);
@@ -49,7 +53,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
     fetchData(postId).catch((error) => {
       console.error(error);
     });
-  }, [postId]);
+  }, [postId, userInfo.isLogin]);
 
   /** 댓글 작성 */
   const handleCommentSubmit = async () => {
@@ -62,12 +66,11 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: 1,
+          userId: userInfo.userId,
           postId: postData?.postId,
           content: newComment,
         }),
       });
-      console.log(await res.json());
       const updateRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`);
       const updatedData: IPostData = await updateRes.json();
       setPostData(updatedData);
