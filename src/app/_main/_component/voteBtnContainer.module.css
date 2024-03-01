@@ -38,3 +38,14 @@
   margin-top: 12px;
   margin-bottom: 20px;
 }
+
+.primary {
+  color: var(--main-primary-500);
+}
+
+.white {
+  color: var(--body-200);
+}
+.ico_check {
+  margin-left: -8px;
+}

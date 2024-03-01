@@ -61,7 +61,7 @@ export default function LoginForm() {
       localStorage.setItem("token", data.jwtToken?.accessToken);
       setUserData({
         ...data,
-        isLogin: true,
+        isLogin: 1,
       });
       router.push("/");
     }
@@ -122,7 +122,7 @@ export default function LoginForm() {
       >
         로그인
       </Button>
-      <Link className={styles.link} href={"/join"}>
+      <Link className={styles.link} href={"/join?processType=0"}>
         이메일로 회원가입
       </Link>
     </form>
