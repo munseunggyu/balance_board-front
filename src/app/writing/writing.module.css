@@ -1,0 +1,7 @@
+.writingBox {
+  background-color: var(--background-100);
+}
+
+.writingContainer {
+  width: 450px;
+}
