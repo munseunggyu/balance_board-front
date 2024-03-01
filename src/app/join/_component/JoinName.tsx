@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Input from "@/app/_component/Input";
@@ -14,8 +15,8 @@ export default function JoinName() {
     data: { submitData, visibleBtn, processType },
     setDataField,
     setVisibleBtn,
-    setProcessType,
   } = useJoinDataContext();
+  const router = useRouter();
   const [validation, setValidation] = useState({
     len: false,
     space: false,
@@ -95,7 +96,7 @@ export default function JoinName() {
 
   const handleNext = () => {
     if (visibleBtn && processType === 1) {
-      setProcessType(2);
+      router.push("/join/?processType=2");
     }
   };
 

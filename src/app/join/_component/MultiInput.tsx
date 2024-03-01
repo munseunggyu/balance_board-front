@@ -34,11 +34,9 @@ export default function MultiInput() {
     if (value !== "" && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
-    console.log(newInputValues);
     const arr = newInputValues.filter((item) => !!item);
     if (arr.length >= 4) {
       const year = parseInt(arr.join(""), 10);
-      console.log(year);
       if (year > 1) {
         const age = calculateKoreanAge(Number(year));
         if (age < 125) {

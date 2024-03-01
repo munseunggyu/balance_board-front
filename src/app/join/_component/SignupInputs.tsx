@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Input from "@/app/_component/Input";
@@ -10,10 +11,10 @@ import { useJoinDataContext } from "../_context/JoinContext";
 import NextBtn from "./NextBtn";
 import styles from "./signupInputs.module.css";
 export default function SignupInputs() {
+  const router = useRouter();
   const {
     setDataField,
     setVisibleBtn,
-    setProcessType,
     data: { submitData, processType, visibleBtn },
   } = useJoinDataContext();
   const [openSelectBox, setOpenSelectBox] = useState(false);
@@ -161,7 +162,6 @@ export default function SignupInputs() {
   };
 
   const handleChangePasswordConfrim = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("hi");
     setVisibleBtn(false);
     const { name, value } = e.target;
     setDataField(name, value);
@@ -169,7 +169,7 @@ export default function SignupInputs() {
 
   const handleNext = () => {
     if (visibleBtn && processType === 0) {
-      setProcessType(1);
+      router.push("/join/?processType=1");
     }
   };
 

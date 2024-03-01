@@ -122,7 +122,7 @@ export default function LoginForm() {
       >
         로그인
       </Button>
-      <Link className={styles.link} href={"/join?processType=0"}>
+      <Link className={styles.link} href={"/join"}>
         이메일로 회원가입
       </Link>
     </form>
