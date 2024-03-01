@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { IPost } from "@/modal/Post";
@@ -14,6 +15,12 @@ interface IProps {
   openLoginModal?: () => void;
 }
 export default function PostCard({ post, openLoginModal }: IProps) {
+  const router = useRouter();
+
+  const goDetailPage = () => {
+    router.push(`/postDetail/${post.postId}`);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.card_top}>
@@ -22,7 +29,7 @@ export default function PostCard({ post, openLoginModal }: IProps) {
         <span className={styles.time}>time</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
       </div>
-      <div className={styles.contents_container}>
+      <div className={styles.contents_container} onClick={goDetailPage}>
         <div>
           <span className={styles.post_title}>{post.title}</span>
           <p className={styles.contents}>{post.content}</p>
@@ -57,6 +64,9 @@ export default function PostCard({ post, openLoginModal }: IProps) {
         option2={post.option2}
         option1Count={post.option1Count}
         option2Count={post.option2Count}
+        postId={post.postId}
+        post={post}
+        openLoginModal={openLoginModal}
       />
       <div className={styles.divider} />
       <ul className={styles.chat_ul}>

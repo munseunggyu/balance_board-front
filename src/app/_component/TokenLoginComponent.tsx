@@ -15,7 +15,19 @@ export default function TokenLoginComponent() {
   }
 
   const tokenLogin = async () => {
-    if (!token) return;
+    if (!token) {
+      setUserData({
+        email: "",
+        jwtToken: {
+          accessToken: "",
+          refreshToken: "",
+        },
+        nickname: "",
+        userId: 0,
+        isLogin: 2,
+      });
+      return;
+    }
     const res = await fetch(constant.apiUrl + "api/user/login/token", {
       method: "POST",
       headers: {
@@ -27,7 +39,12 @@ export default function TokenLoginComponent() {
     if (data.jwtToken) {
       setUserData({
         ...data,
-        isLogin: true,
+        isLogin: 1,
+      });
+    } else {
+      setUserData({
+        ...data,
+        isLogin: 2,
       });
     }
   };

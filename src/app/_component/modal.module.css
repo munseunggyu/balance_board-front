@@ -45,6 +45,9 @@
   height: 52px;
   background-color: var(--main-primary-500);
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loginButton span {

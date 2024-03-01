@@ -16,6 +16,7 @@ export interface IPost {
   comments: IComment[];
   content: string;
   commentCount: number;
+  selectedOption?: string | null;
 }
 
 export interface ITag {

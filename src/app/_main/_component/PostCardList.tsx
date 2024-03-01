@@ -1,9 +1,10 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
+import JoinCompleteModal from "@/app/_component/JoinCompleteModal";
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
@@ -21,23 +22,32 @@ export default function PostCardList() {
   const { userInfo } = useUserDataContext();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
+  const {
+    openModal: openJoinModal,
+    handleOpenMoal: handleOpenJoinMoal,
+    handleCloseModal: handleCloseJoinModal,
+  } = useModal();
+
+  const router = useRouter();
+
   const openLoginModal = () => {
-    if (!userInfo.isLogin) {
+    if (userInfo.isLogin !== 1) {
       handleOpenMoal();
     }
   };
 
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
+  const firstJoin = searchParams.get("join");
 
   const { data, fetchNextPage, hasNextPage, isFetching, isPending } = useInfiniteQuery<IPost[], Error>({
-    queryKey: ["posts", "all", tab],
+    queryKey: ["posts", "all", tab, userInfo.isLogin],
     queryFn: async ({ pageParam }) => {
-      const hey = pageParam as number;
+      const page = pageParam as number;
       if (!tab || tab === "전체") {
-        return await getPostList({ pageParam: hey });
+        return await getPostList({ pageParam: page, isLogin: userInfo.isLogin });
       } else {
-        return await getCategoryPostList({ pageParam: hey, category: tab });
+        return await getCategoryPostList({ pageParam: page, category: tab, isLogin: userInfo.isLogin });
       }
     },
     initialPageParam: 1,
@@ -55,9 +65,6 @@ export default function PostCardList() {
     threshold: 0,
     delay: 10,
   });
-  const test = () => {
-    void fetchNextPage();
-  };
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -69,6 +76,10 @@ export default function PostCardList() {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
   useEffect(() => {
+    if (firstJoin) {
+      router.replace("/");
+      handleOpenJoinMoal();
+    }
     setMounted(true);
   }, []);
 
@@ -81,7 +92,6 @@ export default function PostCardList() {
   return (
     <div>
       <ul className={styles.card_container}>
-        <button onClick={test}>tes</button>
         {mounted &&
           data?.pages &&
           data?.pages.map((v, i) => (
@@ -94,8 +104,15 @@ export default function PostCardList() {
             </Fragment>
           ))}
       </ul>
-      <div ref={ref} style={{ height: 50 }} />
+      <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
       <WriteFloating />
+      {openJoinModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseJoinModal}>
+            <JoinCompleteModal handleCloseModal={handleCloseJoinModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>

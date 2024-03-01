@@ -1,5 +1,6 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 // 초기 데이터 타입
 interface InitialData {
@@ -57,6 +58,8 @@ export const useJoinDataContext = () => {
 
 // DataContext의 Provider를 만드는 컴포넌트
 export const JoinContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const searchParams = useSearchParams();
+  const joinProcessType = searchParams.get("processType");
   const [data, setData] = useState<InitialData>(initialData);
 
   // 값을 변경하는 함수들
@@ -67,6 +70,9 @@ export const JoinContextProvider = ({ children }: { children: React.ReactNode })
   const setVisibleBtn = (visible: boolean) => {
     setData((prevData) => ({ ...prevData, visibleBtn: visible }));
   };
+  useEffect(() => {
+    setProcessType(Number(joinProcessType || 0));
+  }, [joinProcessType]);
 
   const setDataField = (fieldName: string, value: string | number) => {
     setData((prevData) => {

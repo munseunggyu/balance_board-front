@@ -12,7 +12,7 @@ interface InitialData {
   jwtToken: IJwtToken;
   nickname: string;
   userId: number;
-  isLogin: boolean;
+  isLogin: number;
 }
 
 // 초기 데이터
@@ -24,7 +24,7 @@ const initialData: InitialData = {
   },
   nickname: "",
   userId: 0,
-  isLogin: false,
+  isLogin: 0, // 0. 로그인 api 실행 전, 1. 로그인 완료, 2. 로그인 실패
 };
 
 // Context의 타입
