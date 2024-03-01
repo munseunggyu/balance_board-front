@@ -26,6 +26,8 @@ export default function Writing() {
     setContent(content);
   };
 
+  console.log(selectedCategory, title, content);
+
   return (
     <div className={styles.writingBox}>
       <WritingNav title={"Writing"}>
