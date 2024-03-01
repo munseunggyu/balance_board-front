@@ -1,9 +1,10 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 import { IPost } from "@/modal/Post";
+import { userImgUrl } from "@/utils/userImgUrl";
 
 import CommentInput from "../_main/_component/CommentInput";
 import VoteBtnsContainer from "../_main/_component/VoteBtnsContainer";
@@ -24,7 +25,13 @@ export default function PostCard({ post, openLoginModal }: IProps) {
   return (
     <div className={styles.container}>
       <div className={styles.card_top}>
-        <img className={styles.card_user_img} src="/image8.png" alt="Image 2" />
+        <Image
+          width={24}
+          height={24}
+          className={styles.card_user_img}
+          src={userImgUrl(post.imageType)}
+          alt="프로필 이미지"
+        />
         <span className={styles.user_name}>{post.nickname}</span>
         <span className={styles.time}>time</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
@@ -72,7 +79,13 @@ export default function PostCard({ post, openLoginModal }: IProps) {
       <ul className={styles.chat_ul}>
         {post.comments.map((comment) => (
           <li className={styles.chat_list} key={comment.commentId}>
-            <img className={styles.card_user_img} src="/image8.png" alt="Image 2" />
+            <Image
+              className={styles.card_user_img}
+              src={userImgUrl(comment.imageType)}
+              alt="프로필 이미지"
+              width={20}
+              height={20}
+            />
             <span>{comment.nickname}</span>
             <p className={styles.chat_contents}>{comment.content}</p>
           </li>

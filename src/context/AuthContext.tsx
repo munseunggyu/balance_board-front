@@ -13,6 +13,7 @@ interface InitialData {
   nickname: string;
   userId: number;
   isLogin: number;
+  imageType: number;
 }
 
 // 초기 데이터
@@ -24,6 +25,7 @@ const initialData: InitialData = {
   },
   nickname: "",
   userId: 0,
+  imageType: 1,
   isLogin: 0, // 0. 로그인 api 실행 전, 1. 로그인 완료, 2. 로그인 실패
 };
 
