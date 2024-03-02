@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
+import profile_md from "../../../../../public/profile-md.png";
 import styles from "../postDetail.module.css";
 
 interface ICommentFormProps {
@@ -21,7 +22,7 @@ export default function CommentForm({
   return (
     <div className={styles.commentRegContainer}>
       <div className={styles.voteButtonImageContainer}>
-        <Image src="/profile-md.png" alt="유저 이미지" width={20} height={20} />
+        <Image src={profile_md} alt="유저 이미지" width={20} height={20} />
       </div>
       <input
         placeholder="댓글 달기..."
