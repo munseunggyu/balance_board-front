@@ -51,7 +51,6 @@
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  max-width: 253px;
 }
 .check_list_item {
   display: flex;
@@ -61,4 +60,8 @@
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  min-width: 127px;
+}
+.check_list_item:last-child {
+  margin-top: -14px;
 }

@@ -57,7 +57,6 @@ export default function SignupInputs() {
 
   const checkDuplicateEmail = async () => {
     const email = submitData.emailFont + "@" + submitData.emailBack;
-    console.log(email);
     const validationMsg = validateEmail(email);
     if (validationMsg) {
       setEmailErrMsg(validationMsg);

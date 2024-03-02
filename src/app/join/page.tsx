@@ -14,7 +14,7 @@ export default function Join() {
   } = useJoinDataContext();
 
   return (
-    <div>
+    <div className={styles.container_bgc}>
       <JoinNav />
       <main className={styles.container}>
         <h2 className={styles.h2}>
