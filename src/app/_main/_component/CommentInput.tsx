@@ -7,6 +7,7 @@ import Input from "@/app/_component/Input";
 import { useUserDataContext } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
 import { constant } from "@/utils/constant";
+import { userImgUrl } from "@/utils/userImgUrl";
 
 import styles from "./commentInput.module.css";
 
@@ -56,6 +57,7 @@ export default function CommentInput({ postId }: IProps) {
             console.log("responseData", responseData);
             const data = produce(value, (draftData) => {
               draftData.pages[0][idx].comments = [responseData, draftData.pages[0][idx].comments[0]];
+              draftData.pages[0][idx].commentCount = draftData.pages[0][idx].commentCount + 1;
             });
             queryClient.setQueryData(queryKey, data);
           }
@@ -66,6 +68,7 @@ export default function CommentInput({ postId }: IProps) {
   });
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    if (comment.length > 500) return;
     setComment(value);
   };
 
@@ -77,7 +80,12 @@ export default function CommentInput({ postId }: IProps) {
 
   return (
     <form className={styles.container} onSubmit={handleSumbit}>
-      <Image src={"/profile-md-test.png"} width={24} height={24} alt="유저 이미지" />
+      {userInfo.isLogin === 1 ? (
+        <Image src={userImgUrl(userInfo.imageType)} width={24} height={24} alt="유저 이미지" />
+      ) : (
+        <Image src={"/profile-md-test.png"} width={24} height={24} alt="유저 이미지" />
+      )}
+
       <Input onChange={onChange} placeholder="댓글 달기..." value={comment} />
       <button className={`${styles.submit_btn} ${comment.length > 0 ? styles.active : ""}`}>등록</button>
     </form>

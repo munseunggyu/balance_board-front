@@ -144,7 +144,6 @@ export default function JoinName() {
         <ul className={styles.check_list}>
           <li className={styles.check_list_item}>
             <Image
-              className={styles.ico}
               src={validation.len ? "/check-pressed-md.svg" : "/check-md.svg"}
               alt="닫기 아이콘"
               width={24}
@@ -152,9 +151,9 @@ export default function JoinName() {
             />
             2자리 이상
           </li>
+
           <li className={styles.check_list_item}>
             <Image
-              className={styles.ico}
               src={validation.space ? "/check-pressed-md.svg" : "/check-md.svg"}
               alt="닫기 아이콘"
               width={24}
@@ -162,13 +161,8 @@ export default function JoinName() {
             />
             공백 없음
           </li>
-          {/* <li className={styles.check_list_item}>
-          <Image className={styles.ico} src="/check-md.svg" alt="닫기 아이콘" width={24} height={24} />
-          비속어 없음
-        </li> */}
           <li className={styles.check_list_item}>
             <Image
-              className={styles.ico}
               src={validation.duplication === 2 ? "/check-pressed-md.svg" : "/check-md.svg"}
               alt="닫기 아이콘"
               width={24}
@@ -176,6 +170,10 @@ export default function JoinName() {
             />
             중복 닉네임 없음
           </li>
+          {/* <li className={styles.check_list_item}>
+          <Image className={styles.ico} src="/check-md.svg" alt="닫기 아이콘" width={24} height={24} />
+          비속어 없음
+        </li> */}
         </ul>
       </div>
       <NextBtn handleNext={handleNext} />
