@@ -4,6 +4,7 @@
   gap: 24px;
   margin-bottom: 30px;
   position: relative;
+  margin-top: 45px;
 }
 .email_err {
   color: var(--State-Warning-Red-300, #ff513d);
@@ -103,7 +104,7 @@
 .check_list {
   margin-top: 10px;
   display: flex;
-  gap: 24px;
+  gap: 10px;
   flex-wrap: wrap;
   max-width: 253px;
 }
@@ -117,6 +118,9 @@
   font-weight: 500;
   line-height: 150%;
   color: var(--body-950);
+}
+.check_list_item:nth-child(odd) {
+  margin-right: 14px;
 }
 
 .input_password_confirm {

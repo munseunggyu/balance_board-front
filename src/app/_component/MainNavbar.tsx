@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import logo from "../../../public/logo.png";
-import notificationIco from "../../../public/notification-md.png";
-import searchIco from "../../../public/search-md.png";
+import notificationIco from "../../../public/notification-md.svg";
+import searchIco from "../../../public/search-md.svg";
 import styles from "./mainNavbar.module.css";
 
 export default function Topnav() {

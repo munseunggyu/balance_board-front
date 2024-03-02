@@ -15,5 +15,5 @@
 }
 .primary {
   color: var(--main-primary-500);
-  background: var(--body-100);
+  background: var(--background-100);
 }
