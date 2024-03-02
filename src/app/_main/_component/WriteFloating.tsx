@@ -1,8 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import styles from "./writeFloating.module.css";
-import Link from "next/link";
 export default function WriteFloating() {
   return (
     <Link href={"/writing"} className={styles.floating}>
