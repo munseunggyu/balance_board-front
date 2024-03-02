@@ -30,7 +30,7 @@ export default function WritingQuestionModal({ modalForm, handleCloseModal }: Qu
       handleCloseModal();
       router.push("/");
     } catch (error) {
-      console.error("Error while navigating:", error);
+      console.error(error);
     }
   };
 

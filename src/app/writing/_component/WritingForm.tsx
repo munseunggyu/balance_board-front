@@ -1,11 +1,15 @@
 "use client";
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
 
+import ModalContainer from "@/app/_component/ModalContainer";
+import ModalPortal from "@/app/_component/ModalPortal";
 import { useUserDataContext } from "@/context/AuthContext";
+import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 
 import styles from "./writingNav.module.css";
+import WritingSuccessModal from "./WritingSuccessModal";
 
 interface IWritingFormProps {
   selectedCategory: string | null;
@@ -19,6 +23,7 @@ interface IWritingFormProps {
 export default function WritingForm({ selectedCategory, title, content, option1, option2, tags }: IWritingFormProps) {
   const { userInfo } = useUserDataContext();
   const [contentFulfilled, setContentFulfilled] = useState(false);
+  const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const handleCommentSubmit = async () => {
     try {
@@ -37,6 +42,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
           option2: option2,
         }),
       });
+      handleOpenMoal();
       console.log(res.json());
     } catch (error) {
       console.error(error);
@@ -54,11 +60,16 @@ export default function WritingForm({ selectedCategory, title, content, option1,
   const registrationClass = contentFulfilled ? `${styles.registration} ${styles.fulfilled}` : styles.registration;
   return (
     <div className={registrationClass}>
-      <Link href="/">
-        <button onClick={handleCommentSubmit} disabled={!contentFulfilled}>
-          등록
-        </button>
-      </Link>
+      <button onClick={handleCommentSubmit} disabled={!contentFulfilled}>
+        등록
+      </button>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <WritingSuccessModal handleCloseModal={handleCloseModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }
