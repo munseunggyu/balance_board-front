@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
-import profile_md from "../../../../../public/profile-md.png";
+import { userImgUrl } from "@/utils/userImgUrl";
+
 import styles from "../postDetail.module.css";
 
 interface ICommentFormProps {
@@ -10,6 +11,7 @@ interface ICommentFormProps {
   setNewComment: Dispatch<SetStateAction<string>>;
   setIsComment: Dispatch<SetStateAction<boolean>>;
   handleCommentSubmit: () => Promise<void>;
+  userImage: number;
 }
 
 export default function CommentForm({
@@ -18,11 +20,12 @@ export default function CommentForm({
   isComment,
   setIsComment,
   handleCommentSubmit,
+  userImage,
 }: ICommentFormProps) {
   return (
     <div className={styles.commentRegContainer}>
       <div className={styles.voteButtonImageContainer}>
-        <Image src={profile_md} alt="유저 이미지" width={20} height={20} />
+        <Image src={userImgUrl(userImage)} alt="유저 이미지" width={20} height={20} />
       </div>
       <input
         placeholder="댓글 달기..."
