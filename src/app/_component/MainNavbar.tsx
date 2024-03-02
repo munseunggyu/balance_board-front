@@ -5,6 +5,7 @@ import logo from "../../../public/logo.png";
 import notificationIco from "../../../public/notification-md.svg";
 import searchIco from "../../../public/search-md.svg";
 import styles from "./mainNavbar.module.css";
+import NavUserProfile from "./NavUserProfile";
 
 export default function Topnav() {
   return (
@@ -19,6 +20,7 @@ export default function Topnav() {
         <Link href="/">
           <Image src={notificationIco} alt="알림" width={24} height={24} />
         </Link>
+        <NavUserProfile />
       </div>
     </nav>
   );
