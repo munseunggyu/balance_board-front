@@ -87,7 +87,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
     }
 
     return (
-      <div>
+      <div className={styles.postDetailBox}>
         <PostDetailNav />
         <div className={styles.postDetailContainer}>
           {postData ? (

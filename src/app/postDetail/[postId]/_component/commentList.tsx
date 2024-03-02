@@ -26,6 +26,7 @@ interface CommentProps {
 }
 
 function Comment({ comment }: CommentProps) {
+  console.log(comment);
   return (
     <div className={styles.commentContainer}>
       <div className={styles.commentorInfo}>
