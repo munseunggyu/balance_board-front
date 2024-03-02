@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 import { IPost } from "@/modal/Post";
+import { formatDay } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
 
 import CommentInput from "../_main/_component/CommentInput";
@@ -33,7 +34,7 @@ export default function PostCard({ post, openLoginModal }: IProps) {
           alt="프로필 이미지"
         />
         <span className={styles.user_name}>{post.nickname}</span>
-        <span className={styles.time}>time</span>
+        <span className={styles.time}>{formatDay(post.created)}</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
       </div>
       <div className={styles.contents_container} onClick={goDetailPage}>
