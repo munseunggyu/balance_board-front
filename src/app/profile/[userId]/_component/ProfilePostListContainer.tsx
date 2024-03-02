@@ -1,34 +1,22 @@
 "use client";
 import React from "react";
 
-import { IProfileData } from "../page";
+import { useQueryGetProfileData } from "../_hook/useQueryGetProfileData";
+import ProfilePostCard from "./ProfilePostCard";
+import styles from "./profilePostListContainer.module.css";
+export default function ProfilePostListContainer({ userId }: { userId: number }) {
+  const { isLoading, allData } = useQueryGetProfileData(userId);
 
-export default function ProfilePostListContainer({ profileData }: { profileData: IProfileData }) {
-  console.log(profileData);
-  // const userPosts = profileData.userPosts.map((v) => {
-  //   return {
-  //     ...v,
-  //     isWrite: true,
-  //   };
-  // });
+  if (isLoading) return <>Loading...</>;
 
-  // const votedPosts = profileData.userPosts.map((v) => {
-  //   return {
-  //     ...v,
-  //     isVoted: true,
-  //   };
-  // });
-
-  // const dupArr = [...profileData.userPosts, ...profileData.votedPosts];
-
-  // const allData = dupArr.filter((obj, index, self) => index === self.findIndex((o) => o.postId === obj.postId));
-  // const [data] = useState(allData);
   return (
     <div>
-      <ul>
-        {/* {data.map((v, i) => (
-          <li key={i}>{v.title}</li>
-        ))} */}
+      <ul className={styles.post_ul}>
+        {allData.map((post, i) => (
+          <li key={`${post.postId} - ${i}`} className={styles.post_list}>
+            <ProfilePostCard profilePostData={post} userId={userId} />
+          </li>
+        ))}
       </ul>
     </div>
   );
