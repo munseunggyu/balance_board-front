@@ -85,7 +85,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
     if (postData.category === "정치_경제") {
       postData.category = "정치・경제";
     }
-
+    console.log(userInfo);
     return (
       <div className={styles.postDetailBox}>
         <PostDetailNav />
@@ -107,6 +107,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                   isComment={isComment}
                   setIsComment={setIsComment}
                   handleCommentSubmit={handleCommentSubmit}
+                  userImage={userInfo.imageType}
                 />
                 <CommentList comments={postData.comments} showAllComments={showAllComments} />
                 {!showAllComments && postData.comments.length > 5 && (
