@@ -1,0 +1,20 @@
+.writingVoteInput {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--title-400);
+  height: 48px;
+  border: 1px solid var(--body-500);
+  border-radius: 6px;
+  background-color: var(--body-100);
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.writingVoteInput::placeholder {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--body-600);
+}

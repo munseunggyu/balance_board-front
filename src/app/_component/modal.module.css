@@ -114,12 +114,15 @@
 }
 
 .questionModal {
-  display: flex;
-  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 290px;
   height: 236px;
   background-color: var(--body-200);
   border-radius: 26px;
+  z-index: 999;
 }
 
 .modalContent {

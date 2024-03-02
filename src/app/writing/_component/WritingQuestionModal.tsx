@@ -1,10 +1,13 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 import { userImgUrl } from "@/utils/userImgUrl";
 
-import styles from "./modal.module.css";
+import styles from "../../_component/modal.module.css";
 
 interface QuestionModalProps {
+  handleCloseModal: () => void;
   modalForm: {
     question: string;
     sign: string;
@@ -15,8 +18,24 @@ interface QuestionModalProps {
   className?: string;
 }
 
-export default function QuestionModal({ modalForm }: QuestionModalProps) {
+export default function WritingQuestionModal({ modalForm, handleCloseModal }: QuestionModalProps) {
+  const router = useRouter();
+
+  const handleContinue = () => {
+    handleCloseModal();
+  };
+
+  const handleCancel = () => {
+    try {
+      handleCloseModal();
+      router.push("/");
+    } catch (error) {
+      console.error("Error while navigating:", error);
+    }
+  };
+
   const { question, sign, continueText, cancelText, imageUrl } = modalForm;
+
   return (
     <div className={styles.questionModal}>
       <div className={styles.modalContent}>
@@ -30,12 +49,12 @@ export default function QuestionModal({ modalForm }: QuestionModalProps) {
       </div>
       <div className={styles.buttonWrapper}>
         <div className={styles.buttonContainer}>
-          <button className={styles.questionButton}>
+          <button className={styles.questionButton} onClick={handleContinue}>
             <span>{continueText}</span>
           </button>
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.cancelButton}>
+          <button className={styles.cancelButton} onClick={handleCancel}>
             <span>{cancelText}</span>
           </button>
         </div>
