@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { userImgUrl } from "@/utils/userImgUrl";
 
-import styles from "./modal.module.css";
+import styles from "../../_component/modal.module.css";
 
 interface QuestionModalProps {
   modalForm: {
@@ -15,7 +15,7 @@ interface QuestionModalProps {
   className?: string;
 }
 
-export default function QuestionModal({ modalForm }: QuestionModalProps) {
+export default function WritingQuestionModal({ modalForm }: QuestionModalProps) {
   const { question, sign, continueText, cancelText, imageUrl } = modalForm;
   return (
     <div className={styles.questionModal}>
