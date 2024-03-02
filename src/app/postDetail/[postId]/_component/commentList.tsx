@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { formatDay, formatTime } from "@/utils/foramattime";
+import { userImgUrl } from "@/utils/userImgUrl";
 
 import { IComment } from "../interfaces";
 import styles from "../postDetail.module.css";
@@ -29,7 +30,7 @@ function Comment({ comment }: CommentProps) {
     <div className={styles.commentContainer}>
       <div className={styles.commentorInfo}>
         <div className={styles.commentorImageContainer}>
-          <Image src="/profile-md.png" alt="댓글 쓴 사람 이미지" width={24} height={24} />
+          <Image src={userImgUrl(comment.imageType)} alt="댓글 쓴 사람 이미지" width={24} height={24} />
         </div>
         <div className={styles.commentorName}>{comment.nickname}</div>
         <div className={styles.verticalLine}></div>

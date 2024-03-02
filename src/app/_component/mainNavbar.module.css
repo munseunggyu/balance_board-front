@@ -12,7 +12,11 @@
 .user_icon {
   margin-right: 20px;
 }
-
+.main_logo {
+  height: 31px;
+  position: relative;
+  top: 6px;
+}
 .right_icons {
   display: flex;
   margin-left: auto;

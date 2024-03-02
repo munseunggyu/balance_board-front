@@ -25,6 +25,7 @@ export default function TokenLoginComponent() {
         nickname: "",
         userId: 0,
         isLogin: 2,
+        imageType: 0,
       });
       return;
     }

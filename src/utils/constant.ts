@@ -1,3 +1,4 @@
 export const constant = {
-  apiUrl: "http://52.78.127.145:8080/",
+  // apiUrl: "http://52.78.127.145:8080/",
+  apiUrl: "https://balanceboard.store/",
 };

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import backIco from "../../../../public/direction-left-md.svg";
 import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./joinNav.module.css";
 export default function JoinNav() {
@@ -11,22 +12,17 @@ export default function JoinNav() {
 
   const {
     data: { processType },
-    setProcessType,
   } = useJoinDataContext();
 
   const handleBack = () => {
-    if (processType === 0) {
-      router.back();
-    } else {
-      setProcessType(processType - 1);
-    }
+    router.back();
   };
 
   return (
     <nav>
       <div className={styles.nav}>
         <button className={styles.back_btn} onClick={handleBack}>
-          <Image src="/image5.png" alt="Page 1" width={24} height={24} />
+          <Image src={backIco} alt="뒤로가기" width={24} height={24} />
           <h1 className={styles.title}>Join</h1>
         </button>
       </div>
