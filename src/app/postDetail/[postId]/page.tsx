@@ -108,6 +108,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
                   setIsComment={setIsComment}
                   handleCommentSubmit={handleCommentSubmit}
                   userImage={userInfo.imageType}
+                  isLogin={userInfo.isLogin}
                 />
                 <CommentList comments={postData.comments} showAllComments={showAllComments} />
                 {!showAllComments && postData.comments.length > 5 && (
