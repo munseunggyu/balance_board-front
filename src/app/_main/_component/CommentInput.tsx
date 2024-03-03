@@ -50,13 +50,16 @@ export default function CommentInput({ postId }: IProps) {
 
         if (value && "pages" in value) {
           const idx = value.pages[0].findIndex((v) => {
-            console.log(v, postId);
             return v.postId === postId;
           });
           if (idx >= 0) {
-            console.log("responseData", responseData);
             const data = produce(value, (draftData) => {
-              draftData.pages[0][idx].comments = [responseData, draftData.pages[0][idx].comments[0]];
+              const old = draftData.pages[0][idx].comments[0];
+              if (old) {
+                draftData.pages[0][idx].comments = [responseData, old];
+              } else {
+                draftData.pages[0][idx].comments = [responseData];
+              }
               draftData.pages[0][idx].commentCount = draftData.pages[0][idx].commentCount + 1;
             });
             queryClient.setQueryData(queryKey, data);
@@ -79,14 +82,14 @@ export default function CommentInput({ postId }: IProps) {
   };
 
   return (
-    <form className={styles.container} onSubmit={handleSumbit}>
+    <form onSubmit={handleSumbit} className={styles.container}>
       {userInfo.isLogin === 1 ? (
         <Image src={userImgUrl(userInfo.imageType)} width={24} height={24} alt="유저 이미지" />
       ) : (
         <Image src={"/profile-md-test.png"} width={24} height={24} alt="유저 이미지" />
       )}
 
-      <Input onChange={onChange} placeholder="댓글 달기..." value={comment} />
+      <Input className={styles.comment_input} onChange={onChange} placeholder="댓글 달기..." value={comment} />
       <button className={`${styles.submit_btn} ${comment.length > 0 ? styles.active : ""}`}>등록</button>
     </form>
   );
