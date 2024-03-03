@@ -1,20 +1,21 @@
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import React from "react";
 
 import { Profiletab } from "@/app/_component/Tabs";
-import { constant } from "@/utils/constant";
 
 import ProfilePostListContainer from "./_component/ProfilePostListContainer";
 import ProfileUserInfo from "./_component/ProfileUserInfo";
+import { getProfileData } from "./_lib/getProfileData";
 
-interface IProfilePostData {
+export interface IProfilePostData {
   postId: number;
   title: string;
   created: string;
   category: string;
   content: string;
   voteCount: number;
-  isVoted: boolean;
-  isWrite: boolean;
+  isVoted?: boolean | undefined;
+  isWrite?: boolean | undefined;
 }
 
 export interface IProfileData {
@@ -26,21 +27,24 @@ export interface IProfileData {
   votedPosts: IProfilePostData[];
 }
 
-export default async function ProfilePage() {
-  const res = await fetch(constant.apiUrl + "api/user/profile/1", {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+export default async function ProfilePage({ params: { userId } }: { params: { userId: number } }) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["profile", userId],
+    queryFn: () => {
+      return getProfileData(userId);
     },
   });
 
-  const profileData: IProfileData = await res.json();
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div>
-      <ProfileUserInfo profileData={profileData} />
-      <Profiletab totalCount={0} votedCount={0} writtenCount={0} />
-      <ProfilePostListContainer profileData={profileData} />
+      <HydrationBoundary state={dehydratedState}>
+        <ProfileUserInfo userId={userId} />
+        <Profiletab userId={userId} />
+        <ProfilePostListContainer userId={userId} />
+      </HydrationBoundary>
     </div>
   );
 }
