@@ -33,7 +33,11 @@ export default function CommentForm({
   return (
     <div className={styles.commentRegContainer} onClick={isLogin !== 1 ? handleOpenMoal : undefined}>
       <div className={styles.voteButtonImageContainer}>
-        <Image src={userImgUrl(userImage)} alt="유저 이미지" width={20} height={20} />
+        {userImage ? (
+          <Image src={userImgUrl(userImage)} alt="로그인 유저 이미지" width={24} height={24} />
+        ) : (
+          <Image src="/profile-md-test.png" alt="비로그인 유저 이미지" width={24} height={24} />
+        )}
       </div>
       <input
         placeholder="댓글 달기..."

@@ -52,13 +52,11 @@ export default function PostCardList() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      if (allPages[allPages.length - 1].length / 20 < 1) {
+      if (allPages[allPages.length - 1].length / 10 < 1) {
         return undefined;
       }
       return allPages.length;
     },
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
   });
 
   const { ref, inView } = useInView({
