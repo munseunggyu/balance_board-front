@@ -65,7 +65,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
       </button>
       {openModal && (
         <ModalPortal>
-          <ModalContainer handleCloseModal={handleCloseModal}>
+          <ModalContainer>
             <WritingSuccessModal handleCloseModal={handleCloseModal} />
           </ModalContainer>
         </ModalPortal>
