@@ -108,7 +108,7 @@
 }
 
 .upButton {
-  width: 310px;
+  width: calc(100% - 40px);
   height: 52px;
   margin-top: 20px;
   border: 1px solid var(--main-primary-600);
@@ -123,7 +123,7 @@
 }
 
 .downButton {
-  width: 310px;
+  width: calc(100% - 40px);
   height: 52px;
   margin-top: 8px;
   border: 1px solid var(--main-primary-600);
@@ -142,7 +142,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 50px;
+  padding-right: 20px;
 }
 
 .sumVoterImageContainer {
