@@ -4,12 +4,14 @@ import styles from "./modalContainer.module.css";
 
 interface Props {
   children: React.ReactNode;
-  handleCloseModal: () => void;
+  handleCloseModal?: () => void;
 }
 
 export default function ModalContainer({ children, handleCloseModal }: Props) {
+  const closeModalHandler = handleCloseModal || (() => {});
+
   return (
-    <div onClick={handleCloseModal} className={styles.container}>
+    <div onClick={closeModalHandler} className={styles.container}>
       {children}
     </div>
   );
