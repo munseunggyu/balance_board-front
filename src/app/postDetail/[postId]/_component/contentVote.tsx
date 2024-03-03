@@ -1,11 +1,16 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import LoginModal from "@/app/_component/LoginModal";
+import ModalContainer from "@/app/_component/ModalContainer";
+import ModalPortal from "@/app/_component/ModalPortal";
 import { useUserDataContext } from "@/context/AuthContext";
+import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 
 import { IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
+
 let userToken: string | null = null;
 
 interface IContentVoteProps {
@@ -15,6 +20,7 @@ interface IContentVoteProps {
 }
 
 export default function ContentVote({ postData, postId, setPostData }: IContentVoteProps) {
+  const { openModal, handleOpenMoal, handleCloseModal } = useModal();
   const { userInfo } = useUserDataContext();
   const [userSelectedOption, setUserSelectedOption] = useState<string | null>(null);
 
@@ -73,7 +79,10 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
         : ((postData.option2Count / SumVoted) * 100).toFixed(1);
 
   return (
-    <div className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}>
+    <div
+      className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}
+      onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => ""}
+    >
       <button
         className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && UpVoted && styles.upVoted} ${!postData.selectedOption && userSelectedOption === postData.option1 ? styles.userSelected : ""}`}
         onClick={() => handleOptionClick(postData.option1)}
@@ -105,7 +114,7 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
       </button>
       <button
         className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && DownVoted && styles.downVoted} ${!postData.selectedOption && userSelectedOption === postData.option2 ? styles.userSelected : ""}`}
-        onClick={() => handleOptionClick(postData.option2)}
+        onClick={() => handleOptionClick(postData.option1)}
         disabled={!!postData.selectedOption}
       >
         <div className={styles.voteButtonContainer}>
@@ -150,6 +159,13 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
           <span>참여 {SumVoted}</span>
         </div>
       </div>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <LoginModal handleCloseModal={handleCloseModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }
