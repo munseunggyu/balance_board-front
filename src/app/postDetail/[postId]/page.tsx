@@ -94,7 +94,7 @@ export default function PostDetail({ params }: { params: { postId: number } }) {
             <>
               <UserInfo postData={postData} />
               <PostContent postData={postData} />
-              <ContentVote postData={postData} />
+              <ContentVote postData={postData} postId={postId} setPostData={setPostData} />
               <div className={styles.seperator}></div>
               <div className={styles.commentContainer}>
                 <div className={styles.commentCount}>

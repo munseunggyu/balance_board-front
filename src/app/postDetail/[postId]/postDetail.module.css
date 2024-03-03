@@ -89,16 +89,21 @@
   font-weight: 500;
   line-height: 19.5px;
   margin-top: 20px;
-  height: 180px;
+  height: 240px;
   border: 1px solid var(--body-300);
   border-radius: 14px;
   text-align: center;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 6px 2px rgba(219, 219, 219, 0.25);
+}
+
+.selectedOptionContainer {
+  height: 180px;
 }
 
 .voteButtonContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 24px;
 }
 
@@ -107,34 +112,46 @@
   align-items: center;
 }
 
-.upButton {
-  width: calc(100% - 40px);
-  height: 52px;
-  margin-top: 20px;
-  border: 1px solid var(--main-primary-600);
-  border-radius: 100px;
-  background-color: #f5fffa;
-  color: var(--main-primary-500);
-}
-
-.upButton.upVoted {
-  color: var(--body-100);
-  background-color: var(--main-primary-400);
-}
-
+.upButton,
 .downButton {
   width: calc(100% - 40px);
   height: 52px;
-  margin-top: 8px;
-  border: 1px solid var(--main-primary-600);
+  border: 1px solid var(--body-400);
   border-radius: 100px;
-  background-color: #f5fffa;
+  background-color: #ffffff;
+  color: #9d9d9d;
+  box-shadow: 0px 0px 6px 2px rgba(219, 219, 219, 0.25);
+}
+
+.upButton {
+  margin-top: 20px;
+}
+
+.downButton {
+  margin-top: 8px;
+}
+
+.upButton.selectedOption,
+.downButton.selectedOption {
   color: var(--main-primary-500);
+  background-color: var(--main-primary-50);
+  border-color: var(--main-primary-600);
+}
+
+.upButton.upVoted {
+  background-color: #01d066;
+  color: #ffffff;
 }
 
 .downButton.downVoted {
-  color: var(--body-100);
-  background-color: var(--main-primary-400);
+  background-color: #01d066;
+  color: #ffffff;
+}
+
+.userSelected {
+  color: var(--main-primary-500);
+  background-color: var(--main-primary-50);
+  border-color: var(--main-primary-600);
 }
 
 .sumVoterContainer {
@@ -155,6 +172,22 @@
   font-weight: 500;
   line-height: 18px;
   color: var(--body-800);
+}
+
+.voteSubmitButton {
+  width: calc(100% - 40px);
+  height: 46px;
+  border-radius: 6px;
+  color: var(--body-950);
+  background-color: var(--body-200);
+  border: 1px solid var(--body-400);
+  box-shadow: 0px 0px 6px 2px rgba(219, 219, 219, 0.25);
+  margin-top: 20px;
+}
+
+.voteSubmitButton.selectedOption {
+  background-color: var(--title-400);
+  color: var(--body-400);
 }
 
 .seperator {
