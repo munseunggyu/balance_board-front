@@ -1,7 +1,12 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
-import profile_md from "../../../../../public/profile-md.png";
+import LoginModal from "@/app/_component/LoginModal";
+import ModalContainer from "@/app/_component/ModalContainer";
+import ModalPortal from "@/app/_component/ModalPortal";
+import { useModal } from "@/hook/useModal";
+import { userImgUrl } from "@/utils/userImgUrl";
+
 import styles from "../postDetail.module.css";
 
 interface ICommentFormProps {
@@ -10,6 +15,8 @@ interface ICommentFormProps {
   setNewComment: Dispatch<SetStateAction<string>>;
   setIsComment: Dispatch<SetStateAction<boolean>>;
   handleCommentSubmit: () => Promise<void>;
+  userImage: number;
+  isLogin: number;
 }
 
 export default function CommentForm({
@@ -18,11 +25,15 @@ export default function CommentForm({
   isComment,
   setIsComment,
   handleCommentSubmit,
+  userImage,
+  isLogin,
 }: ICommentFormProps) {
+  const { openModal, handleOpenMoal, handleCloseModal } = useModal();
+
   return (
-    <div className={styles.commentRegContainer}>
+    <div className={styles.commentRegContainer} onClick={isLogin !== 1 ? handleOpenMoal : undefined}>
       <div className={styles.voteButtonImageContainer}>
-        <Image src={profile_md} alt="유저 이미지" width={20} height={20} />
+        <Image src={userImgUrl(userImage)} alt="유저 이미지" width={20} height={20} />
       </div>
       <input
         placeholder="댓글 달기..."
@@ -57,6 +68,13 @@ export default function CommentForm({
       >
         등록
       </button>
+      {openModal && (
+        <ModalPortal>
+          <ModalContainer handleCloseModal={handleCloseModal}>
+            <LoginModal handleCloseModal={handleCloseModal} />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }

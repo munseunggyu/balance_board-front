@@ -4,13 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import { useQueryGetProfileData } from "../profile/[userId]/_hook/useQueryGetProfileData";
 import styles from "./tabs.module.css";
-
-interface IProfileProps {
-  totalCount: number;
-  votedCount: number;
-  writtenCount: number;
-}
 
 function Maintab() {
   const searchParams = useSearchParams();
@@ -58,8 +53,12 @@ function Maintab() {
   );
 }
 
-function Profiletab({ totalCount, votedCount, writtenCount }: IProfileProps) {
+function Profiletab({ userId }: { userId: number }) {
+  const { allData, userPosts, votedPosts } = useQueryGetProfileData(userId);
   const [activeTab, setActiveTab] = useState<number>(0);
+  const totalCount = allData.length;
+  const writtenCount = userPosts?.length || 0;
+  const votedCount = votedPosts?.length || 0;
 
   const tabs = [
     { label: "전체", count: totalCount },
