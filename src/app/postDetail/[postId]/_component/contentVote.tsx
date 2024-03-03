@@ -79,13 +79,10 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
         : ((postData.option2Count / SumVoted) * 100).toFixed(1);
 
   return (
-    <div
-      className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}
-      onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => ""}
-    >
+    <div className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}>
       <button
         className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && UpVoted && styles.upVoted} ${!postData.selectedOption && userSelectedOption === postData.option1 ? styles.userSelected : ""}`}
-        onClick={() => handleOptionClick(postData.option1)}
+        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option1)}
         disabled={!!postData.selectedOption}
       >
         <div className={styles.voteButtonContainer}>
@@ -114,7 +111,7 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
       </button>
       <button
         className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && DownVoted && styles.downVoted} ${!postData.selectedOption && userSelectedOption === postData.option2 ? styles.userSelected : ""}`}
-        onClick={() => handleOptionClick(postData.option1)}
+        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
         disabled={!!postData.selectedOption}
       >
         <div className={styles.voteButtonContainer}>
