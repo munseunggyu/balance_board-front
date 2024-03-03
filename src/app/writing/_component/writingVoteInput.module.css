@@ -18,3 +18,11 @@
   line-height: 21px;
   color: var(--body-600);
 }
+
+.errorMessage {
+  padding-left: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--state-wraning-red-300);
+}

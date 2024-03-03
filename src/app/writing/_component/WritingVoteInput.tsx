@@ -9,6 +9,7 @@ interface IOptionInputProps {
 export default function WritingVoteInput({ onVoteData }: IOptionInputProps) {
   const [option1, setOption1] = useState<string>("");
   const [option2, setOption2] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleOptionInput = (e: React.ChangeEvent<HTMLInputElement>, option: "option1" | "option2") => {
     const value = e.target.value;
@@ -17,9 +18,15 @@ export default function WritingVoteInput({ onVoteData }: IOptionInputProps) {
     } else {
       setOption2(value);
     }
+    setErrorMessage("");
   };
 
   useEffect(() => {
+    if (option1 !== "" && option2 !== "" && option1 === option2) {
+      setErrorMessage("투표 항목은 서로 같을 수 없습니다.");
+    } else {
+      setErrorMessage("");
+    }
     onVoteData(option1, option2);
   }, [option1, option2, onVoteData]);
 
@@ -39,6 +46,7 @@ export default function WritingVoteInput({ onVoteData }: IOptionInputProps) {
         className={styles.writingVoteInput}
         maxLength={14}
       />
+      {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
     </div>
   );
 }

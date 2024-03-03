@@ -51,7 +51,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
   };
 
   useEffect(() => {
-    if (selectedCategory && title && content && option1 && option2 && tags.length > 0) {
+    if (selectedCategory && title && content && option1 && option2 && tags.length > 0 && option1 !== option2) {
       setContentFulfilled(true);
     } else {
       setContentFulfilled(false);
