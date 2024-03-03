@@ -5,7 +5,7 @@ export const getPostList = async ({ pageParam, isLogin }: { pageParam: number; i
   const token = localStorage.getItem("token");
   let res;
   if (isLogin === 1) {
-    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=20`, {
+    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -14,7 +14,7 @@ export const getPostList = async ({ pageParam, isLogin }: { pageParam: number; i
       },
     });
   } else {
-    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=20`, {
+    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -44,7 +44,7 @@ export const getCategoryPostList = async ({
   }
   let res;
   if (isLogin === 1) {
-    res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=20`, {
+    res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -53,7 +53,7 @@ export const getCategoryPostList = async ({
       },
     });
   } else {
-    res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=20`, {
+    res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
         Accept: "application/json",
