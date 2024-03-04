@@ -55,22 +55,21 @@ export default function PostCardList() {
       if (allPages[allPages.length - 1].length / 10 < 1) {
         return undefined;
       }
-      return allPages.length;
+      return allPages.length + 1;
     },
   });
 
   const { ref, inView } = useInView({
     threshold: 0,
-    delay: 10,
+    delay: 0,
   });
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     if (inView) {
-      if (!isFetching && hasNextPage) {
+      if (!isFetching && hasNextPage && fetchNextPage) {
         void fetchNextPage();
       }
-      // void !isFetching && hasNextPage && fetchNextPage();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
   useEffect(() => {
@@ -81,7 +80,6 @@ export default function PostCardList() {
     setMounted(true);
   }, []);
 
-  useEffect(() => {}, [tab]);
   if (isPending) {
     <div>loading 중...</div>;
     return;

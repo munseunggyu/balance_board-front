@@ -7,15 +7,20 @@ import ProfilePostListContainer from "./_component/ProfilePostListContainer";
 import ProfileUserInfo from "./_component/ProfileUserInfo";
 import { getProfileData } from "./_lib/getProfileData";
 
-export interface IProfilePostData {
+export interface IProfilePost {
   postId: number;
   title: string;
   created: string;
   category: string;
   content: string;
   voteCount: number;
-  isVoted?: boolean | undefined;
-  isWrite?: boolean | undefined;
+  voted?: boolean | undefined;
+  writed?: boolean | undefined;
+}
+
+export interface IPostPostData {
+  profilePosts: IProfilePost[];
+  totalPosts: number;
 }
 
 export interface IProfileData {
@@ -23,8 +28,6 @@ export interface IProfileData {
   email: string;
   nickname: string;
   imageType: number;
-  userPosts: IProfilePostData[];
-  votedPosts: IProfilePostData[];
 }
 
 export default async function ProfilePage({ params: { userId } }: { params: { userId: number } }) {
