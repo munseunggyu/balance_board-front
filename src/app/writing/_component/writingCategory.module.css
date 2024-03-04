@@ -27,13 +27,13 @@
 .dropDownBox.clicked {
   font-weight: 700;
   color: var(--main-primary-500);
-  border: 1px solid var(--main-primary-500); /* 클릭된 상태의 border 스타일 변경 */
+  border: 1px solid var(--main-primary-500);
 }
 
 .dropdownOptionContainer {
   top: 100%;
   position: absolute;
-  width: 390px;
+  width: calc(100% - 40px);
   color: var(--body-100);
   border: 1px solid var(--body-600);
   border-radius: 6px;
