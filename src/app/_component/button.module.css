@@ -56,6 +56,10 @@
   border: 1px solid var(--main-primary-500);
 }
 
+.border_primary_600 {
+  border: 1px solid var(--main-primary-600);
+}
+
 .border_gray {
   border: 1px solid var(--body-400);
 }

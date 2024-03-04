@@ -64,11 +64,11 @@ export default function VoteBtnsContainer({
   // const btnType = 1; // 0. 미선택(미투표), 1. 선택(미투표), 2. 더 적음 또는 같음(투표완), 3. 더 많음(투표완)
   const Option1BtnStyle: IButton = {
     bgColor: option1BtnType === 3 ? "primary" : option1BtnType === 2 ? "primary_50" : "body_100",
-    border: option1BtnType === 1 || option1BtnType === 2 ? "primary" : "gray",
+    border: option1BtnType === 1 || option1BtnType === 2 ? "primary_600" : "gray",
   };
   const Option2BtnStyle: IButton = {
     bgColor: option2BtnType === 3 ? "primary" : option2BtnType === 2 ? "primary_50" : "body_100",
-    border: option2BtnType === 1 || option2BtnType === 2 ? "primary" : "gray",
+    border: option2BtnType === 1 || option2BtnType === 2 ? "primary_600" : "gray",
   };
 
   const option1FontColor =
@@ -134,16 +134,23 @@ export default function VoteBtnsContainer({
       if (option1Count > option2Count) {
         setOption1BtnType(3);
         setOption2BtnType(2);
-      } else {
+      } else if (option2Count === option1Count) {
         setOption1BtnType(2);
         setOption2BtnType(2);
+      } else {
+        setOption1BtnType(2);
+        setOption2BtnType(3);
       }
     } else if (post.selectedOption === option2) {
       if (option2Count > option1Count) {
         setOption1BtnType(2);
         setOption2BtnType(3);
-      } else {
+      } else if (option2Count === option1Count) {
         setOption1BtnType(2);
+        setOption2BtnType(2);
+      } else {
+        console.log("??");
+        setOption1BtnType(3);
         setOption2BtnType(2);
       }
     }
@@ -162,15 +169,9 @@ export default function VoteBtnsContainer({
           <div className={styles.btn_left}>
             {(selectOption === option1 || post.selectedOption === option1) &&
               (option1BtnType === 1 || option1BtnType === 2) && (
-                <Image
-                  className={styles.ico_check}
-                  src={"/check-pressed-md.svg"}
-                  alt="체크 아이콘"
-                  width={24}
-                  height={24}
-                />
+                <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={24} height={24} />
               )}
-            {option1BtnType === 3 && (
+            {option1BtnType === 3 && post.selectedOption === option1 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}
@@ -207,7 +208,7 @@ export default function VoteBtnsContainer({
                   height={24}
                 />
               )}
-            {option2BtnType === 3 && (
+            {option2BtnType === 3 && post.selectedOption === option2 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}

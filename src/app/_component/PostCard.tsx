@@ -1,10 +1,12 @@
 "use client";
+import "dayjs/locale/ko";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 import { IPost } from "@/modal/Post";
-import { formatDay } from "@/utils/foramattime";
+import { formatRelativeTime } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
 
 import CommentInput from "../_main/_component/CommentInput";
@@ -34,7 +36,7 @@ export default function PostCard({ post, openLoginModal }: IProps) {
           alt="프로필 이미지"
         />
         <span className={styles.user_name}>{post.nickname}</span>
-        <span className={styles.time}>{formatDay(post.created)}</span>
+        <span className={styles.time}>{formatRelativeTime(post.created)}</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
       </div>
       <div className={styles.contents_container} onClick={goDetailPage}>
@@ -45,20 +47,14 @@ export default function PostCard({ post, openLoginModal }: IProps) {
         <div className={styles.contents_bottom}>
           <ul className={styles.contents_bottom_ul}>
             {post.tags.length > 0 &&
-              post.tags.map((v) => (
+              post.tags.slice(0, 2).map((v) => (
                 <li key={v.tagId}>
                   <Tag tagName={v.tagName} />
                 </li>
               ))}
           </ul>
           <div className={styles.contents_bottom_right_container}>
-            <Image
-              className={styles.ico_check}
-              src={"/check-pressed-md.svg"}
-              alt="체크 아이콘"
-              width={24}
-              height={24}
-            />
+            <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={18} height={18} />
             <span className={styles.ico_txt}>{post.voteCount}명 참여</span>
             <Image className={styles.chat_ico} src={"/comment-sm.svg"} alt="체크 아이콘" width={18} height={18} />
             <span className={styles.ico_txt}>{post.commentCount}</span>
