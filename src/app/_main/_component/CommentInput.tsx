@@ -49,20 +49,27 @@ export default function CommentInput({ postId }: IProps) {
         const value: IPost | InfiniteData<IPost[]> | undefined = queryClient.getQueryData(queryKey);
 
         if (value && "pages" in value) {
-          const idx = value.pages[0].findIndex((v) => {
-            return v.postId === postId;
-          });
-          if (idx >= 0) {
-            const data = produce(value, (draftData) => {
-              const old = draftData.pages[0][idx].comments[0];
-              if (old) {
-                draftData.pages[0][idx].comments = [responseData, old];
-              } else {
-                draftData.pages[0][idx].comments = [responseData];
-              }
-              draftData.pages[0][idx].commentCount = draftData.pages[0][idx].commentCount + 1;
+          const obj = value.pages.flat().find((v) => v.postId === postId);
+          if (obj) {
+            const pageIndex = value.pages.findIndex((page) => {
+              const wow = page.includes(obj);
+              return wow;
             });
-            queryClient.setQueryData(queryKey, data);
+            const idx = value.pages[pageIndex].findIndex((v) => {
+              return v.postId === postId;
+            });
+            if (idx >= 0) {
+              const data = produce(value, (draftData) => {
+                const old = draftData.pages[pageIndex][idx].comments[pageIndex];
+                if (old) {
+                  draftData.pages[pageIndex][idx].comments = [responseData, old];
+                } else {
+                  draftData.pages[pageIndex][idx].comments = [responseData];
+                }
+                draftData.pages[pageIndex][idx].commentCount = draftData.pages[pageIndex][idx].commentCount + 1;
+              });
+              queryClient.setQueryData(queryKey, data);
+            }
           }
         }
       });

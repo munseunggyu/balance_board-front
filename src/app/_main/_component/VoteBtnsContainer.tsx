@@ -10,7 +10,6 @@ import { IPost } from "@/modal/Post";
 
 import { doVote } from "../_lib/doVote";
 import styles from "./voteBtnContainer.module.css";
-import { cookies } from "next/headers";
 
 interface IProps {
   btnType: number;
@@ -94,20 +93,27 @@ export default function VoteBtnsContainer({
       filterQuerys.forEach((queryKey) => {
         const value: IPost | InfiniteData<IPost[]> | undefined = queryClient.getQueryData(queryKey);
         if (value && "pages" in value) {
-          const idx = value.pages[0].findIndex((v) => {
-            return v.postId === postId;
-          });
-          if (idx >= 0) {
-            const data = produce(value, (draftData) => {
-              draftData.pages[0][idx].selectedOption = selectOption;
-              draftData.pages[0][idx].voteCount = draftData.pages[0][idx].voteCount + 1;
-              if (selectOption === option1) {
-                draftData.pages[0][idx].option1Count = draftData.pages[0][idx].option1Count + 1;
-              } else {
-                draftData.pages[0][idx].option2Count = draftData.pages[0][idx].option2Count + 1;
-              }
+          const obj = value.pages.flat().find((v) => v.postId === postId);
+          if (obj) {
+            const pageIndex = value.pages.findIndex((page) => {
+              const wow = page.includes(obj);
+              return wow;
             });
-            queryClient.setQueryData(queryKey, data);
+            const idx = value.pages[pageIndex].findIndex((v) => {
+              return v.postId === postId;
+            });
+            if (idx >= 0) {
+              const data = produce(value, (draftData) => {
+                draftData.pages[pageIndex][idx].selectedOption = selectOption;
+                draftData.pages[pageIndex][idx].voteCount = draftData.pages[pageIndex][idx].voteCount + 1;
+                if (selectOption === option1) {
+                  draftData.pages[pageIndex][idx].option1Count = draftData.pages[pageIndex][idx].option1Count + 1;
+                } else {
+                  draftData.pages[pageIndex][idx].option2Count = draftData.pages[pageIndex][idx].option2Count + 1;
+                }
+              });
+              queryClient.setQueryData(queryKey, data);
+            }
           }
         }
       });
