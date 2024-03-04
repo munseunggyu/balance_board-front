@@ -115,6 +115,7 @@ export default function VoteBtnsContainer({
 
   const onClickVotedBtn = () => {
     if (userInfo.isLogin !== 1) return;
+    if (!post.selectedOption) return;
     handleVote.mutate();
   };
 
