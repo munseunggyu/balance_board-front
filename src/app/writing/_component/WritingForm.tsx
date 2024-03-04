@@ -26,6 +26,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const handleCommentSubmit = async () => {
+    const category = selectedCategory === "정치・경제" ? "정치_경제" : selectedCategory;
     try {
       const res = await fetch(constant.apiUrl + `api/main/new/post`, {
         method: "POST",
@@ -35,7 +36,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
         body: JSON.stringify({
           userId: userInfo.userId,
           title: title,
-          category: selectedCategory,
+          category: category,
           content: content,
           tags: tags,
           option1: option1,
@@ -50,7 +51,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
   };
 
   useEffect(() => {
-    if (selectedCategory && title && content && option1 && option2 && tags.length > 0) {
+    if (selectedCategory && title && content && option1 && option2 && tags.length > 0 && option1 !== option2) {
       setContentFulfilled(true);
     } else {
       setContentFulfilled(false);

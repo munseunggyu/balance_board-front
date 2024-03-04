@@ -24,9 +24,10 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   /** 태그 글자 6글자 이내처리 */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
-    if (value.length <= 6) {
+    const trimdValue = value.replace(/\s/g, "");
+    if (trimdValue.length <= 6) {
       const newTags = [...tags];
-      newTags[index] = value;
+      newTags[index] = trimdValue;
       setTags(newTags);
       setErrorMessage("");
       onTagsData(newTags);
@@ -39,14 +40,13 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (tags[index].trim() !== "") {
-        if (index === tags.length - 1 && tags.length < 5) {
-          setTags([...tags, ""]);
-        }
+      const trimTag = tags[index].trim();
+
+      if (trimTag !== "" && index === tags.length - 1 && tags.length < 5) {
+        setTags([...tags, ""]);
       }
     }
   };
-
   /** 포커싱 잃었을 떄 데이터가 없으면 input 삭제 */
   const handleInputBlur = (index: number) => {
     if (tags[index].trim() === "" && tags.length > 1) {
