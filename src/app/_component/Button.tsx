@@ -14,7 +14,7 @@ export interface IButton extends ComponentPropsWithRef<"button"> {
     | "primary_50"
     | "title_400";
   rounded?: "none" | "rounded" | "large";
-  border?: "none" | "primary" | "gray" | "orange";
+  border?: "none" | "primary" | "gray" | "orange" | "primary_600";
   color?: "none" | "primary";
   size?: "normal" | "small";
   fullWidth?: boolean;
