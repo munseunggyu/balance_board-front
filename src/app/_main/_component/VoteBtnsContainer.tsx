@@ -10,6 +10,7 @@ import { IPost } from "@/modal/Post";
 
 import { doVote } from "../_lib/doVote";
 import styles from "./voteBtnContainer.module.css";
+import { cookies } from "next/headers";
 
 interface IProps {
   btnType: number;
@@ -115,7 +116,7 @@ export default function VoteBtnsContainer({
 
   const onClickVotedBtn = () => {
     if (userInfo.isLogin !== 1) return;
-    if (!post.selectedOption) return;
+    if (!disableVoteBtn) return;
     handleVote.mutate();
   };
 
