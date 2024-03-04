@@ -134,16 +134,23 @@ export default function VoteBtnsContainer({
       if (option1Count > option2Count) {
         setOption1BtnType(3);
         setOption2BtnType(2);
-      } else {
+      } else if (option2Count === option1Count) {
         setOption1BtnType(2);
         setOption2BtnType(2);
+      } else {
+        setOption1BtnType(2);
+        setOption2BtnType(3);
       }
     } else if (post.selectedOption === option2) {
       if (option2Count > option1Count) {
         setOption1BtnType(2);
         setOption2BtnType(3);
-      } else {
+      } else if (option2Count === option1Count) {
         setOption1BtnType(2);
+        setOption2BtnType(2);
+      } else {
+        console.log("??");
+        setOption1BtnType(3);
         setOption2BtnType(2);
       }
     }
@@ -164,7 +171,7 @@ export default function VoteBtnsContainer({
               (option1BtnType === 1 || option1BtnType === 2) && (
                 <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={24} height={24} />
               )}
-            {option1BtnType === 3 && (
+            {option1BtnType === 3 && post.selectedOption === option1 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}
@@ -201,7 +208,7 @@ export default function VoteBtnsContainer({
                   height={24}
                 />
               )}
-            {option2BtnType === 3 && (
+            {option2BtnType === 3 && post.selectedOption === option2 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}
