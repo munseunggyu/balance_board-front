@@ -9,7 +9,7 @@ interface IWritingContentProps {
 }
 
 export default function WritingContent({ onContentData }: IWritingContentProps) {
-  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const [isFilled, setIsFilled] = useState<boolean>(false);
 
@@ -22,8 +22,11 @@ export default function WritingContent({ onContentData }: IWritingContentProps) 
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTitle(e.target.value);
-    onContentData(e.target.value.trimStart());
+    const inputText = e.target.value.trimStart();
+    if (inputText.length <= 1500) {
+      setContent(inputText);
+      onContentData(inputText);
+    }
   };
 
   const placeholderText = "내용을 입력해주세요.\n부적절한 글일 경우 커뮤니티 이용 규칙에 따라 삭제 조치될 수 있습니다.";
@@ -33,7 +36,7 @@ export default function WritingContent({ onContentData }: IWritingContentProps) 
       <div className={`${styles.contentContainer} ${isFilled ? styles.contentFocused : ""}`}>
         <textarea
           placeholder={placeholderText}
-          value={title}
+          value={content}
           onChange={handleContentChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -41,7 +44,7 @@ export default function WritingContent({ onContentData }: IWritingContentProps) 
           maxLength={1500}
         />
         <div className={styles.contentLengthContainer}>
-          <div className={styles.contentLength}>{title.length}</div>
+          <div className={styles.contentLength}>{content.length}</div>
           <div className={styles.seperator}></div>
           <div>1500</div>
         </div>
