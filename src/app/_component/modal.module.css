@@ -205,6 +205,29 @@
   font-weight: 700;
   color: var(--main-secondary-100);
 }
+.develop_modal {
+  display: flex;
+  flex-direction: column;
+  width: 290px;
+  height: 180px;
+  background-color: var(--body-200);
+  border-radius: 26px;
+  padding: 36px 20px 20px 20px;
+}
+.develop_modal_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--title-400);
+
+  /* Botton/Botton-XL */
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 150%; /* 27px */
+}
+.develop_btn {
+  margin-top: 20px;
+}
 
 .goHomeModal {
   display: flex;

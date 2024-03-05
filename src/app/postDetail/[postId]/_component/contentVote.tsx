@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -14,10 +15,10 @@ import styles from "../postDetail.module.css";
 interface IContentVoteProps {
   postData: IPostData;
   postId: number;
-  setPostData: (updatedData: IPostData) => void;
 }
 
-export default function ContentVote({ postData, postId, setPostData }: IContentVoteProps) {
+export default function ContentVote({ postData, postId }: IContentVoteProps) {
+  const queryClient = useQueryClient();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
   const { userInfo } = useUserDataContext();
   const [userSelectedOption, setUserSelectedOption] = useState<string | null>(null);
@@ -26,45 +27,46 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
     setUserSelectedOption(option);
   };
 
-  console.log(postId);
+  const doVote = useMutation({
+    mutationFn: async () => {
+      const userToken = localStorage.getItem("token");
+      const headers: { [key: string]: string } = {};
 
-  const handleVote = async () => {
-    const userToken = localStorage.getItem("token");
-    const headers: { [key: string]: string } = {};
+      if (userToken) {
+        headers.Authorization = userToken;
+      }
+      const res = await fetch(constant.apiUrl + "api/main/new/vote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: JSON.stringify({
+          postId,
+          voteId: postId,
+          userId: userInfo.userId,
+          selectedOption: userSelectedOption,
+        }),
+      });
+      return await res.json();
+    },
+    async onSuccess() {
+      const userToken = localStorage.getItem("token");
+      const headers: { [key: string]: string } = {};
 
-    if (userToken) {
-      headers.Authorization = userToken;
-    }
+      if (userToken) {
+        headers.Authorization = userToken;
+      }
+      const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
+        headers: headers,
+      });
+      const data = await updatedRes.json();
+      queryClient.setQueryData(["post", "detail", postId, userInfo.isLogin], data);
+    },
+  });
 
-    const res = await fetch(constant.apiUrl + "api/main/new/vote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify({
-        postId,
-        voteId: postId,
-        userId: userInfo.userId,
-        selectedOption: userSelectedOption,
-      }),
-    });
-
-    if (!res.ok) {
-      throw new Error("Error");
-    }
-
-    if (userInfo.isLogin === 1 && userToken !== null) {
-      headers.Authorization = userToken;
-    }
-
-    const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
-      headers: headers,
-    });
-
-    const updatedData = await updatedRes.json();
-
-    setPostData(updatedData as IPostData);
+  const handleVote = () => {
+    doVote.mutate();
   };
 
   const UpVoted = postData.option1Count > postData.option2Count;

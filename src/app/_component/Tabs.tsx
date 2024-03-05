@@ -58,12 +58,9 @@ function Profiletab({ userId }: { userId: number }) {
   const profileTab = Number(searchParams.get("profileTab"));
   const { data } = useQueryGetProfilePostData(userId);
   const [activeTab, setActiveTab] = useState<number>(0);
-  // const totalCount = allData.length;
-  // const writtenCount = userPosts?.length || 0;
-  // const votedCount = votedPosts?.length || 0;
-  const totalCount = data?.totalPosts || 0;
-  const writtenCount = 0;
-  const votedCount = 0;
+  const totalCount = data?.totalCount || 0;
+  const writtenCount = data?.votedCount || 0;
+  const votedCount = data?.writedCount || 0;
 
   const tabs = [
     { label: "전체", count: totalCount, value: 1 },

@@ -38,7 +38,7 @@
 
 .contents_container {
   height: 135px;
-  padding: 10px 0;
+  margin: 10px 0;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;

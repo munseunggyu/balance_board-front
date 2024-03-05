@@ -9,6 +9,7 @@ import ModalPortal from "@/app/_component/ModalPortal";
 import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 
+import { getProfilePostData } from "../_lib/getProfilePostData";
 import { IProfilePost } from "../page";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import styles from "./profilePostCard.module.css";
@@ -35,7 +36,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
         }),
       });
     },
-    onSuccess() {
+    async onSuccess() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
 
@@ -71,6 +72,8 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
           }
         }
       });
+      const totalCntData = await getProfilePostData(userId, 1);
+      queryClient.setQueryData(["profile", "post", userId, 1, "count"], totalCntData);
     },
   });
 
