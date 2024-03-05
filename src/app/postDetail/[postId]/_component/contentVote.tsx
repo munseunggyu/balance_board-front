@@ -11,8 +11,6 @@ import { constant } from "@/utils/constant";
 import { IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
 
-let userToken: string | null = null;
-
 interface IContentVoteProps {
   postData: IPostData;
   postId: number;
@@ -28,18 +26,26 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
     setUserSelectedOption(option);
   };
 
+  console.log(postId);
+
   const handleVote = async () => {
-    userToken = localStorage.getItem("token");
+    const userToken = localStorage.getItem("token");
+    const headers: { [key: string]: string } = {};
+
+    if (userToken) {
+      headers.Authorization = userToken;
+    }
+
     const res = await fetch(constant.apiUrl + "api/main/new/vote", {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
+        ...headers,
       },
       body: JSON.stringify({
-        postId: postData.postId,
+        postId,
+        voteId: postId,
         userId: userInfo.userId,
-        voteId: postData.postId,
         selectedOption: userSelectedOption,
       }),
     });
@@ -48,9 +54,8 @@ export default function ContentVote({ postData, postId, setPostData }: IContentV
       throw new Error("Error");
     }
 
-    const headers: { [key: string]: string } = {};
-    if (userInfo.isLogin === 1) {
-      headers.Authorization = `${userToken}`;
+    if (userInfo.isLogin === 1 && userToken !== null) {
+      headers.Authorization = userToken;
     }
 
     const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {

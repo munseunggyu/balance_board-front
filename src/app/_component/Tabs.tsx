@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { useQueryGetProfileData } from "../profile/[userId]/_hook/useQueryGetProfileData";
+import { useQueryGetProfilePostData } from "../profile/[userId]/_hook/useQueryGetProfilePostData";
 import styles from "./tabs.module.css";
 
 function Maintab() {
@@ -54,32 +54,53 @@ function Maintab() {
 }
 
 function Profiletab({ userId }: { userId: number }) {
-  const { allData, userPosts, votedPosts } = useQueryGetProfileData(userId);
+  const searchParams = useSearchParams();
+  const profileTab = Number(searchParams.get("profileTab"));
+  const { data } = useQueryGetProfilePostData(userId);
   const [activeTab, setActiveTab] = useState<number>(0);
-  const totalCount = allData.length;
-  const writtenCount = userPosts?.length || 0;
-  const votedCount = votedPosts?.length || 0;
+  // const totalCount = allData.length;
+  // const writtenCount = userPosts?.length || 0;
+  // const votedCount = votedPosts?.length || 0;
+  const totalCount = data?.totalPosts || 0;
+  const writtenCount = 0;
+  const votedCount = 0;
 
   const tabs = [
-    { label: "전체", count: totalCount },
-    { label: "투표한 글", count: votedCount },
-    { label: "작성한 글", count: writtenCount },
+    { label: "전체", count: totalCount, value: 1 },
+    { label: "작성한 글", count: votedCount, value: 2 },
+    { label: "투표한 글", count: writtenCount, value: 3 },
   ];
+
+  useEffect(() => {
+    setActiveTab(() => {
+      if (profileTab === 1) {
+        return 1;
+      } else if (profileTab === 2) {
+        return 2;
+      } else if (profileTab === 3) {
+        return 3;
+      }
+      return 1;
+    });
+  }, [profileTab]);
 
   return (
     <div className={styles.tabsProfileContainer}>
       <div className={styles.tabsContainer}>
         {tabs.map((profileTab, index) => (
-          <div
+          <Link
+            href={{
+              query: { profileTab: profileTab.value },
+            }}
+            replace
             key={index}
-            className={`${styles.profileTab} ${activeTab === index ? styles.active : ""}`}
-            onClick={() => setActiveTab(index)}
+            className={`${styles.profileTab} ${activeTab === index + 1 ? styles.active : ""}`}
           >
             <div className={styles.tabContent}>
               <div className={styles.tabLabel}>{profileTab.label}</div>
               <div className={styles.tabCount}>{profileTab.count}</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className={`${styles.tabProfileBorderBottom} ${activeTab !== undefined ? styles.active : ""}`}></div>

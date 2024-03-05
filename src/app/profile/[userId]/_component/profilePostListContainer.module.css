@@ -1,5 +1,6 @@
 .post_ul {
   margin-top: 6px;
+  background-color: var(--background-100);
 }
 .post_list {
   padding: 0 20px;

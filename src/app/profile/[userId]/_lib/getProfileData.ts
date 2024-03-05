@@ -10,6 +10,5 @@ export const getProfileData = async (userId: number) => {
   });
 
   const profileData = await res.json();
-  console.log("profileData", profileData);
   return profileData;
 };

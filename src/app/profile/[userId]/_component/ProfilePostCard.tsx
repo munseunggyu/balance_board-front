@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import React from "react";
 
-import { IProfilePostData } from "../page";
+import { IProfilePost } from "../page";
 import DelBtn from "./DelBtn";
 import styles from "./profilePostCard.module.css";
 
@@ -16,15 +16,15 @@ export default function ProfilePostCard({
   profilePostData,
   userId,
 }: {
-  profilePostData: IProfilePostData;
+  profilePostData: IProfilePost;
   userId: number;
 }) {
   return (
     <article className={styles.profile_post_card_container}>
       <div className={styles.chip_container}>
-        {profilePostData?.isVoted && <span className={styles.voted_chip}>투표</span>}
-        {profilePostData?.isWrite && <span className={styles.write_chip}>작성</span>}
-        <DelBtn userId={userId} postId={profilePostData.postId} />
+        {profilePostData?.voted && <span className={styles.voted_chip}>투표</span>}
+        {profilePostData?.writed && <span className={styles.write_chip}>작성</span>}
+        {profilePostData?.writed && <DelBtn userId={userId} postId={profilePostData.postId} />}
       </div>
       <h4 className={styles.title}>{profilePostData.title}</h4>
       <Link href={`/postDetail/${profilePostData.postId}`}>
