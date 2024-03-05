@@ -17,6 +17,9 @@
   align-items: center;
   text-align: center;
 }
+.usermageContainer {
+  margin-right: 4px;
+}
 
 .userImageContainer {
   margin-right: 10px;
