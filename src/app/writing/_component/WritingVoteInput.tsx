@@ -12,7 +12,7 @@ export default function WritingVoteInput({ onVoteData }: IOptionInputProps) {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleOptionInput = (e: React.ChangeEvent<HTMLInputElement>, option: "option1" | "option2") => {
-    const value = e.target.value;
+    const value = e.target.value.trimStart();
     if (option === "option1") {
       setOption1(value);
     } else {

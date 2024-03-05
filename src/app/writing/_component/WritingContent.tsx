@@ -21,9 +21,9 @@ export default function WritingContent({ onContentData }: IWritingContentProps) 
     setIsFilled(false);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
-    onContentData(e.target.value);
+    onContentData(e.target.value.trimStart());
   };
 
   const placeholderText = "내용을 입력해주세요.\n부적절한 글일 경우 커뮤니티 이용 규칙에 따라 삭제 조치될 수 있습니다.";
@@ -34,7 +34,7 @@ export default function WritingContent({ onContentData }: IWritingContentProps) 
         <textarea
           placeholder={placeholderText}
           value={title}
-          onChange={handleTitleChange}
+          onChange={handleContentChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={styles.contentInput}
