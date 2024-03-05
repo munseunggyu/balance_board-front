@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { useUserDataContext } from "@/context/AuthContext";
 import { formatDay, formatTime } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
 
@@ -26,6 +27,7 @@ interface CommentProps {
 }
 
 function Comment({ comment }: CommentProps) {
+  const { userInfo } = useUserDataContext();
   return (
     <div className={styles.commentContainer}>
       <div className={styles.commentorInfo}>
@@ -36,7 +38,9 @@ function Comment({ comment }: CommentProps) {
         <div className={styles.verticalLine}></div>
         <div className={styles.commentDay}>{formatDay(comment.created)}</div>
         <div className={styles.commentTime}>{formatTime(comment.created)}</div>
-        <button className={styles.comment_del}>삭제</button>
+        {userInfo.isLogin === 1 && userInfo.userId === comment.commentId && (
+          <button className={styles.comment_del}>삭제</button>
+        )}
       </div>
       <div className={styles.userComment}>{comment.content}</div>
       <div className={styles.commentSeperator}></div>
