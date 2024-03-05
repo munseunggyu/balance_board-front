@@ -6,8 +6,10 @@ interface MoreCommentsButtonProps {
 
 export default function MoreCommentsButton({ onClick }: MoreCommentsButtonProps) {
   return (
-    <button className={styles.moreCommentButton} onClick={onClick}>
-      + 댓글 더보기
-    </button>
+    <div className={styles.moreCommentButtonContainer}>
+      <button className={styles.moreCommentButton} onClick={onClick}>
+        + 댓글 더보기
+      </button>
+    </div>
   );
 }
