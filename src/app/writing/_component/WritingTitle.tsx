@@ -37,7 +37,7 @@ export default function WritingTitle({ onTitleData }: IWritingTitleProps) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={styles.titleInput}
-          maxLength={30}
+          maxLength={29}
         />
         <div className={styles.titleLengthContainer}>
           <div className={styles.titleLength}>{title.length}</div>

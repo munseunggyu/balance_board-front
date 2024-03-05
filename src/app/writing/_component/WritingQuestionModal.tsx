@@ -41,7 +41,7 @@ export default function WritingQuestionModal({ modalForm, handleCloseModal }: Qu
       <div className={styles.modalContent}>
         <div className={styles.questionModalContent}>
           <p>{question}</p>
-          <Image src={userImgUrl(imageUrl)} alt="Tear-face" width={24} height={24} />
+          <Image src={userImgUrl(imageUrl)} alt="유저 이미지" width={24} height={24} />
         </div>
         <div className={styles.signModalContent}>
           <p>{sign}</p>

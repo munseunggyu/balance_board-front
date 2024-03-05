@@ -114,15 +114,11 @@
 }
 
 .questionModal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 290px;
   height: 236px;
   background-color: var(--body-200);
   border-radius: 26px;
-  z-index: 999;
+  box-shadow: 0 3px 6px 0 rgba(204, 204, 204, 0.25);
 }
 
 .modalContent {
@@ -140,11 +136,15 @@
   color: var(--title-400);
 }
 
+.questionModalContent p {
+  margin-right: 2px;
+}
+
 .signModalContent {
+  margin-top: 4px;
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
-  padding-top: 4px;
   color: var(--body-950);
 }
 
@@ -156,19 +156,21 @@
   height: 52px;
   border-radius: 6px;
   background-color: var(--main-primary-500);
-  color: var(--main-secondary-100);
+  color: var(--body-100);
+  box-shadow: 0 3px 6px 0 rgba(242, 242, 242, 0.1);
 }
 
 .cancelButton {
   margin-top: 5px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 24px;
   width: 250px;
   height: 52px;
   border-radius: 6px;
   background-color: var(--body-200);
   color: var(--main-primary-500);
+  box-shadow: 0 3px 6px 0 rgba(242, 242, 242, 0.1);
 }
 
 .DeleteModal {
