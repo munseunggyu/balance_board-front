@@ -22,21 +22,25 @@ export default function Page() {
 
   return (
     <>
-      <SettingNav title={"Setting"} />
-      <div className={styles.settingContainer}>
-        <div className={styles.changeBirthContainer}>
-          <div className={styles.changeBirth}>
-            <span>출생 연도 변경</span>
+      {userInfo.isLogin === 1 ? (
+        <>
+          <SettingNav title={"Setting"} />
+          <div className={styles.settingContainer}>
+            <div className={styles.changeBirthContainer}>
+              <div className={styles.changeBirth}>
+                <span>출생 연도 변경</span>
+              </div>
+              <Image src={directon_right} alt="출생 연도 변경 이미지" width={24} height={24} />
+            </div>
+            <div className={styles.userActionsContainer}>
+              <button className={styles.logoutBtn} onClick={handleLogoutBtn}>
+                로그아웃
+              </button>
+              <button className={styles.deleteBtn}>회원탈퇴</button>
+            </div>
           </div>
-          <Image src={directon_right} alt="출생 연도 변경 이미지" width={24} height={24} />
-        </div>
-        <div className={styles.userActionsContainer}>
-          <button className={styles.logoutBtn} onClick={handleLogoutBtn}>
-            로그아웃
-          </button>
-          <button className={styles.deleteBtn}>회원탈퇴</button>
-        </div>
-      </div>
+        </>
+      ) : null}
     </>
   );
 }
