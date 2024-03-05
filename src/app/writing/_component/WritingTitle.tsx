@@ -23,7 +23,7 @@ export default function WritingTitle({ onTitleData }: IWritingTitleProps) {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     setIsFilled(e.target.value.length > 0);
-    onTitleData(e.target.value);
+    onTitleData(e.target.value.trimStart());
   };
 
   return (
@@ -37,7 +37,7 @@ export default function WritingTitle({ onTitleData }: IWritingTitleProps) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={styles.titleInput}
-          maxLength={30}
+          maxLength={29}
         />
         <div className={styles.titleLengthContainer}>
           <div className={styles.titleLength}>{title.length}</div>
