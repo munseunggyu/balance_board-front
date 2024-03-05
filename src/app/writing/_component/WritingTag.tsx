@@ -14,11 +14,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   /** inputRefs가 배열의 마지막 요소고, 정상적으로 존재한다면 포커스 */
 
   useEffect(() => {
-    inputRefs.current.forEach((inputRef, index) => {
-      if (index === inputRefs.current.length - 1 && inputRef) {
-        inputRef.focus();
-      }
-    });
+    inputRefs.current[inputRefs.current.length - 1]?.focus();
   }, [tags]);
 
   /** 태그 글자 6글자 이내처리 */
