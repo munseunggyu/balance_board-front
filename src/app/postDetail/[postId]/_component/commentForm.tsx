@@ -40,6 +40,7 @@ export default function CommentForm({
         )}
       </div>
       <input
+        className={styles.commentInput}
         placeholder="댓글 달기..."
         value={newComment}
         onChange={(e) => {
