@@ -17,7 +17,7 @@ interface IWritingFormProps {
   content: string | null;
   option1: string | null;
   option2: string | null;
-  tags: string[];
+  tags: string[] | [];
 }
 
 export default function WritingForm({ selectedCategory, title, content, option1, option2, tags }: IWritingFormProps) {
@@ -27,6 +27,8 @@ export default function WritingForm({ selectedCategory, title, content, option1,
 
   const handleCommentSubmit = async () => {
     const category = selectedCategory === "정치・경제" ? "정치_경제" : selectedCategory;
+    const isTagEmpty = tags.some((tag) => tag === "");
+    const isTag: string[] = isTagEmpty ? [] : tags;
     try {
       const res = await fetch(constant.apiUrl + `api/main/new/post`, {
         method: "POST",
@@ -38,13 +40,15 @@ export default function WritingForm({ selectedCategory, title, content, option1,
           title: title,
           category: category,
           content: content,
-          tags: tags,
+          tags: isTag,
           option1: option1,
           option2: option2,
         }),
       });
+
       handleOpenMoal();
       console.log(res.json());
+      console.log(isTag);
     } catch (error) {
       console.error(error);
     }
