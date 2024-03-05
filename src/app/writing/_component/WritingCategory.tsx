@@ -27,7 +27,9 @@ export default function WritingCategory({ selectedOption, OnSelectedOption }: IW
   return (
     <div className={styles.dropdownContainer}>
       <div className={`${styles.dropDownBox} ${isOpen ? styles.clicked : ""}`} onClick={toggleDropdown}>
-        <span>{selectedOption ? selectedOption : "카테고리를 선택해주세요."}</span>
+        <span className={selectedOption ? `${styles.selectedCategory}` : ""}>
+          {selectedOption ? selectedOption : "카테고리를 선택해주세요."}
+        </span>
         <Image src={isOpen ? direction_green_up : direction_down} alt="화살표 아이콘" width={24} height={24} />
       </div>
       {isOpen && (
