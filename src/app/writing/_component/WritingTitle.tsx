@@ -23,7 +23,7 @@ export default function WritingTitle({ onTitleData }: IWritingTitleProps) {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     setIsFilled(e.target.value.length > 0);
-    onTitleData(e.target.value);
+    onTitleData(e.target.value.trimStart());
   };
 
   return (

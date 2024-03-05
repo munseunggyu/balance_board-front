@@ -14,11 +14,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   /** inputRefs가 배열의 마지막 요소고, 정상적으로 존재한다면 포커스 */
 
   useEffect(() => {
-    inputRefs.current.forEach((inputRef, index) => {
-      if (index === inputRefs.current.length - 1 && inputRef) {
-        inputRef.focus();
-      }
-    });
+    inputRefs.current[inputRefs.current.length - 1]?.focus();
   }, [tags]);
 
   /** 태그 글자 6글자 이내처리 */
@@ -38,7 +34,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
 
   /** Enter를 쳤을 때 공백이 아니고, index가 마지막 요소고, tags가 5개 미만일 때 빈 문자열 추가 */
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
       e.preventDefault();
       const trimTag = tags[index].trim();
 
@@ -47,6 +43,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
       }
     }
   };
+
   /** 포커싱 잃었을 떄 데이터가 없으면 input 삭제 */
   const handleInputBlur = (index: number) => {
     if (tags[index].trim() === "" && tags.length > 1) {
