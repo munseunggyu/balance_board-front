@@ -1,5 +1,7 @@
+import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
+import x_circle from "../../../../public/X-circle-sm.svg";
 import styles from "./writingtag.module.css";
 
 interface IWritingTagProps {
@@ -11,8 +13,6 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  /** inputRefs가 배열의 마지막 요소고, 정상적으로 존재한다면 포커스 */
-
   useEffect(() => {
     inputRefs.current.forEach((inputRef, index) => {
       if (index === inputRefs.current.length - 1 && inputRef) {
@@ -21,7 +21,6 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
     });
   }, [tags]);
 
-  /** 태그 글자 6글자 이내처리 */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
     const trimdValue = value.replace(/\s/g, "");
@@ -36,7 +35,6 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
     }
   };
 
-  /** Enter를 쳤을 때 공백이 아니고, index가 마지막 요소고, tags가 5개 미만일 때 빈 문자열 추가 */
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
       e.preventDefault();
@@ -44,11 +42,14 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
 
       if (trimTag !== "" && index === tags.length - 1 && tags.length < 5) {
         setTags([...tags, ""]);
+        // 추가된 태그에 포커스를 설정합니다.
+        setTimeout(() => {
+          inputRefs.current[index + 1]?.focus();
+        }, 0);
       }
     }
   };
 
-  /** 포커싱 잃었을 떄 데이터가 없으면 input 삭제 */
   const handleInputBlur = (index: number) => {
     if (tags[index].trim() === "" && tags.length > 1) {
       const newTags = [...tags];
@@ -57,9 +58,22 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
     }
   };
 
+  const handleTagRemove = (index: number) => {
+    const remainingTags = tags.filter((_, idx) => idx !== index);
+    if (remainingTags.length === 0) {
+      setTags([""]);
+    } else {
+      setTags(remainingTags);
+      // 태그를 삭제한 후 이전 태그에 포커스를 설정합니다.
+      setTimeout(() => {
+        inputRefs.current[index - 1]?.focus();
+      }, 0);
+    }
+  };
+
   const calculateInputWidth = (value: string) => {
     const minWidth = 80;
-    const inputPadding = 12;
+    const inputPadding = 18;
     const inputMinWidth = 12;
 
     const width = value ? value.length * inputMinWidth + inputPadding * 2 : minWidth;
@@ -79,7 +93,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
       </div>
       <div className={styles.taginputContainer}>
         {tags.map((tag, index) => (
-          <span key={index}>
+          <span key={index} className={styles.tagAddContainer}>
             <input
               className={styles.tagAdd}
               placeholder={"# 태그추가"}
@@ -92,10 +106,20 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
               }}
               style={{ width: `${calculateInputWidth(tag)}px` }}
             />
-            {errorMessage && index === tags.length - 1 && <div className={styles.errorMessage}>{errorMessage}</div>}
+            {tag.trim() !== "" && (
+              <Image
+                src={x_circle}
+                alt="태그 삭제 버튼"
+                width={18}
+                height={18}
+                className={styles.tagRemoveImg}
+                onClick={() => handleTagRemove(index)}
+              />
+            )}
           </span>
         ))}
       </div>
+      <div className={styles.errorMessage}>{errorMessage}</div>
     </div>
   );
 }
