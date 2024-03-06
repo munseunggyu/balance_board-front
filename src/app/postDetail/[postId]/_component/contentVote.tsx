@@ -157,7 +157,7 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
 
       <div className={styles.sumVoterContainer}>
         <div className={styles.sumVoterImageContainer}>
-          <Image src="/participate-sm.png" alt="참여자 이미지" width={18} height={18} />
+          <Image src="/participate-sm.svg" alt="참여자 이미지" width={18} height={18} />
         </div>
         <div className={styles.sumVoter}>
           <span>참여 {SumVoted}</span>
