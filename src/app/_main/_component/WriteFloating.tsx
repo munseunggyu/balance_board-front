@@ -16,7 +16,7 @@ export default function WriteFloating() {
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const handleClick = () => {
-    if (userInfo.isLogin !== 1) {
+    if (userInfo.isLogin === 1) {
       router.push("/writing");
     } else {
       handleOpenMoal();
