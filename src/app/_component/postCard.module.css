@@ -117,6 +117,9 @@
   font-weight: 500;
   line-height: 150%; /* 18px */
 }
+.chat_list:not(:last-child) {
+  margin-bottom: 2px;
+}
 .chat_contents {
   color: var(--body-950);
   margin-left: 12px;
