@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Suspense } from "react";
 
 import { AuthContextProvider } from "@/context/AuthContext";
@@ -20,6 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script src="https://cdn.swygbro.com/public/widget/swyg-widget.js" />
       <body>
         <RQProvider>
           <AuthContextProvider>
