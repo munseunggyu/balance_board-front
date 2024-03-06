@@ -1,8 +1,11 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+
+import NotContent from "@/app/_component/NotContent";
 
 import { getProfilePostData } from "../_lib/getProfilePostData";
 import { IProfilePost } from "../page";
@@ -22,7 +25,6 @@ export default function ProfilePostListContainer({ userId }: { userId: number })
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      console.log("allPages", allPages);
       if (allPages[allPages.length - 1].length / 10 < 1) {
         return undefined;
       }
@@ -45,20 +47,31 @@ export default function ProfilePostListContainer({ userId }: { userId: number })
   }, []);
   return (
     <div>
-      <ul className={styles.post_ul}>
-        {mounted &&
-          data?.pages &&
-          data.pages.map((v, i) => (
-            <Fragment key={i}>
-              {v.map((post) => (
-                <li key={`${post.postId} - ${i}`} className={styles.post_list}>
-                  <ProfilePostCard profilePostData={post} userId={userId} />
-                </li>
+      {data?.pages && data?.pages[0].length > 0 ? (
+        <>
+          {data?.pages.length}
+          <ul className={styles.post_ul}>
+            {mounted &&
+              data?.pages &&
+              data.pages.map((v, i) => (
+                <Fragment key={i}>
+                  {v.map((post) => (
+                    <li key={`${post.postId} - ${i}`} className={styles.post_list}>
+                      <ProfilePostCard profilePostData={post} userId={userId} />
+                    </li>
+                  ))}
+                </Fragment>
               ))}
-            </Fragment>
-          ))}
-      </ul>
-      <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
+          </ul>
+          <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
+        </>
+      ) : (
+        <NotContent title="활동한 내역이 없어요!" comment1="궁금한 것을 질문하고" comment2="투표에 참여해보세요">
+          <Link className={styles.no_content_btn} href={"/"}>
+            둘러보기
+          </Link>
+        </NotContent>
+      )}
     </div>
   );
 }
