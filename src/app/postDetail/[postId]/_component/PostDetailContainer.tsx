@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
+import NotContent from "@/app/_component/NotContent";
 import { useUserDataContext } from "@/context/AuthContext";
 
 import { useGetComments } from "../_hook/useGetComments";
@@ -42,7 +43,17 @@ export default function PostDetailContainer({ postId }: { postId: number }) {
               <span>{commentTotalCnt}</span>
             </div>
             <CommentForm postData={postData} userImage={userInfo.imageType} />
-            <CommentList postId={postData.postId} />
+            {commentTotalCnt && commentTotalCnt > 0 ? (
+              <CommentList postId={postData.postId} />
+            ) : (
+              <div className={styles.no_comment_container}>
+                <NotContent
+                  title="아직 댓글이 없어요!"
+                  comment1="투표에 대한 의견을"
+                  comment2="댓글로 공유해보세요."
+                ></NotContent>
+              </div>
+            )}
           </div>
         </>
       ) : (

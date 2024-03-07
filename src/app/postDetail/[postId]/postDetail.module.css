@@ -335,3 +335,10 @@
   font-weight: 500;
   line-height: 150%; /* 18px */
 }
+
+.no_comment_container {
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+  padding-bottom: 20px;
+}
