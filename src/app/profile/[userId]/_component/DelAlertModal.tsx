@@ -5,9 +5,10 @@ import styles from "./delModal.module.css";
 
 interface IProps {
   handleCloseModal: () => void;
+  title: string;
 }
 
-export default function DelAlertModal({ handleCloseModal }: IProps) {
+export default function DelAlertModal({ handleCloseModal, title }: IProps) {
   const handleStopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -16,7 +17,7 @@ export default function DelAlertModal({ handleCloseModal }: IProps) {
       <div className={styles.contentWrapper}>
         <div className={styles.delConfirmImgContainer}>
           <Image src={checkImg} width={72} height={72} alt="체크 이밎" />
-          <p>게시물을 삭제했어요</p>
+          <p>{title}</p>
         </div>
         <div className={styles.buttonWrapper}>
           <div className={styles.buttonContainer}>

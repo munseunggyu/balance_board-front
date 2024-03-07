@@ -89,7 +89,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
       {openDelConfirmModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseDelConfirmModal}>
-            <DeleteConfirmModal handleDel={handleDel} handleCloseModal={handleCloseDelConfirmModal} />
+            <DeleteConfirmModal target="게시물" handleDel={handleDel} handleCloseModal={handleCloseDelConfirmModal} />
           </ModalContainer>
         </ModalPortal>
       )}

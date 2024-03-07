@@ -19,7 +19,7 @@ export default async function PostDetail({ params }: { params: { postId: number 
   const { postId } = params;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["post", "detail", postId, 0],
+    queryKey: ["post", "detail", Number(postId), 0],
     queryFn: () => {
       return getPostDetailData(postId, null);
     },
