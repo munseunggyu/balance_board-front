@@ -19,6 +19,7 @@ import WriteFloating from "./WriteFloating";
 
 // import styles from './post'
 export default function PostCardList() {
+  console.log("url", process.env.NEXT_PUBLIC_BASE_URL);
   const { userInfo } = useUserDataContext();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
