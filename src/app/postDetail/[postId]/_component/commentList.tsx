@@ -1,24 +1,54 @@
+"use client";
 import Image from "next/image";
+import { Fragment, useEffect, useState } from "react";
 
 import { useUserDataContext } from "@/context/AuthContext";
 import { formatDay, formatTime } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
 
+import { useGetComments } from "../_hook/useGetComments";
 import { IComment } from "../interfaces";
 import styles from "../postDetail.module.css";
+import MoreCommentsButton from "./moreCommentButton";
 
 interface CommentListProps {
-  comments: IComment[];
-  showAllComments: boolean;
+  postId: number;
 }
 
-export default function CommentList({ comments, showAllComments }: CommentListProps) {
+export default function CommentList({ postId }: CommentListProps) {
+  const [mounted, setMounted] = useState(false);
+
+  const { data, fetchNextPage, hasNextPage, isFetching } = useGetComments(postId);
+
+  const hanleMoreComment = () => {
+    void fetchNextPage();
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <div className={styles.commentListContainer}>
-      {showAllComments
-        ? comments.map((comment, index) => <Comment key={index} comment={comment} />)
-        : comments.slice(0, 5).map((comment, index) => <Comment key={index} comment={comment} />)}
-    </div>
+    <ul className={styles.commentListContainer}>
+      {mounted &&
+        data?.pages &&
+        data?.pages.map((v, i) => (
+          <Fragment key={i}>
+            {v.map((comment) => (
+              <li className={styles.card_list} key={comment.commentId}>
+                <Comment comment={comment} />
+              </li>
+            ))}
+          </Fragment>
+        ))}
+      {!isFetching && hasNextPage && (
+        <MoreCommentsButton
+          onClick={() => {
+            hanleMoreComment();
+          }}
+        />
+      )}
+    </ul>
   );
 }
 
@@ -38,7 +68,7 @@ function Comment({ comment }: CommentProps) {
         <div className={styles.verticalLine}></div>
         <div className={styles.commentDay}>{formatDay(comment.created)}</div>
         <div className={styles.commentTime}>{formatTime(comment.created)}</div>
-        {userInfo.isLogin === 1 && userInfo.userId === comment.commentId && (
+        {userInfo.isLogin === 1 && userInfo.userId === comment.userId && (
           <button className={styles.comment_del}>삭제</button>
         )}
       </div>

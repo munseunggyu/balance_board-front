@@ -1,4 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+"use client";
+import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
+import { produce } from "immer";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 
@@ -10,7 +12,7 @@ import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 import { userImgUrl } from "@/utils/userImgUrl";
 
-import { IPostData } from "../interfaces";
+import { IComment, IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
 
 interface ICommentFormProps {
@@ -38,20 +40,34 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
           content: newComment,
         }),
       });
-      return await res.json();
+      const data: IComment = await res.json();
+      return data;
     },
-    async onSuccess() {
+    onSuccess(response) {
       const userToken = localStorage.getItem("token");
       const headers: { [key: string]: string } = {};
 
       if (userToken) {
         headers.Authorization = userToken;
       }
-      const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postData.postId}`, {
-        headers: headers,
+      const queryCache = queryClient.getQueryCache();
+      const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      const filterQuerys = queryKeys.filter((v) => {
+        if (v[0] === "post" && v[1] === postData.postId && v[2] === "comments") {
+          return true;
+        }
+        return false;
       });
-      const data = await updatedRes.json();
-      queryClient.setQueryData(["post", "detail", postData.postId, userInfo.isLogin], data);
+      filterQuerys.forEach((queryKey) => {
+        const value: IComment | InfiniteData<IComment[]> | undefined = queryClient.getQueryData(queryKey);
+        if (value && "pages" in value) {
+          const data = produce(value, (draftData) => {
+            draftData.pages[0].unshift(response);
+          });
+          queryClient.setQueryData(["post", postData.postId, "comments"], data);
+        }
+      });
+
       setNewComment("");
       setIsComment(false);
     },
