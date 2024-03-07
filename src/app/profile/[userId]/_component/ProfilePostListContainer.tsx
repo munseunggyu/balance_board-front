@@ -49,7 +49,6 @@ export default function ProfilePostListContainer({ userId }: { userId: number })
     <div>
       {data?.pages && data?.pages[0].length > 0 ? (
         <>
-          {data?.pages.length}
           <ul className={styles.post_ul}>
             {mounted &&
               data?.pages &&
