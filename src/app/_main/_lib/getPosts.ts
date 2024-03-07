@@ -1,11 +1,20 @@
+import { IAuth } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
 import { constant } from "@/utils/constant";
 
-export const getPostList = async ({ pageParam, isLogin }: { pageParam: number; isLogin: number }) => {
-  const token = localStorage.getItem("token");
+export const getPostList = async ({
+  pageParam,
+  userInfo,
+  size = 10,
+}: {
+  pageParam: number;
+  userInfo: IAuth;
+  size?: number;
+}) => {
   let res;
-  if (isLogin === 1) {
-    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=10`, {
+  if (userInfo.isLogin === 1) {
+    const token = userInfo?.jwtToken.accessToken;
+    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=${size}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -14,7 +23,7 @@ export const getPostList = async ({ pageParam, isLogin }: { pageParam: number; i
       },
     });
   } else {
-    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=10`, {
+    res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=${size}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -31,19 +40,19 @@ export const getPostList = async ({ pageParam, isLogin }: { pageParam: number; i
 export const getCategoryPostList = async ({
   pageParam,
   category,
-  isLogin,
+  userInfo,
 }: {
   pageParam: number;
   category: string;
-  isLogin: number;
+  userInfo: IAuth;
 }) => {
-  const token = localStorage.getItem("token");
   let categoryParams = category;
   if (category === "정치・경제") {
     categoryParams = "정치_경제";
   }
   let res;
-  if (isLogin === 1) {
+  if (userInfo.isLogin === 1) {
+    const token = userInfo?.jwtToken.accessToken;
     res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
@@ -67,14 +76,11 @@ export const getCategoryPostList = async ({
 };
 
 export const getOnePost = async (postId: number) => {
-  const token = localStorage.getItem("token");
-
   const res = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `${token}`,
     },
   });
 

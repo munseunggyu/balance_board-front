@@ -45,9 +45,9 @@ export default function PostCardList() {
     queryFn: async ({ pageParam }) => {
       const page = pageParam as number;
       if (!tab || tab === "전체") {
-        return await getPostList({ pageParam: page, isLogin: userInfo.isLogin });
+        return await getPostList({ pageParam: page, userInfo: userInfo });
       } else {
-        return await getCategoryPostList({ pageParam: page, category: tab, isLogin: userInfo.isLogin });
+        return await getCategoryPostList({ pageParam: page, category: tab, userInfo: userInfo });
       }
     },
     initialPageParam: 1,
