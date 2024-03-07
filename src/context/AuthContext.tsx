@@ -7,7 +7,7 @@ interface IJwtToken {
 }
 
 // 초기 데이터 타입
-interface InitialData {
+export interface IAuth {
   email: string;
   jwtToken: IJwtToken;
   nickname: string;
@@ -17,7 +17,7 @@ interface InitialData {
 }
 
 // 초기 데이터
-const initialData: InitialData = {
+const initialData: IAuth = {
   email: "",
   jwtToken: {
     accessToken: "",
@@ -31,8 +31,8 @@ const initialData: InitialData = {
 
 // Context의 타입
 interface DataContextType {
-  userInfo: InitialData;
-  setUserData: (payload: InitialData) => void;
+  userInfo: IAuth;
+  setUserData: (payload: IAuth) => void;
 }
 
 // createContext를 사용하여 새로운 컨텍스트를 생성
@@ -49,9 +49,9 @@ export const useUserDataContext = () => {
 
 // DataContext의 Provider를 만드는 컴포넌트
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [userInfo, setUserInfo] = useState<InitialData>(initialData);
+  const [userInfo, setUserInfo] = useState<IAuth>(initialData);
 
-  const setUserData = (payload: InitialData) => {
+  const setUserData = (payload: IAuth) => {
     setUserInfo(payload);
   };
 
