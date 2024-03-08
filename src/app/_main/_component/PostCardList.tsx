@@ -51,9 +51,9 @@ export default function PostCardList() {
         return await getCategoryPostList({ pageParam: page, category: tab, userInfo: userInfo });
       }
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      if (allPages[allPages.length - 1].length / 10 < 1) {
+      if (allPages[allPages.length - 1].length / 20 < 1) {
         return undefined;
       }
       return allPages.length + 1;

@@ -13,7 +13,7 @@ import ProfilePostCard from "./ProfilePostCard";
 import styles from "./profilePostListContainer.module.css";
 export default function ProfilePostListContainer({ userId }: { userId: number }) {
   const searchParams = useSearchParams();
-  const profileTab = Number(searchParams.get("profileTab")) || 1;
+  const profileTab = Number(searchParams.get("profileTab")) || 0;
   const [mounted, setMounted] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery<IProfilePost[], Error>({
@@ -23,9 +23,9 @@ export default function ProfilePostListContainer({ userId }: { userId: number })
       const hey = await getProfilePostData(userId, Number(profileTab), page);
       return hey.profilePosts;
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      if (allPages[allPages.length - 1].length / 10 < 1) {
+      if (allPages[allPages.length - 1].length / 20 < 1) {
         return undefined;
       }
       return allPages.length + 1;
