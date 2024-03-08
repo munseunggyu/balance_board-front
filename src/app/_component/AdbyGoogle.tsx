@@ -22,7 +22,6 @@ export default function AdbyGoogle() {
         crossOrigin="anonymous"
         onLoad={AdInit}
       ></Script>
-      <div>ge</div>
       <ins className="adsbygoogle" data-ad-client="ca-pub-1919598055512436" data-ad-slot="1678485541"></ins>
     </>
   );
