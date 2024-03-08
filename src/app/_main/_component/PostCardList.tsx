@@ -1,10 +1,9 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-import JoinCompleteModal from "@/app/_component/JoinCompleteModal";
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
@@ -19,17 +18,8 @@ import WriteFloating from "./WriteFloating";
 
 // import styles from './post'
 export default function PostCardList() {
-  console.log("url", process.env.NEXT_PUBLIC_BASE_URL);
   const { userInfo } = useUserDataContext();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
-
-  const {
-    openModal: openJoinModal,
-    handleOpenMoal: handleOpenJoinMoal,
-    handleCloseModal: handleCloseJoinModal,
-  } = useModal();
-
-  const router = useRouter();
 
   const openLoginModal = () => {
     if (userInfo.isLogin !== 1) {
@@ -39,7 +29,6 @@ export default function PostCardList() {
 
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
-  const firstJoin = searchParams.get("join");
 
   const { data, fetchNextPage, hasNextPage, isFetching, isPending } = useInfiniteQuery<IPost[], Error>({
     queryKey: ["posts", "all", tab, userInfo.isLogin],
@@ -74,10 +63,6 @@ export default function PostCardList() {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
   useEffect(() => {
-    if (firstJoin) {
-      router.replace("/");
-      handleOpenJoinMoal();
-    }
     setMounted(true);
   }, []);
 
@@ -103,13 +88,7 @@ export default function PostCardList() {
       </ul>
       <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
       <WriteFloating />
-      {openJoinModal && (
-        <ModalPortal>
-          <ModalContainer handleCloseModal={handleCloseJoinModal}>
-            <JoinCompleteModal handleCloseModal={handleCloseJoinModal} />
-          </ModalContainer>
-        </ModalPortal>
-      )}
+
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>
