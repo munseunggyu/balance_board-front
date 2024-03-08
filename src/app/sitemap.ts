@@ -17,14 +17,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     isLogin: 0,
     imageType: 1,
   };
-  const postList: IPost[] = await getPostList({ pageParam: 1, userInfo: user, size: 100 });
+  const postList: IPost[] = await getPostList({ pageParam: 0, userInfo: user, size: 100 });
 
   const postEntries: MetadataRoute.Sitemap = postList.map((v) => ({
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/postDetail/${v.postId}`,
+    url: `https://balanceboard.swygbro.com/postDetail/${v.postId}`,
   }));
   return [
     {
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+      url: `https://balanceboard.swygbro.com`,
       lastModified: new Date(),
     },
     ...postEntries,
