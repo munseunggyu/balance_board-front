@@ -42,7 +42,6 @@ textarea {
   display: inline-block;
   width: 320px;
   height: 50px;
-  background-color: aliceblue;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
