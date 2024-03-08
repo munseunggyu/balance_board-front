@@ -3,13 +3,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Suspense } from "react";
-import { BarLoader } from "react-spinners";
 
 import { AuthContextProvider } from "@/context/AuthContext";
 
+import Loading from "./_component/Loading";
 import RQProvider from "./_component/RQProvider";
 import TokenLoginComponent from "./_component/TokenLoginComponent";
-import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "밸런스 보드",
@@ -27,13 +26,7 @@ export default function RootLayout({
       <body>
         <RQProvider>
           <AuthContextProvider>
-            <Suspense
-              fallback={
-                <div className={styles.spinnerWrapper}>
-                  <BarLoader color="#36d7b7" />
-                </div>
-              }
-            >
+            <Suspense fallback={<Loading />}>
               <TokenLoginComponent />
               <div className="root_container">{children}</div>
             </Suspense>
