@@ -11,9 +11,9 @@ export const useGetComments = (postId: number) => {
 
       return await getCommentList(postId, page);
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (_, allPages) => {
-      if (allPages[allPages.length - 1].length / 10 < 1) {
+      if (allPages[allPages.length - 1].length / 20 < 1) {
         return undefined;
       }
       return allPages.length + 1;

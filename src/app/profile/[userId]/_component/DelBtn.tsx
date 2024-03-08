@@ -72,8 +72,8 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
           }
         }
       });
-      const totalCntData = await getProfilePostData(userId, 1);
-      queryClient.setQueryData(["profile", "post", userId, 1, "count"], totalCntData);
+      const totalCntData = await getProfilePostData(userId, 0);
+      queryClient.setQueryData(["profile", "post", userId, 0, "count"], totalCntData);
     },
   });
 
