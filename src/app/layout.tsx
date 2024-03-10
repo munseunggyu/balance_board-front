@@ -14,6 +14,19 @@ import TokenLoginComponent from "./_component/TokenLoginComponent";
 export const metadata: Metadata = {
   title: "밸런스 보드",
   description: "개인적인 고민부터 사회적인 이슈까지, 세상의 모든 이슈에 투표할 수 있는 투표 특화 커뮤니티 사이트",
+  openGraph: {
+    title: "밸런스 보드",
+    description: "개인적인 고민부터 사회적인 이슈까지, 세상의 모든 이슈에 투표할 수 있는 투표 특화 커뮤니티 사이트",
+    images: [
+      {
+        url: "https://github.com/chabssaltteog/balance_board-front/assets/84954439/ce020331-b423-415e-869f-1ac4e50c0d58",
+        width: 1900,
+        height: 600,
+      },
+    ],
+    siteName: "밸런스 보드",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -24,6 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Script src="https://cdn.swygbro.com/public/widget/swyg-widget.js" />
+      <head>
+        <meta name="google-site-verification" content="1cg1uLRwyJPflC9vo2kwdwz9mICUbYOkF7GJpepiyzU" />
+      </head>
       <body>
         <RQProvider>
           <AuthContextProvider>
