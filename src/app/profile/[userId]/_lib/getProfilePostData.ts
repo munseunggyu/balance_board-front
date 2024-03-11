@@ -2,7 +2,7 @@ import { constant } from "@/utils/constant";
 
 import { IPostPostData } from "../page";
 
-export const getProfilePostData = async (userId: number, listType: number, pageParam: number = 1) => {
+export const getProfilePostData = async (userId: number, listType: number, pageParam: number = 0) => {
   const res = await fetch(constant.apiUrl + `api/user/profile/${userId}/posts?listType=${listType}&page=${pageParam}`, {
     method: "GET",
     headers: {
