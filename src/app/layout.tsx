@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     siteName: "밸런스 보드",
     type: "website",
   },
+  verification: {
+    google: "bB7ciRMYMuHjwrvCu4ZkQbv8j_yB5HCRtNdtzcmISYY",
+  },
 };
 
 export default function RootLayout({
@@ -37,9 +40,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Script src="https://cdn.swygbro.com/public/widget/swyg-widget.js" />
-      <head>
-        <meta name="google-site-verification" content="1cg1uLRwyJPflC9vo2kwdwz9mICUbYOkF7GJpepiyzU" />
-      </head>
       <body>
         <RQProvider>
           <AuthContextProvider>
