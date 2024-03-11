@@ -11,7 +11,6 @@ declare global {
 export default function AdbyGoogle() {
   const AdInit = () => {
     if (window?.adsbygoogle) {
-      console.log(window.adsbygoogle);
       window.adsbygoogle.push({});
     }
   };

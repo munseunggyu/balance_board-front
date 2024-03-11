@@ -61,6 +61,7 @@ function Profiletab({ userId }: { userId: number }) {
   const totalCount = data?.totalCount || 0;
   const writtenCount = data?.votedCount || 0;
   const votedCount = data?.writedCount || 0;
+  console.log("data", data);
 
   const tabs = [
     { label: "전체", count: totalCount, value: 0 },

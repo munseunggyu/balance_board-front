@@ -85,6 +85,5 @@ export const getOnePost = async (postId: number) => {
   });
 
   const data: IPost = await res.json();
-  console.log(data);
   return data;
 };

@@ -49,7 +49,6 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
       filterQuerys.forEach((queryKey) => {
         const value: IProfilePost | InfiniteData<IProfilePost[]> | undefined = queryClient.getQueryData(queryKey);
         if (value && "totalPosts" in value) {
-          console.log("@@");
           const data = produce(value, (draftData) => {
             draftData.totalPosts = (draftData.totalPosts as number) - 1;
           });

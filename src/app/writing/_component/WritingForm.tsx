@@ -47,8 +47,6 @@ export default function WritingForm({ selectedCategory, title, content, option1,
       });
 
       handleOpenMoal();
-      console.log(res.json());
-      console.log(isTag);
     } catch (error) {
       console.error(error);
     }
