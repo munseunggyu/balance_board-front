@@ -258,10 +258,9 @@
 
 .commentListContainer {
   margin-top: 14px;
-}
-
-.commentListContainer {
   padding: 0 20px;
+  padding-bottom: 70px;
+
   background-color: var(--background-100);
 }
 

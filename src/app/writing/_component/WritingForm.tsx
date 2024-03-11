@@ -30,7 +30,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
     const isTagEmpty = tags.some((tag) => tag === "");
     const isTag: string[] = isTagEmpty ? [] : tags;
     try {
-      const res = await fetch(constant.apiUrl + `api/main/new/post`, {
+      await fetch(constant.apiUrl + `api/main/new/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,8 +47,6 @@ export default function WritingForm({ selectedCategory, title, content, option1,
       });
 
       handleOpenMoal();
-      console.log(res.json());
-      console.log(isTag);
     } catch (error) {
       console.error(error);
     }

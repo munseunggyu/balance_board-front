@@ -42,7 +42,6 @@ export default function Writing() {
   const handleTags = (newTags: string[]) => {
     setTags(newTags);
   };
-  console.log(userInfo);
 
   return (
     <div className={styles.writingBox}>

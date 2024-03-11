@@ -14,7 +14,7 @@
 
 .submit_btn {
   position: absolute;
-  bottom: 30px;
+  bottom: 80px;
   width: calc(100% - 40px);
   color: var(--body-950);
   display: flex;
