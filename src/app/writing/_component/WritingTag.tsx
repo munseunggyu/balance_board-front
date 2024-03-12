@@ -36,7 +36,7 @@ export default function WritingTag({ onTagsData }: IWritingTagProps) {
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar" || e.key === "Next" || e.key === "Go") {
       e.preventDefault();
       const trimTag = tags[index].trim();
 
