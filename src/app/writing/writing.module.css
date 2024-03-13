@@ -1,19 +1,17 @@
 .writingBox {
   max-width: 450px;
+  height: 100%;
   background-color: var(--background-100);
-}
-
-.tagContainer {
-  margin-top: 20px;
 }
 
 .seperator {
   margin: 20px;
   border-bottom: 1px solid rgba(238, 238, 238, 0.93);
+  padding-bottom: 70px;
 }
 
 .writingVoteContainer {
-  margin: 0 20px;
+  margin: 10px 20px 0 20px;
 }
 
 .voteItem {

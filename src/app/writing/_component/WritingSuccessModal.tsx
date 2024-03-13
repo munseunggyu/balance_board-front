@@ -21,7 +21,7 @@ export default function WritingSuccessModal({ handleCloseModal }: ISuccessProps)
   return (
     <div className={styles.upLoadModal}>
       <div className={styles.upLoadImageWrapper}>
-        <Image src="/upload-success.png" alt="upload-success-image" width={250} height={184} />
+        <Image src="/upload-success.svg" alt="upload-success-image" width={250} height={184} />
       </div>
       <div className={styles.modalContent}>
         <div className={styles.upLoadMessage}>
