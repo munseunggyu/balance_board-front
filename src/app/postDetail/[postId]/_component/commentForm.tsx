@@ -2,11 +2,12 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { produce } from "immer";
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { ChangeEventHandler, FormEvent, useState } from "react";
 
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
+import TextArea from "@/app/_component/TextArea";
 import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
@@ -26,6 +27,11 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
   const [newComment, setNewComment] = useState<string>("");
   const [isComment, setIsComment] = useState<boolean>(false);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
+
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setNewComment(e.target.value); // 입력 필드의 변경을 감지하여 상태 업데이트
+    setIsComment(!!e.target.value); // 댓글이 들어오는지 확인
+  };
 
   const commentSubmit = useMutation({
     mutationFn: async () => {
@@ -92,16 +98,8 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
           <Image src="/profile-md-test.png" alt="비로그인 유저 이미지" width={24} height={24} />
         )}
       </div>
-      <input
-        className={styles.commentInput}
-        placeholder="댓글 달기..."
-        value={newComment}
-        onChange={(e) => {
-          setNewComment(e.target.value); // 입력 필드의 변경을 감지하여 상태 업데이트
-          setIsComment(!!e.target.value); // 댓글이 들어오는지 확인
-        }}
-        maxLength={50}
-      />
+
+      <TextArea placeholder="댓글 달기..." onChange={onChange} value={newComment} />
       <button className={`${styles.commentReg} ${isComment ? styles.isComment : ""}`}>등록</button>
       {openModal && (
         <ModalPortal>

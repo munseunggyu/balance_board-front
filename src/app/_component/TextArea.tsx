@@ -8,11 +8,18 @@ interface IProps {
   maxRows?: number;
   value: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  maxLength?: number;
 }
 
-export default function TextArea({ placeholder, maxRows = 2, value, onChange }: IProps) {
+export default function TextArea({ placeholder, maxRows = 2, value, onChange, maxLength = 500 }: IProps) {
   return (
-    <ReactTextareaAutosize onChange={onChange} value={value} className={`${styles.textarea}`} maxRows={maxRows}>
+    <ReactTextareaAutosize
+      onChange={onChange}
+      value={value}
+      className={`${styles.textarea}`}
+      maxRows={maxRows}
+      maxLength={maxLength}
+    >
       {placeholder}
     </ReactTextareaAutosize>
   );
