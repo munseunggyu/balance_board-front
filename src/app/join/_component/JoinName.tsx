@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Input from "@/app/_component/Input";
+import ValidationCheckList from "@/app/_component/ValidationCheckList";
 import { constant } from "@/utils/constant";
 
 import { useJoinDataContext } from "../_context/JoinContext";
@@ -67,6 +68,17 @@ export default function JoinName() {
     setDataField(name, value);
     // setVisibleBtn(false);
   };
+  const resetInput = () => {
+    setValidation((prev) => {
+      return {
+        ...prev,
+        len: false,
+        space: false,
+        duplication: 0,
+      };
+    });
+    setDataField("nickname", "");
+  };
   const checkDuplication = async () => {
     const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
       method: "GET",
@@ -93,6 +105,21 @@ export default function JoinName() {
     }
     // 잘 되면
   };
+
+  const validationList = [
+    {
+      validation: validation.len,
+      label: "2자 이상",
+    },
+    {
+      validation: validation.duplication === 2,
+      label: "중복 닉네임 없음",
+    },
+    {
+      validation: validation.space,
+      label: "공백 없음",
+    },
+  ];
 
   const handleNext = () => {
     if (visibleBtn && processType === 1) {
@@ -127,7 +154,14 @@ export default function JoinName() {
             {validation.duplication === 2 ? (
               <Image className={styles.ico} src="/check-circle-md.svg" alt="확인 아이콘" width={24} height={24} />
             ) : (
-              <Image className={styles.ico} src="/x-circle-md.svg" alt="닫기 아이콘" width={24} height={24} />
+              <Image
+                onClick={resetInput}
+                className={styles.ico}
+                src="/x-circle-md.svg"
+                alt="닫기 아이콘"
+                width={24}
+                height={24}
+              />
             )}
           </div>
           {validation.duplication !== 2 && (
@@ -136,45 +170,11 @@ export default function JoinName() {
             </button>
           )}
         </div>
-        {validation.duplication === 0 && <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>}
         {validation.duplication === 1 && <p className={styles.validation_txt}>중복된 닉네임 입니다.</p>}
         {validation.duplication === 2 && (
           <p className={`${styles.validation_txt} ${styles.pass}`}>{submitData.nickname}님, 멋진 이름이네요!</p>
         )}
-        <ul className={styles.check_list}>
-          <li className={styles.check_list_item}>
-            <Image
-              src={validation.len ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            2자리 이상
-          </li>
-
-          <li className={styles.check_list_item}>
-            <Image
-              src={validation.space ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            공백 없음
-          </li>
-          <li className={styles.check_list_item}>
-            <Image
-              src={validation.duplication === 2 ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            중복 닉네임 없음
-          </li>
-          {/* <li className={styles.check_list_item}>
-          <Image className={styles.ico} src="/check-md.svg" alt="닫기 아이콘" width={24} height={24} />
-          비속어 없음
-        </li> */}
-        </ul>
+        <ValidationCheckList className={styles.check_list_margin} validationList={validationList} />
       </div>
       <NextBtn handleNext={handleNext} />
     </div>
