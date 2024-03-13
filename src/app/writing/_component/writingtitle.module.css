@@ -26,7 +26,7 @@
 }
 
 .titleContainer.titleFocused {
-  border-color: var(--state-notification-orange-400);
+  border-color: var(--main-primary-500);
 }
 
 .titleInput {
