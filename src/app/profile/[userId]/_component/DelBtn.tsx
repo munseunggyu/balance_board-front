@@ -9,6 +9,7 @@ import ModalPortal from "@/app/_component/ModalPortal";
 import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 
+import { getProfilePostData } from "../_lib/getProfilePostData";
 import { IProfilePost } from "../page";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import styles from "./profilePostCard.module.css";
@@ -35,7 +36,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
         }),
       });
     },
-    onSuccess() {
+    async onSuccess() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
 
@@ -48,7 +49,6 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
       filterQuerys.forEach((queryKey) => {
         const value: IProfilePost | InfiniteData<IProfilePost[]> | undefined = queryClient.getQueryData(queryKey);
         if (value && "totalPosts" in value) {
-          console.log("@@");
           const data = produce(value, (draftData) => {
             draftData.totalPosts = (draftData.totalPosts as number) - 1;
           });
@@ -71,6 +71,8 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
           }
         }
       });
+      const totalCntData = await getProfilePostData(userId, 0);
+      queryClient.setQueryData(["profile", "post", userId, 0, "count"], totalCntData);
     },
   });
 
@@ -86,7 +88,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
       {openDelConfirmModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseDelConfirmModal}>
-            <DeleteConfirmModal handleDel={handleDel} handleCloseModal={handleCloseDelConfirmModal} />
+            <DeleteConfirmModal target="게시물" handleDel={handleDel} handleCloseModal={handleCloseDelConfirmModal} />
           </ModalContainer>
         </ModalPortal>
       )}

@@ -38,7 +38,7 @@
 
 .contents_container {
   height: 135px;
-  padding: 10px 0;
+  margin: 10px 0;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -116,6 +116,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 18px */
+}
+.chat_list:not(:last-child) {
+  margin-bottom: 2px;
 }
 .chat_contents {
   color: var(--body-950);

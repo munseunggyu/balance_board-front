@@ -1,37 +1,90 @@
+"use client";
+import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
+import { produce } from "immer";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { FormEvent, useState } from "react";
 
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
+import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { constant } from "@/utils/constant";
 import { userImgUrl } from "@/utils/userImgUrl";
 
+import { IComment, IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
 
 interface ICommentFormProps {
-  newComment: string;
-  isComment: boolean;
-  setNewComment: Dispatch<SetStateAction<string>>;
-  setIsComment: Dispatch<SetStateAction<boolean>>;
-  handleCommentSubmit: () => Promise<void>;
   userImage: number;
-  isLogin: number;
+  postData: IPostData;
 }
 
-export default function CommentForm({
-  newComment,
-  setNewComment,
-  isComment,
-  setIsComment,
-  handleCommentSubmit,
-  userImage,
-  isLogin,
-}: ICommentFormProps) {
+export default function CommentForm({ userImage, postData }: ICommentFormProps) {
+  const queryClient = useQueryClient();
+  const { userInfo } = useUserDataContext();
+  const [newComment, setNewComment] = useState<string>("");
+  const [isComment, setIsComment] = useState<boolean>(false);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
+  const commentSubmit = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(constant.apiUrl + `api/main/new/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userInfo.userId,
+          postId: postData?.postId,
+          content: newComment,
+        }),
+      });
+      const data: IComment = await res.json();
+      return data;
+    },
+    onSuccess(response) {
+      const userToken = localStorage.getItem("token");
+      const headers: { [key: string]: string } = {};
+
+      if (userToken) {
+        headers.Authorization = userToken;
+      }
+      const queryCache = queryClient.getQueryCache();
+      const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      const filterQuerys = queryKeys.filter((v) => {
+        if (v[0] === "post" && v[1] === postData.postId && v[2] === "comments") {
+          return true;
+        }
+        return false;
+      });
+      filterQuerys.forEach((queryKey) => {
+        const value: IComment | InfiniteData<IComment[]> | undefined = queryClient.getQueryData(queryKey);
+        if (value && "pages" in value) {
+          const data = produce(value, (draftData) => {
+            draftData.pages[0].unshift(response);
+          });
+          queryClient.setQueryData(["post", postData.postId, "comments"], data);
+        }
+      });
+
+      setNewComment("");
+      setIsComment(false);
+    },
+  });
+
+  const handleCommentSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (newComment.trim() === "") return;
+    commentSubmit.mutate();
+  };
+
   return (
-    <div className={styles.commentRegContainer} onClick={isLogin !== 1 ? handleOpenMoal : undefined}>
+    <form
+      onSubmit={handleCommentSubmit}
+      className={styles.commentRegContainer}
+      onClick={userInfo.isLogin !== 1 ? handleOpenMoal : undefined}
+    >
       <div className={styles.voteButtonImageContainer}>
         {userImage ? (
           <Image src={userImgUrl(userImage)} alt="로그인 유저 이미지" width={24} height={24} />
@@ -48,31 +101,8 @@ export default function CommentForm({
           setIsComment(!!e.target.value); // 댓글이 들어오는지 확인
         }}
         maxLength={50}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleCommentSubmit()
-              .then(() => {})
-              .catch((error) => {
-                console.error(error);
-              });
-            setIsComment(false);
-          }
-        }}
       />
-      <button
-        className={`${styles.commentReg} ${isComment ? styles.isComment : ""}`}
-        onClick={() => {
-          handleCommentSubmit()
-            .then(() => {
-              setIsComment(false);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }}
-      >
-        등록
-      </button>
+      <button className={`${styles.commentReg} ${isComment ? styles.isComment : ""}`}>등록</button>
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>
@@ -80,6 +110,6 @@ export default function CommentForm({
           </ModalContainer>
         </ModalPortal>
       )}
-    </div>
+    </form>
   );
 }

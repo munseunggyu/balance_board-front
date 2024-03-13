@@ -1,10 +1,9 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { Fragment, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-import JoinCompleteModal from "@/app/_component/JoinCompleteModal";
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
@@ -22,14 +21,6 @@ export default function PostCardList() {
   const { userInfo } = useUserDataContext();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
-  const {
-    openModal: openJoinModal,
-    handleOpenMoal: handleOpenJoinMoal,
-    handleCloseModal: handleCloseJoinModal,
-  } = useModal();
-
-  const router = useRouter();
-
   const openLoginModal = () => {
     if (userInfo.isLogin !== 1) {
       handleOpenMoal();
@@ -38,21 +29,20 @@ export default function PostCardList() {
 
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
-  const firstJoin = searchParams.get("join");
 
   const { data, fetchNextPage, hasNextPage, isFetching, isPending } = useInfiniteQuery<IPost[], Error>({
     queryKey: ["posts", "all", tab, userInfo.isLogin],
     queryFn: async ({ pageParam }) => {
       const page = pageParam as number;
       if (!tab || tab === "전체") {
-        return await getPostList({ pageParam: page, isLogin: userInfo.isLogin });
+        return await getPostList({ pageParam: page, userInfo: userInfo });
       } else {
-        return await getCategoryPostList({ pageParam: page, category: tab, isLogin: userInfo.isLogin });
+        return await getCategoryPostList({ pageParam: page, category: tab, userInfo: userInfo });
       }
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      if (allPages[allPages.length - 1].length / 10 < 1) {
+      if (allPages[allPages.length - 1].length / 20 < 1) {
         return undefined;
       }
       return allPages.length + 1;
@@ -73,10 +63,6 @@ export default function PostCardList() {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
   useEffect(() => {
-    if (firstJoin) {
-      router.replace("/");
-      handleOpenJoinMoal();
-    }
     setMounted(true);
   }, []);
 
@@ -102,13 +88,7 @@ export default function PostCardList() {
       </ul>
       <div ref={ref} style={{ height: 10, backgroundColor: "#FAFAFA" }} />
       <WriteFloating />
-      {openJoinModal && (
-        <ModalPortal>
-          <ModalContainer handleCloseModal={handleCloseJoinModal}>
-            <JoinCompleteModal handleCloseModal={handleCloseJoinModal} />
-          </ModalContainer>
-        </ModalPortal>
-      )}
+
       {openModal && (
         <ModalPortal>
           <ModalContainer handleCloseModal={handleCloseModal}>

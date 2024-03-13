@@ -43,17 +43,33 @@
 
 .taginputContainer {
   margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagAddContainer {
+  align-items: center;
+  position: relative;
+  margin-right: 6px;
+  margin-bottom: 8px;
+  border: 1px solid var(--body-300);
+  border-radius: 100px;
 }
 
 .tagAdd {
   font-size: 13px;
   font-weight: 500;
-  line-height: 21px;
-  height: 33px;
-  border-radius: 100px;
-  border: 1px solid var(--body-300);
-  padding-left: 12px;
-  margin: 0 4px 8px 0;
+  line-height: 19.5px;
+  color: var(--title-100);
+  padding: 6px 12px 6px 12px;
+}
+
+.tagRemoveImg {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .tagAdd::placeholder {
@@ -64,7 +80,7 @@
 }
 
 .errorMessage {
-  margin-top: 4px;
+  margin-top: -4px;
   padding-left: 12px;
   font-size: 12px;
   font-weight: 700;

@@ -1,10 +1,16 @@
+import "dayjs/locale/ko";
+
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 
-import { formatRelativeTime } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
 
 import { IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
+
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
 
 interface IUserInfoProps {
   postData: IPostData;
@@ -18,7 +24,7 @@ export default function UserInfo({ postData }: IUserInfoProps) {
       </div>
       <div className={styles.userInfoContainer}>
         <span className={styles.userName}>{postData.nickname}</span>
-        <span className={styles.userPostTime}>{formatRelativeTime(postData.created)}</span>
+        <span className={styles.userPostTime}>{dayjs(postData.created).fromNow()}</span>
       </div>
       <div className={styles.topicContainer}>
         <span className={styles.userTopic}>{postData.category}</span>

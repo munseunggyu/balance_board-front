@@ -20,7 +20,9 @@ export interface IProfilePost {
 
 export interface IPostPostData {
   profilePosts: IProfilePost[];
-  totalPosts: number;
+  totalCount: number;
+  votedCount?: number;
+  writedCount?: number;
 }
 
 export interface IProfileData {

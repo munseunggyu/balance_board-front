@@ -58,29 +58,26 @@ function Profiletab({ userId }: { userId: number }) {
   const profileTab = Number(searchParams.get("profileTab"));
   const { data } = useQueryGetProfilePostData(userId);
   const [activeTab, setActiveTab] = useState<number>(0);
-  // const totalCount = allData.length;
-  // const writtenCount = userPosts?.length || 0;
-  // const votedCount = votedPosts?.length || 0;
-  const totalCount = data?.totalPosts || 0;
-  const writtenCount = 0;
-  const votedCount = 0;
+  const totalCount = data?.totalCount || 0;
+  const writtenCount = data?.votedCount || 0;
+  const votedCount = data?.writedCount || 0;
 
   const tabs = [
-    { label: "전체", count: totalCount, value: 1 },
-    { label: "작성한 글", count: votedCount, value: 2 },
-    { label: "투표한 글", count: writtenCount, value: 3 },
+    { label: "전체", count: totalCount, value: 0 },
+    { label: "작성한 글", count: votedCount, value: 1 },
+    { label: "투표한 글", count: writtenCount, value: 2 },
   ];
 
   useEffect(() => {
     setActiveTab(() => {
-      if (profileTab === 1) {
+      if (profileTab === 0) {
+        return 0;
+      } else if (profileTab === 1) {
         return 1;
       } else if (profileTab === 2) {
         return 2;
-      } else if (profileTab === 3) {
-        return 3;
       }
-      return 1;
+      return 0;
     });
   }, [profileTab]);
 
@@ -94,7 +91,7 @@ function Profiletab({ userId }: { userId: number }) {
             }}
             replace
             key={index}
-            className={`${styles.profileTab} ${activeTab === index + 1 ? styles.active : ""}`}
+            className={`${styles.profileTab} ${activeTab === index ? styles.active : ""}`}
           >
             <div className={styles.tabContent}>
               <div className={styles.tabLabel}>{profileTab.label}</div>

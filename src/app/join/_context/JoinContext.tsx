@@ -21,7 +21,7 @@ interface InitialData {
 
 // 초기 데이터
 const initialData: InitialData = {
-  processType: 0,
+  processType: 4,
   visibleBtn: false,
   submitData: {
     emailFont: "",

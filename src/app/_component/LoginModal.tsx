@@ -15,7 +15,7 @@ export default function LoginModal({ handleCloseModal }: IProps) {
     <div className={styles.loginModal} onClick={handleStopPropagation}>
       <div className={styles.contentWrapper}>
         <div className={styles.imageWrapper}>
-          <Image src="/go-home.png" alt="Login ModalImage" width={115} height={95} />
+          <Image src="/email-login.png" alt="Login ModalImage" width={115} height={95} />
         </div>
         <div className={styles.easyloginMessage}>
           <p>간편 로그인으로 더 많은</p>

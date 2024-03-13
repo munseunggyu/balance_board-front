@@ -149,7 +149,6 @@ export default function VoteBtnsContainer({
         setOption1BtnType(2);
         setOption2BtnType(2);
       } else {
-        console.log("??");
         setOption1BtnType(3);
         setOption2BtnType(2);
       }
@@ -200,13 +199,7 @@ export default function VoteBtnsContainer({
           <div className={styles.btn_left}>
             {(selectOption === option2 || post.selectedOption === option2) &&
               (option2BtnType === 1 || option2BtnType === 2) && (
-                <Image
-                  className={styles.ico_check}
-                  src={"/check-pressed-md.svg"}
-                  alt="체크 아이콘"
-                  width={24}
-                  height={24}
-                />
+                <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={24} height={24} />
               )}
             {option2BtnType === 3 && post.selectedOption === option2 && (
               <Image

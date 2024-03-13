@@ -5,9 +5,9 @@ import { IPostPostData } from "../page";
 
 export const useQueryGetProfilePostData = (userId: number) => {
   const { data, isLoading } = useQuery<IPostPostData>({
-    queryKey: ["profile", "post", userId, 1, "count"],
+    queryKey: ["profile", "post", userId, 0, "count"],
     queryFn: () => {
-      return getProfilePostData(userId, 1);
+      return getProfilePostData(userId, 0);
     },
   });
 
