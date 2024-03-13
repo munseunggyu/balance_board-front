@@ -1,0 +1,7 @@
+.textarea {
+  background-color: inherit;
+  width: 100%;
+  border: 0;
+  resize: none;
+  outline: none;
+}

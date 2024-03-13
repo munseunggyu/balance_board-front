@@ -153,7 +153,7 @@ function Comment({ comment, postId, handleOpenDelAlertMoal }: CommentProps) {
           </button>
         )}
       </div>
-      <div className={styles.userComment}>{comment.content}</div>
+      <p className={styles.userComment}>{comment.content}</p>
       <div className={styles.commentSeperator}></div>
       {openDelConfirmModal && (
         <ModalPortal>

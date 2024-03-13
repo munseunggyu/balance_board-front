@@ -298,6 +298,7 @@
   font-weight: 500;
   line-height: 18px;
   color: var(--body-950);
+  white-space: pre-wrap;
 }
 
 .commentSeperator {
