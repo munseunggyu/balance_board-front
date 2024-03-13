@@ -21,6 +21,7 @@ export interface ILogin {
   isLogin: boolean;
   message?: string;
   imageType: number;
+  status?: number;
 }
 
 export default function LoginForm() {
@@ -45,31 +46,40 @@ export default function LoginForm() {
   };
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch(constant.apiUrl + "api/user/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-      }),
-    });
-    const data: ILogin = await res.json();
-    if (data?.message) {
-      setErrMsg(data.message);
-      return false;
-    }
-    if (data.jwtToken) {
-      localStorage.setItem("token", data.jwtToken?.accessToken);
-      setUserData({
-        ...data,
-        isLogin: 1,
+    try {
+      const res = await fetch(constant.apiUrl + "api/user/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
       });
-      router.push("/");
+      const data: ILogin = await res.json();
+      if (data?.status === 400) {
+        setErrMsg("아이디(이메일) 또는 비밀번호를 확인해주세요!");
+        return;
+      }
+      if (data?.message) {
+        setErrMsg(data.message);
+        return false;
+      }
+      if (data.jwtToken) {
+        localStorage.setItem("token", data.jwtToken?.accessToken);
+        setUserData({
+          ...data,
+          isLogin: 1,
+        });
+        router.push("/");
+      }
+      return data;
+    } catch (err) {
+      console.error(err);
+      setErrMsg("아이디(이메일) 또는 비밀번호를 확인해주세요!");
     }
-    return data;
   };
   return (
     <form onSubmit={onSubmit} className={styles.form}>
@@ -84,6 +94,7 @@ export default function LoginForm() {
         />
         {form.email && (
           <button
+            type="button"
             onClick={() =>
               setForm((prev) => {
                 return { ...prev, email: "" };
@@ -117,7 +128,11 @@ export default function LoginForm() {
         )}
         {errMsg && <p className={styles.err_msg}>아이디(이메일) 또는 비밀번호를 확인해주세요!</p>}
       </div>
-      <button disabled={disabledBtn} className={`${styles.login_btn} ${!disabledBtn ? styles.active : ""}`}>
+      <button
+        type="submit"
+        disabled={disabledBtn}
+        className={`${styles.login_btn} ${!disabledBtn ? styles.active : ""}`}
+      >
         로그인
       </button>
       <Link className={styles.link} href={"/join"}>

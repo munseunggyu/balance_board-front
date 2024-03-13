@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Input from "@/app/_component/Input";
+import ValidationCheckList from "@/app/_component/ValidationCheckList";
 import { constant } from "@/utils/constant";
 import { validateEmail } from "@/utils/validation";
 
@@ -159,6 +160,25 @@ export default function SignupInputs() {
     }
   };
 
+  const validationList = [
+    {
+      validation: validation.minLen,
+      label: "8자 이상",
+    },
+    {
+      validation: validation.maxLen,
+      label: "20자 이내",
+    },
+    {
+      validation: validation.space,
+      label: "공백 없음",
+    },
+    {
+      validation: validation.enNum,
+      label: "영문, 숫자 포함",
+    },
+  ];
+
   const handleChangePasswordConfrim = (e: ChangeEvent<HTMLInputElement>) => {
     setVisibleBtn(false);
     const { name, value } = e.target;
@@ -186,12 +206,12 @@ export default function SignupInputs() {
             border={"none"}
             type="text"
             placeholder="이메일"
-            className={`${styles.email_font} ${emailErrMsg !== "good" ? styles.wran_border : ""}`}
+            className={`${styles.email_font} ${emailErrMsg !== "good" ? styles.wran_border : ""} ${styles.input_max_width}`}
             value={submitData.emailFont}
           />
           <span className={styles.at}>@</span>
           <div
-            className={styles.dropdown}
+            className={`${styles.dropdown} ${styles.input_max_width}`}
             onClick={() => {
               setOpenSelectBox((prev) => !prev);
             }}
@@ -236,48 +256,8 @@ export default function SignupInputs() {
         className={`${styles.email_font} ${styles.password}`}
         placeholder="비밀번호"
       />
-      <ul className={styles.check_list}>
-        <li className={styles.check_list_item}>
-          <Image
-            className={styles.ico}
-            src={validation.minLen ? "/check-pressed-md.svg" : "/check-md.svg"}
-            alt="닫기 아이콘"
-            width={24}
-            height={24}
-          />
-          8자리 이상
-        </li>
-        <li className={styles.check_list_item}>
-          <Image
-            className={styles.ico}
-            src={validation.maxLen ? "/check-pressed-md.svg" : "/check-md.svg"}
-            alt="닫기 아이콘"
-            width={24}
-            height={24}
-          />
-          20자 이내
-        </li>
-        <li className={styles.check_list_item}>
-          <Image
-            className={styles.ico}
-            src={validation.space ? "/check-pressed-md.svg" : "/check-md.svg"}
-            alt="닫기 아이콘"
-            width={24}
-            height={24}
-          />
-          공백 없음
-        </li>
-        <li className={styles.check_list_item}>
-          <Image
-            className={styles.ico}
-            src={validation.enNum ? "/check-pressed-md.svg" : "/check-md.svg"}
-            alt="닫기 아이콘"
-            width={24}
-            height={24}
-          />
-          영문, 숫자 포함
-        </li>
-      </ul>
+      <ValidationCheckList validationList={validationList} />
+
       <div
         className={`${styles.input_password_confirm} ${notEqualPassword && submitData.passwordConfirm.length > 7 ? styles.wran_border : ""}`}
       >
