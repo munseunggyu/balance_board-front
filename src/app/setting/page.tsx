@@ -21,7 +21,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className={styles.settingBox}>
       {userInfo.isLogin === 1 ? (
         <>
           <SettingNav title={"Setting"} />
@@ -41,6 +41,6 @@ export default function Page() {
           </div>
         </>
       ) : null}
-    </>
+    </div>
   );
 }
