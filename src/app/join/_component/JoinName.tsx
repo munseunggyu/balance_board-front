@@ -21,7 +21,7 @@ export default function JoinName() {
   const [validation, setValidation] = useState({
     len: false,
     space: false,
-    duplication: 0, // 0 1 2
+    duplication: 0, // 0. 중복확인 1. 통과 2. 닉네임 중복에러
   });
   const regex = /\s/;
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export default function JoinName() {
           ...prev,
           len: false,
           space: false,
-          duplication: 1,
+          duplication: 0,
         };
       });
     }
@@ -80,22 +80,41 @@ export default function JoinName() {
     setDataField("nickname", "");
   };
   const checkDuplication = async () => {
-    const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    const { duplicate }: { duplicate: boolean } = await res.json();
-    if (duplicate) {
-      setValidation((prev) => {
-        return {
-          ...prev,
-          duplication: 1,
-        };
+    try {
+      const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
-    } else {
+      const { duplicate, status }: { duplicate: boolean; status?: number } = await res.json();
+      if (status === 400) {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 2,
+          };
+        });
+        return;
+      }
+      if (duplicate) {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 1,
+          };
+        });
+      } else {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 2,
+          };
+        });
+      }
+    } catch (err) {
+      console.error(err);
       setValidation((prev) => {
         return {
           ...prev,
@@ -170,6 +189,9 @@ export default function JoinName() {
             </button>
           )}
         </div>
+        {submitData.nickname.length > 1 && validation.duplication === 0 && (
+          <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>
+        )}
         {validation.duplication === 1 && <p className={styles.validation_txt}>중복된 닉네임 입니다.</p>}
         {validation.duplication === 2 && (
           <p className={`${styles.validation_txt} ${styles.pass}`}>{submitData.nickname}님, 멋진 이름이네요!</p>
