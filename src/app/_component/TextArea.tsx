@@ -19,8 +19,7 @@ export default function TextArea({ placeholder, maxRows = 2, value, onChange, ma
       className={`${styles.textarea}`}
       maxRows={maxRows}
       maxLength={maxLength}
-    >
-      {placeholder}
-    </ReactTextareaAutosize>
+      placeholder={placeholder}
+    ></ReactTextareaAutosize>
   );
 }
