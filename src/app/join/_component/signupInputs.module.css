@@ -33,6 +33,11 @@
   flex: 1;
   color: var(--title-400);
 }
+@media (max-width: 450px) {
+  .input_max_width {
+    max-width: 120px;
+  }
+}
 
 .at {
   width: 36px;

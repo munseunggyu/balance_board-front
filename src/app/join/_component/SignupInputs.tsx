@@ -206,12 +206,12 @@ export default function SignupInputs() {
             border={"none"}
             type="text"
             placeholder="이메일"
-            className={`${styles.email_font} ${emailErrMsg !== "good" ? styles.wran_border : ""}`}
+            className={`${styles.email_font} ${emailErrMsg !== "good" ? styles.wran_border : ""} ${styles.input_max_width}`}
             value={submitData.emailFont}
           />
           <span className={styles.at}>@</span>
           <div
-            className={styles.dropdown}
+            className={`${styles.dropdown} ${styles.input_max_width}`}
             onClick={() => {
               setOpenSelectBox((prev) => !prev);
             }}
