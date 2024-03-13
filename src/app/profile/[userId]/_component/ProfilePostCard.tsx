@@ -1,16 +1,13 @@
 import "dayjs/locale/ko";
 
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import React from "react";
+
+import { dateFormat } from "@/utils/dateFormat";
 
 import { IProfilePost } from "../page";
 import DelBtn from "./DelBtn";
 import styles from "./profilePostCard.module.css";
-
-dayjs.locale("ko");
-dayjs.extend(relativeTime);
 
 export default function ProfilePostCard({
   profilePostData,
@@ -32,7 +29,7 @@ export default function ProfilePostCard({
       </Link>
       <div
         className={styles.bottom}
-      >{`${profilePostData.category} ・ ${dayjs(profilePostData.created).fromNow()} ・ 참여 ${profilePostData.voteCount}`}</div>
+      >{`${profilePostData.category} ・ ${dateFormat(profilePostData.created)} ・ 참여 ${profilePostData.voteCount}`}</div>
     </article>
   );
 }

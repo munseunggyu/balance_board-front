@@ -1,22 +1,16 @@
 "use client";
-import "dayjs/locale/ko";
-
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 import { IPost } from "@/modal/Post";
+import { dateFormat } from "@/utils/dateFormat";
 import { userImgUrl } from "@/utils/userImgUrl";
 
 import CommentInput from "../_main/_component/CommentInput";
 import VoteBtnsContainer from "../_main/_component/VoteBtnsContainer";
 import styles from "./postCard.module.css";
 import Tag from "./Tag";
-
-dayjs.locale("ko");
-dayjs.extend(relativeTime);
 
 interface IProps {
   post: IPost;
@@ -40,7 +34,7 @@ export default function PostCard({ post, openLoginModal }: IProps) {
           alt="프로필 이미지"
         />
         <span className={styles.user_name}>{post.nickname}</span>
-        <span className={styles.time}>{dayjs(post.created).fromNow()}</span>
+        <span className={styles.time}>{dateFormat(post.created)}</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
       </div>
       <div className={styles.contents_container} onClick={goDetailPage}>

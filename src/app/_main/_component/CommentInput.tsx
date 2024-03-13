@@ -1,9 +1,9 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { produce } from "immer";
 import Image from "next/image";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEventHandler, FormEvent, useState } from "react";
 
-import Input from "@/app/_component/Input";
+import TextArea from "@/app/_component/TextArea";
 import { useUserDataContext } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
 import { constant } from "@/utils/constant";
@@ -76,7 +76,7 @@ export default function CommentInput({ postId }: IProps) {
       setComment("");
     },
   });
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const { value } = e.target;
     if (comment.length > 500) return;
     setComment(value);
@@ -96,7 +96,7 @@ export default function CommentInput({ postId }: IProps) {
         <Image src={"/profile-md-test.png"} width={24} height={24} alt="유저 이미지" />
       )}
 
-      <Input className={styles.comment_input} onChange={onChange} placeholder="댓글 달기..." value={comment} />
+      <TextArea placeholder="댓글 달기..." onChange={onChange} value={comment} />
       <button className={`${styles.submit_btn} ${comment.length > 0 ? styles.active : ""}`}>등록</button>
     </form>
   );
