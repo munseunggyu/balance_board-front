@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { useUserDataContext } from "@/context/AuthContext";
 
 import balance_together from "../../../../public/balance-together.svg";
-import DeleteLast from "./_component/DeleteLast";
 import DeleteLastNav from "../_component/DeleteLastNav";
+import DeleteLast from "./_component/DeleteLast";
 import styles from "./deleteLast.module.css";
 
 export default function DeleteLastPage() {
