@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import backPageImg from "../../../../public/direction-left-md.svg";
-import styles from "../../deleteInfo/_component/deleteNav.module.css";
+import styles from "./deleteNav.module.css";
 
 export default function DeleteLastNav() {
   const router = useRouter();

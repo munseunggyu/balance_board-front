@@ -21,7 +21,7 @@ export default function Page() {
   };
 
   const handleGoToDeleteBtn = () => {
-    router.push("/deleteInfo");
+    router.push("/delete/deleteInfo");
   };
 
   return (

@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import DeleteNav from "../_component/DeleteNav";
 import DeleteInfo from "./_component/DeleteInfo";
-import DeleteNav from "./_component/DeleteNav";
 import styles from "./delete.module.css";
 
 export default function DeletePage() {
@@ -12,7 +12,7 @@ export default function DeletePage() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleGoDelete = () => {
-    router.push("/deleteCheckInfo");
+    router.push("/delete/deleteCheckInfo");
   };
 
   return (

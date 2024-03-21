@@ -4,8 +4,8 @@ import Image from "next/image";
 
 import { useUserDataContext } from "@/context/AuthContext";
 
-import checked_circle from "../../../../public/check-circle-1-lg.svg";
-import check_circle from "../../../../public/check-circle-2-lg.svg";
+import checked_circle from "../../../../../public/check-circle-1-lg.svg";
+import check_circle from "../../../../../public/check-circle-2-lg.svg";
 import styles from "./deleteInfo.module.css";
 
 interface IDeleteInfoProps {

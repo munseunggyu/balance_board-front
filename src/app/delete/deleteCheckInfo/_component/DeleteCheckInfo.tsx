@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 import { useUserDataContext } from "@/context/AuthContext";
 
-import x_circle from "../../../../public/x-circle-md.svg";
+import x_circle from "../../../../../public/x-circle-md.svg";
 import styles from "./deleteCheckInfo.module.css";
 
 interface IDeleteCheckPageProps {

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { constant } from "@/utils/constant";
 
-import DeleteNav from "../deleteInfo/_component/DeleteNav";
+import DeleteNav from "../_component/DeleteNav";
 import styles from "../deleteInfo/delete.module.css";
 import DeleteCheckInfo from "./_component/DeleteCheckInfo";
 
@@ -16,7 +16,7 @@ export default function DeleteCheckPage() {
   const [isError, setIsError] = useState<boolean>(true);
 
   const handleGoToLast = () => {
-    router.push("/deleteLast");
+    router.push("/delete/deleteLast");
   };
 
   const handleWithdrawal = async () => {
