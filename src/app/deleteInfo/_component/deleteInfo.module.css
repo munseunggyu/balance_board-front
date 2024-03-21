@@ -1,0 +1,75 @@
+.deleteContainer {
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.deleteHeader {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: var(--title-400);
+}
+
+.deleteSubTitle {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--body-950);
+}
+
+.deleteContent {
+  height: calc(100% - 20px);
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 19.5px;
+  color: var(--body-950);
+  background-color: var(--background-200);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.deleteProcessHeader,
+.deleteHandleHeader,
+.deleteRejoinHeader {
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.deleteHandleContainer,
+.deleteRejoinContainer,
+.deleteInfoCheckContainer {
+  margin-top: 20px;
+}
+
+.deleteHandleContent {
+  margin-left: 9px;
+}
+
+.deleteHandleContent::before,
+.deleteRejoinContent::before {
+  content: "-";
+  display: inline-block;
+  margin-left: -9px;
+  margin-right: 4px;
+}
+
+.deleteRejoinContent {
+  margin-left: 9px;
+}
+
+.deleteInfoCheckContainer {
+  display: flex;
+  align-items: center;
+}
+
+.checkedImg {
+  cursor: pointer;
+}
+
+.deleteInfoCheckContainer span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--body-800);
+}

@@ -1,0 +1,49 @@
+.deleteBox {
+  position: relative;
+  max-width: 450px;
+  height: 100%;
+  background-color: var(--background-100);
+}
+
+.deleteBtnContainer {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 0 20px;
+}
+
+.deleteCheckBtn {
+  width: calc(100% - 40px);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  width: 100%;
+  height: 52px;
+  background-color: var(--background-100);
+  color: var(--body-800);
+  border: 1px solid var(--body-400);
+  border-radius: 6px;
+  cursor: default;
+}
+
+.deleteCheckBtn.checkedBtn {
+  border-color: var(--main-primary-500);
+  color: var(--main-primary-500);
+  cursor: pointer;
+}
+
+.deleteBtn {
+  width: calc(100% - 40px);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  width: 100%;
+  height: 52px;
+  background-color: var(--background-100);
+  color: var(--state-wraning-red-300);
+  border: 1px solid var(--body-400);
+  border-radius: 6px;
+  cursor: pointer;
+}
