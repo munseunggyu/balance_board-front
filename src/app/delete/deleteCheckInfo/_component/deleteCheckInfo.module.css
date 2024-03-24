@@ -1,0 +1,85 @@
+.deleteCheckContainer {
+  position: relative;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.deleteHeader {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: var(--title-400);
+}
+
+.deleteCheckPassword {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--body-950);
+}
+
+.userInfoContainer {
+  margin-top: 45px;
+}
+
+.userInfoEmail,
+.userInfoPassword {
+  width: 100%;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  padding-left: 10px;
+  border-radius: 8px;
+}
+
+.userInfoEmail {
+  background-color: var(--background-200);
+  color: var(--body-950);
+}
+
+.userInfoPassword::placeholder {
+  color: var(--body-800);
+}
+
+.userInfoPasswordContainer {
+  display: flex;
+  align-items: center;
+}
+
+.deleteImgBox {
+  padding-right: 10px;
+}
+
+.deleteImg {
+  cursor: pointer;
+}
+
+.deleteImg.disabled {
+  pointer-events: none;
+}
+
+.seperator {
+  margin-top: -10px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--body-400);
+}
+
+.seperator.isError {
+  background-color: var(--state-wraning-red-300);
+}
+
+.errorMessageContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.errorMessage {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--state-wraning-red-300);
+}

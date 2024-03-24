@@ -20,6 +20,10 @@ export default function Page() {
     router.push("/");
   };
 
+  const handleGoToDeleteBtn = () => {
+    router.push("/delete/deleteInfo");
+  };
+
   return (
     <div className={styles.settingBox}>
       {userInfo.isLogin === 1 ? (
@@ -36,7 +40,9 @@ export default function Page() {
               <button className={styles.logoutBtn} onClick={handleLogoutBtn}>
                 로그아웃
               </button>
-              <button className={styles.deleteBtn}>회원탈퇴</button>
+              <button className={styles.deleteBtn} onClick={handleGoToDeleteBtn}>
+                회원탈퇴
+              </button>
             </div>
           </div>
         </>
