@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useUserDataContext } from "@/context/AuthContext";
 import { constant } from "@/utils/constant";
 
 import DeleteNav from "../_component/DeleteNav";
@@ -14,6 +15,7 @@ export default function DeleteCheckPage() {
   const [isPasswordCorrect, setIsPasswordCorrect] = useState<boolean>(true);
   const [userPassword, setUserPassword] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(true);
+  const { userInfo } = useUserDataContext();
 
   const handleGoToLast = () => {
     router.push("/delete/deleteLast");
@@ -32,6 +34,8 @@ export default function DeleteCheckPage() {
         body: JSON.stringify({ password: userPassword }),
       });
       if (res.status === 200) {
+        localStorage.removeItem("token");
+        userInfo.isLogin = 2;
         handleGoToLast();
       } else {
         setIsError(false);
