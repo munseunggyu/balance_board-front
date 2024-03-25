@@ -4,28 +4,35 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
-import Button from "@/app/_component/Button";
 import Input from "@/app/_component/Input";
+import { useUserDataContext } from "@/context/AuthContext";
 import { constant } from "@/utils/constant";
 
 import styles from "./loginForm.module.css";
 
 export interface ILogin {
   email: string;
-  password: string;
-  message?: string;
-  jwtToken?: {
+  jwtToken: {
     accessToken: string;
+    refreshToken: string;
   };
+  nickname: string;
+  userId: number;
+  isLogin: boolean;
+  message?: string;
+  imageType: number;
+  status?: number;
 }
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUserData } = useUserDataContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  const disabledBtn = !form.email || !form.password;
+  const [disabledBtn, setDisabledBtn] = useState(true);
+  // const disabledBtn = !form.email || !form.password;
   const [errMsg, setErrMsg] = useState("");
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,30 +40,46 @@ export default function LoginForm() {
       ...prevForm,
       [name]: value,
     }));
+    if (form.email && form.password) {
+      setDisabledBtn(false);
+    }
   };
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch(constant.apiUrl + "api/user/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-      }),
-    });
-    const data: ILogin = await res.json();
-    if (data?.message) {
-      setErrMsg(data.message);
-      return false;
+    try {
+      const res = await fetch(constant.apiUrl + "api/user/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
+      });
+      const data: ILogin = await res.json();
+      if (data?.status === 400) {
+        setErrMsg("아이디(이메일) 또는 비밀번호를 확인해주세요!");
+        return;
+      }
+      if (data?.message) {
+        setErrMsg(data.message);
+        return false;
+      }
+      if (data.jwtToken) {
+        localStorage.setItem("token", data.jwtToken?.accessToken);
+        setUserData({
+          ...data,
+          isLogin: 1,
+        });
+        router.push("/");
+      }
+      return data;
+    } catch (err) {
+      console.error(err);
+      setErrMsg("아이디(이메일) 또는 비밀번호를 확인해주세요!");
     }
-    if (data.jwtToken) {
-      localStorage.setItem("token", data.jwtToken?.accessToken);
-      router.push("/");
-    }
-    return data;
   };
   return (
     <form onSubmit={onSubmit} className={styles.form}>
@@ -65,13 +88,13 @@ export default function LoginForm() {
           className={styles.input}
           onChange={handleChange}
           name="email"
-          border={"body_500"}
           type="text"
           placeholder="이메일"
           value={form.email}
         />
         {form.email && (
           <button
+            type="button"
             onClick={() =>
               setForm((prev) => {
                 return { ...prev, email: "" };
@@ -87,7 +110,6 @@ export default function LoginForm() {
           className={styles.input}
           onChange={handleChange}
           name="password"
-          border={"body_500"}
           type="password"
           placeholder="비밀번호"
           value={form.password}
@@ -106,13 +128,13 @@ export default function LoginForm() {
         )}
         {errMsg && <p className={styles.err_msg}>아이디(이메일) 또는 비밀번호를 확인해주세요!</p>}
       </div>
-      <Button
+      <button
+        type="submit"
         disabled={disabledBtn}
-        rounded={"large"}
         className={`${styles.login_btn} ${!disabledBtn ? styles.active : ""}`}
       >
         로그인
-      </Button>
+      </button>
       <Link className={styles.link} href={"/join"}>
         이메일로 회원가입
       </Link>

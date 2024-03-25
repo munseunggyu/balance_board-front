@@ -1,6 +1,10 @@
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
+import JoinCompleteModal from "@/app/_component/JoinCompleteModal";
+import ModalContainer from "@/app/_component/ModalContainer";
+import ModalPortal from "@/app/_component/ModalPortal";
+import { useModal } from "@/hook/useModal";
 import { constant } from "@/utils/constant";
 
 import { useJoinDataContext } from "../_context/JoinContext";
@@ -8,12 +12,18 @@ import styles from "./multiInput.module.css";
 import NextBtn from "./NextBtn";
 
 export default function MultiInput() {
+  const {
+    openModal: openJoinModal,
+    handleOpenMoal: handleOpenJoinMoal,
+    handleCloseModal: handleCloseJoinModal,
+  } = useModal();
   const [inputValues, setInputValues] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [birthYear, setBirthYear] = useState(0);
   const [errMsg, setErrMsg] = useState("good");
 
   const router = useRouter();
+
   const {
     data: { submitData, visibleBtn, processType },
     setDataField,
@@ -34,11 +44,9 @@ export default function MultiInput() {
     if (value !== "" && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     }
-    console.log(newInputValues);
     const arr = newInputValues.filter((item) => !!item);
     if (arr.length >= 4) {
       const year = parseInt(arr.join(""), 10);
-      console.log(year);
       if (year > 1) {
         const age = calculateKoreanAge(Number(year));
         if (age < 125) {
@@ -86,8 +94,7 @@ export default function MultiInput() {
         if (data.duplicate) {
           alert("회원가입에 실패하였습니다");
         } else {
-          router.push("/login");
-          alert("회원가입이 완료 되었습니다");
+          handleOpenJoinMoal();
         }
       } catch (err) {
         console.error(err);
@@ -121,6 +128,18 @@ export default function MultiInput() {
         {errMsg !== "good" && <p className={`${styles.validation_txt} ${styles.wran_txt}`}>{errMsg}</p>}
       </div>
       <NextBtn handleNext={handleNext} txt={visibleBtn ? "시작하기" : "다음"} />
+      {openJoinModal && (
+        <ModalPortal>
+          <ModalContainer>
+            <JoinCompleteModal
+              handleCloseModal={() => {
+                router.push("/login");
+                handleCloseJoinModal();
+              }}
+            />
+          </ModalContainer>
+        </ModalPortal>
+      )}
     </div>
   );
 }

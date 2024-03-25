@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Input from "@/app/_component/Input";
+import ValidationCheckList from "@/app/_component/ValidationCheckList";
 import { constant } from "@/utils/constant";
 
 import { useJoinDataContext } from "../_context/JoinContext";
@@ -14,12 +16,12 @@ export default function JoinName() {
     data: { submitData, visibleBtn, processType },
     setDataField,
     setVisibleBtn,
-    setProcessType,
   } = useJoinDataContext();
+  const router = useRouter();
   const [validation, setValidation] = useState({
     len: false,
     space: false,
-    duplication: 0, // 0 1 2
+    duplication: 0, // 0. 중복확인 1. 통과 2. 닉네임 중복에러
   });
   const regex = /\s/;
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,30 +61,60 @@ export default function JoinName() {
           ...prev,
           len: false,
           space: false,
-          duplication: 1,
+          duplication: 0,
         };
       });
     }
     setDataField(name, value);
     // setVisibleBtn(false);
   };
-  const checkDuplication = async () => {
-    const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+  const resetInput = () => {
+    setValidation((prev) => {
+      return {
+        ...prev,
+        len: false,
+        space: false,
+        duplication: 0,
+      };
     });
-    const { duplicate }: { duplicate: boolean } = await res.json();
-    if (duplicate) {
-      setValidation((prev) => {
-        return {
-          ...prev,
-          duplication: 1,
-        };
+    setDataField("nickname", "");
+  };
+  const checkDuplication = async () => {
+    try {
+      const res = await fetch(constant.apiUrl + "api/user/validate/nickname?nickname=" + submitData.nickname, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
-    } else {
+      const { duplicate, status }: { duplicate: boolean; status?: number } = await res.json();
+      if (status === 400) {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 2,
+          };
+        });
+        return;
+      }
+      if (duplicate) {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 1,
+          };
+        });
+      } else {
+        setValidation((prev) => {
+          return {
+            ...prev,
+            duplication: 2,
+          };
+        });
+      }
+    } catch (err) {
+      console.error(err);
       setValidation((prev) => {
         return {
           ...prev,
@@ -93,9 +125,24 @@ export default function JoinName() {
     // 잘 되면
   };
 
+  const validationList = [
+    {
+      validation: validation.len,
+      label: "2자 이상",
+    },
+    {
+      validation: validation.duplication === 2,
+      label: "중복 닉네임 없음",
+    },
+    {
+      validation: validation.space,
+      label: "공백 없음",
+    },
+  ];
+
   const handleNext = () => {
     if (visibleBtn && processType === 1) {
-      setProcessType(2);
+      router.push("/join/?processType=2");
     }
   };
 
@@ -126,7 +173,14 @@ export default function JoinName() {
             {validation.duplication === 2 ? (
               <Image className={styles.ico} src="/check-circle-md.svg" alt="확인 아이콘" width={24} height={24} />
             ) : (
-              <Image className={styles.ico} src="/x-circle-md.svg" alt="닫기 아이콘" width={24} height={24} />
+              <Image
+                onClick={resetInput}
+                className={styles.ico}
+                src="/x-circle-md.svg"
+                alt="닫기 아이콘"
+                width={24}
+                height={24}
+              />
             )}
           </div>
           {validation.duplication !== 2 && (
@@ -135,47 +189,14 @@ export default function JoinName() {
             </button>
           )}
         </div>
-        {validation.duplication === 0 && <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>}
+        {submitData.nickname.length > 1 && validation.duplication === 0 && (
+          <p className={styles.validation_txt}>닉네임 중복 여부를 확인해주세요!</p>
+        )}
         {validation.duplication === 1 && <p className={styles.validation_txt}>중복된 닉네임 입니다.</p>}
         {validation.duplication === 2 && (
           <p className={`${styles.validation_txt} ${styles.pass}`}>{submitData.nickname}님, 멋진 이름이네요!</p>
         )}
-        <ul className={styles.check_list}>
-          <li className={styles.check_list_item}>
-            <Image
-              className={styles.ico}
-              src={validation.len ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            2자리 이상
-          </li>
-          <li className={styles.check_list_item}>
-            <Image
-              className={styles.ico}
-              src={validation.space ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            공백 없음
-          </li>
-          {/* <li className={styles.check_list_item}>
-          <Image className={styles.ico} src="/check-md.svg" alt="닫기 아이콘" width={24} height={24} />
-          비속어 없음
-        </li> */}
-          <li className={styles.check_list_item}>
-            <Image
-              className={styles.ico}
-              src={validation.duplication === 2 ? "/check-pressed-md.svg" : "/check-md.svg"}
-              alt="닫기 아이콘"
-              width={24}
-              height={24}
-            />
-            중복 닉네임 없음
-          </li>
-        </ul>
+        <ValidationCheckList className={styles.check_list_margin} validationList={validationList} />
       </div>
       <NextBtn handleNext={handleNext} />
     </div>

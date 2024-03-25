@@ -2,8 +2,51 @@
 @import url("./variable.css");
 
 body {
+}
+
+.root_container {
   max-width: 450px;
   height: 100%;
   margin: 0 auto;
   position: relative;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: medium;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: bold;
+}
+
+body,
+button,
+textarea {
+  font-family: "Pretendard";
+}
+
+.adsbygoogle {
+  display: inline-block;
+  width: 320px;
+  height: 50px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+}
+.adsbygoogle-noablate {
+  transform: none !important;
 }

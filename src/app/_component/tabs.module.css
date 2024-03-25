@@ -1,10 +1,11 @@
 .tabsMenuContainer {
   display: flex;
+  margin-top: 60px;
   justify-content: space-around;
-  border-top: 1px solid var(--background-200);
   border-bottom: 1px solid var(--background-200);
-  height: 52px;
-  width: 390px;
+  height: 44px;
+  width: 100%;
+  padding: 4px 20px;
 }
 
 .tab {
@@ -15,6 +16,7 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--title-100);
+  padding: 12px 10px;
 }
 
 .tab.active {
@@ -22,19 +24,18 @@
 }
 
 .tabsProfileContainer {
-  width: 390px;
-  border-bottom: 1px solid var(--background-200);
+  width: 100%;
 }
 
 .profileTab {
-  width: 130px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
   cursor: pointer;
-  border-bottom: 2px solid var(--line-100);
+  border-bottom: 1px solid var(--line-100);
 }
 
 .tabLabel {
@@ -52,17 +53,12 @@
 
 .active {
   border-bottom-color: var(--title-100);
+  border-bottom-width: 2px;
 }
 
 .tabsContainer {
   display: flex;
   justify-content: space-around;
-}
-
-.profileTab {
-  width: 130px;
-  display: inline-block;
-  padding-bottom: 10px;
 }
 
 .profileTab.active .tabContent .tabLabel {

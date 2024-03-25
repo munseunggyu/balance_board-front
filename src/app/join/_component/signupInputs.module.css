@@ -4,6 +4,7 @@
   gap: 24px;
   margin-bottom: 30px;
   position: relative;
+  margin-top: 45px;
 }
 .email_err {
   color: var(--State-Warning-Red-300, #ff513d);
@@ -31,6 +32,11 @@
   font-size: 16px;
   flex: 1;
   color: var(--title-400);
+}
+@media (max-width: 450px) {
+  .input_max_width {
+    max-width: 120px;
+  }
 }
 
 .at {
@@ -98,25 +104,6 @@
 
 .password {
   width: 100%;
-}
-
-.check_list {
-  margin-top: 10px;
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  max-width: 253px;
-}
-.check_list_item {
-  display: flex;
-  min-width: 102px;
-  gap: 12px;
-  align-items: center;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
-  color: var(--body-950);
 }
 
 .input_password_confirm {

@@ -1,7 +1,10 @@
 .loginModal {
   width: 290px;
-  height: 390px;
+  /* height: 390px; */
   background-color: var(--body-200);
+  border-radius: 26px;
+  overflow: hidden;
+  padding-bottom: 20px;
 }
 
 .imageWrapper {
@@ -9,7 +12,7 @@
 }
 
 .imageWrapper img {
-  margin: 38px auto 30px;
+  margin: 30px auto 24px;
 }
 
 .easyloginMessage {
@@ -42,6 +45,9 @@
   height: 52px;
   background-color: var(--main-primary-500);
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loginButton span {
@@ -56,11 +62,12 @@
   height: 52px;
   background-color: var(--body-200);
   border-radius: 6px;
+  font-weight: 500;
 }
 
 .nextLoginButton span {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--main-primary-500);
 }
 
@@ -107,12 +114,11 @@
 }
 
 .questionModal {
-  display: flex;
-  flex-direction: column;
   width: 290px;
   height: 236px;
   background-color: var(--body-200);
   border-radius: 26px;
+  box-shadow: 0 3px 6px 0 rgba(204, 204, 204, 0.25);
 }
 
 .modalContent {
@@ -130,11 +136,15 @@
   color: var(--title-400);
 }
 
+.questionModalContent p {
+  margin-right: 2px;
+}
+
 .signModalContent {
+  margin-top: 4px;
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
-  padding-top: 4px;
   color: var(--body-950);
 }
 
@@ -146,19 +156,21 @@
   height: 52px;
   border-radius: 6px;
   background-color: var(--main-primary-500);
-  color: var(--main-secondary-100);
+  color: var(--body-100);
+  box-shadow: 0 3px 6px 0 rgba(242, 242, 242, 0.1);
 }
 
 .cancelButton {
   margin-top: 5px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 24px;
   width: 250px;
   height: 52px;
   border-radius: 6px;
   background-color: var(--body-200);
   color: var(--main-primary-500);
+  box-shadow: 0 3px 6px 0 rgba(242, 242, 242, 0.1);
 }
 
 .DeleteModal {
@@ -192,6 +204,29 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--main-secondary-100);
+}
+.develop_modal {
+  display: flex;
+  flex-direction: column;
+  width: 290px;
+  height: 180px;
+  background-color: var(--body-200);
+  border-radius: 26px;
+  padding: 36px 20px 20px 20px;
+}
+.develop_modal_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--title-400);
+
+  /* Botton/Botton-XL */
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 150%; /* 27px */
+}
+.develop_btn {
+  margin-top: 20px;
 }
 
 .goHomeModal {

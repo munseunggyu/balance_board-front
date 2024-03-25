@@ -1,6 +1,4 @@
 "use client";
-import { useEffect } from "react";
-
 import JoinGenderSelect from "./_component/JoinGenderSelect";
 import JoinName from "./_component/JoinName";
 import JoinNav from "./_component/JoinNav";
@@ -13,22 +11,10 @@ import styles from "./join.module.css";
 export default function Join() {
   const {
     data: { submitData, processType },
-    setProcessType,
   } = useJoinDataContext();
 
-  useEffect(() => {
-    if (processType === 0) return;
-    const preventGoBack = () => {
-      history.pushState(null, "", location.href);
-      setProcessType(processType - 1);
-    };
-    history.pushState(null, "", location.href);
-    window.addEventListener("popstate", preventGoBack);
-
-    return () => window.removeEventListener("popstate", preventGoBack);
-  }, [processType]);
   return (
-    <div>
+    <div className={styles.container_bgc}>
       <JoinNav />
       <main className={styles.container}>
         <h2 className={styles.h2}>
@@ -67,8 +53,6 @@ export default function Join() {
         ) : (
           <MultiInput />
         )}
-
-        {/* <NextBtn /> */}
       </main>
     </div>
   );

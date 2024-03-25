@@ -3,10 +3,18 @@ import React, { ComponentPropsWithRef } from "react";
 
 import styles from "./button.module.css";
 
-interface IButton extends ComponentPropsWithRef<"button"> {
-  bgColor?: "primary" | "background_100" | "background_200" | "body_200" | "secondary_300";
+export interface IButton extends ComponentPropsWithRef<"button"> {
+  bgColor?:
+    | "primary"
+    | "background_100"
+    | "background_200"
+    | "body_200"
+    | "secondary_300"
+    | "body_100"
+    | "primary_50"
+    | "title_400";
   rounded?: "none" | "rounded" | "large";
-  border?: "none" | "primary" | "gray" | "orange";
+  border?: "none" | "primary" | "gray" | "orange" | "primary_600";
   color?: "none" | "primary";
   size?: "normal" | "small";
   fullWidth?: boolean;

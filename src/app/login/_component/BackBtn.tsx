@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import backIco from "../../../../public/direction-left-md.svg";
 import styles from "../login.module.css";
 
 export default function BackBtn() {
@@ -13,7 +14,7 @@ export default function BackBtn() {
   };
   return (
     <button onClick={back} className={styles.back_btn}>
-      <Image src="/image5.png" alt="Page 1" width={24} height={24} />
+      <Image src={backIco} alt="뒤로가기" width={24} height={24} />
     </button>
   );
 }

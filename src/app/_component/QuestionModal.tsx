@@ -1,22 +1,28 @@
 import Image from "next/image";
 
+import { userImgUrl } from "@/utils/userImgUrl";
+
 import styles from "./modal.module.css";
 
 interface QuestionModalProps {
-  question: string;
-  sign: string;
-  continueText: string;
-  cancelText: string;
-  imageUrl: string;
+  modalForm: {
+    question: string;
+    sign: string;
+    continueText: string;
+    cancelText: string;
+    imageUrl: number;
+  };
+  className?: string;
 }
 
-export default function QuestionModal({ question, sign, continueText, cancelText, imageUrl }: QuestionModalProps) {
+export default function QuestionModal({ modalForm }: QuestionModalProps) {
+  const { question, sign, continueText, cancelText, imageUrl } = modalForm;
   return (
     <div className={styles.questionModal}>
       <div className={styles.modalContent}>
         <div className={styles.questionModalContent}>
           <p>{question}</p>
-          <Image src={imageUrl} alt="Tear-face" width={24} height={24} />
+          <Image src={userImgUrl(imageUrl)} alt="Tear-face" width={24} height={24} />
         </div>
         <div className={styles.signModalContent}>
           <p>{sign}</p>

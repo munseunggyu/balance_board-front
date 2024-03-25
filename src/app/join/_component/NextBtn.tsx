@@ -42,7 +42,6 @@ export default function NextBtn({ handleNext, txt = "다음" }: IProps) {
         setNowVisibleBtn(false);
       }
     }
-    console.log("visibleBtn", visibleBtn);
   }, [visibleBtn]);
   return (
     <Button

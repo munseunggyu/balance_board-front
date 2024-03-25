@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 import Button from "@/app/_component/Button";
@@ -8,22 +9,20 @@ import styles from "./joinGenderSelect.module.css";
 import NextBtn from "./NextBtn";
 
 export default function JoinGenderSelect() {
+  const router = useRouter();
   const {
     data: { submitData, visibleBtn, processType },
     setDataField,
     setVisibleBtn,
-    setProcessType,
   } = useJoinDataContext();
   const selectGender = (value: string) => {
-    // setGender(value);
-    console.log(processType);
     setDataField("gender", value);
     setVisibleBtn(true);
   };
 
   const handleNext = () => {
     if (visibleBtn && processType === 2) {
-      setProcessType(3);
+      router.push("/join/?processType=3");
     }
   };
 
