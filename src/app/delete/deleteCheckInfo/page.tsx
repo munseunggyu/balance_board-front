@@ -27,7 +27,7 @@ export default function DeleteCheckPage() {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ password: userPassword }),
       });
