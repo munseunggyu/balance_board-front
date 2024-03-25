@@ -16,6 +16,8 @@ export interface ILogin {
     accessToken: string;
     refreshToken: string;
   };
+  accessToken?: string;
+  refreshToken?: string;
   nickname: string;
   userId: number;
   isLogin: boolean;
@@ -69,6 +71,8 @@ export default function LoginForm() {
       }
       if (data.jwtToken) {
         localStorage.setItem("token", data.jwtToken?.accessToken);
+        localStorage.setItem("refreshToken", data.jwtToken?.refreshToken);
+
         setUserData({
           ...data,
           isLogin: 1,

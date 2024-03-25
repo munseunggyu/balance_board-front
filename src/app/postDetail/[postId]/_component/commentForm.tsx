@@ -39,6 +39,7 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
         },
         body: JSON.stringify({
           userId: userInfo.userId,
@@ -50,11 +51,11 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
       return data;
     },
     onSuccess(response) {
-      const userToken = localStorage.getItem("token");
+      const userToken = userInfo.jwtToken.accessToken;
       const headers: { [key: string]: string } = {};
 
       if (userToken) {
-        headers.Authorization = userToken;
+        headers.Authorization = `Bearer ${userToken}`;
       }
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);

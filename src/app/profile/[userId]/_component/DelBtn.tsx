@@ -32,7 +32,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `${userInfo?.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo?.jwtToken.accessToken}`,
         },
         body: JSON.stringify({
           postId,
