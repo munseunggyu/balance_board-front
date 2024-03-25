@@ -27,6 +27,7 @@ export default function CommentInput({ postId }: IProps) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
         },
         body: JSON.stringify({
           postId,

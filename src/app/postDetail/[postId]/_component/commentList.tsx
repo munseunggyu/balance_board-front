@@ -93,7 +93,7 @@ function Comment({ comment, postId, handleOpenDelAlertMoal }: CommentProps) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `${userInfo.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
         },
         body: JSON.stringify({
           commentId: comment.commentId,

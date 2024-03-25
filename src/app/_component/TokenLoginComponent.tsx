@@ -4,18 +4,27 @@ import React, { useEffect } from "react";
 import { useUserDataContext } from "@/context/AuthContext";
 import { constant } from "@/utils/constant";
 
-import { ILogin } from "../login/_component/LoginForm";
+interface IToken {
+  email: string;
+  accessToken: string;
+  userId: number;
+  imageType: number;
+  nickname: string;
+}
 
 export default function TokenLoginComponent() {
   const { setUserData } = useUserDataContext();
   let token: string | null = null;
+  let refreshToken: string | null = null;
   if (typeof window !== "undefined") {
     // Client-side-only code
     token = localStorage.getItem("token");
+    refreshToken = localStorage.getItem("refreshToken");
   }
 
   const tokenLogin = async () => {
-    if (!token) {
+    console.log(token, refreshToken);
+    if (!token || !refreshToken) {
       setUserData({
         email: "",
         jwtToken: {
@@ -30,21 +39,30 @@ export default function TokenLoginComponent() {
       return;
     }
     const res = await fetch(constant.apiUrl + "api/user/login/token", {
-      method: "POST",
+      method: "GET",
       headers: {
         Accept: "application/json",
-        Authorization: `${token}`,
+        Authorization: `Bearer ${token}`,
+        refreshToken: refreshToken,
       },
+      credentials: "include",
     });
-    const data: ILogin = await res.json();
-    if (data.jwtToken) {
+    const data: IToken = await res.json();
+    const userData = {
+      ...data,
+      jwtToken: {
+        accessToken: data.accessToken,
+        refreshToken,
+      },
+    };
+    if (data.accessToken) {
       setUserData({
-        ...data,
+        ...userData,
         isLogin: 1,
       });
     } else {
       setUserData({
-        ...data,
+        ...userData,
         isLogin: 2,
       });
     }
