@@ -34,6 +34,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
         },
         body: JSON.stringify({
           userId: userInfo.userId,
