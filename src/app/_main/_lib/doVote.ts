@@ -1,7 +1,6 @@
 import { constant } from "@/utils/constant";
 
-export const doVote = async (postId: number, userId: number, selectedOption: string) => {
-  const token = localStorage.getItem("token");
+export const doVote = async (postId: number, userId: number, selectedOption: string, token: string) => {
   const res = await fetch(constant.apiUrl + "api/main/new/vote", {
     method: "POST",
     headers: {

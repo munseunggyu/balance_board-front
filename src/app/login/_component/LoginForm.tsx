@@ -69,9 +69,6 @@ export default function LoginForm() {
         return false;
       }
       if (data.jwtToken) {
-        localStorage.setItem("token", data.jwtToken?.accessToken);
-        localStorage.setItem("refreshToken", data.jwtToken?.refreshToken);
-
         setUserData({
           ...data,
           isLogin: 1,

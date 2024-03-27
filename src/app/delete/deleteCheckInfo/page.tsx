@@ -22,20 +22,21 @@ export default function DeleteCheckPage() {
   };
 
   const handleWithdrawal = async () => {
-    const token = localStorage.getItem("token");
     try {
       const res = await fetch(constant.apiUrl + "api/user/withdrawal", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
         },
         body: JSON.stringify({ password: userPassword }),
       });
       if (res.status === 200) {
-        localStorage.removeItem("token");
         userInfo.isLogin = 2;
+        await fetch(constant.baseUrl + "api/logout", {
+          method: "GET",
+        });
         handleGoToLast();
       } else {
         setIsError(false);
