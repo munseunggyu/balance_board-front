@@ -29,11 +29,10 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
 
   const doVote = useMutation({
     mutationFn: async () => {
-      const userToken = localStorage.getItem("token");
       const headers: { [key: string]: string } = {};
 
-      if (userToken) {
-        headers.Authorization = userToken;
+      if (userInfo.jwtToken.accessToken) {
+        headers.Authorization = `Bearer ${userInfo.jwtToken.accessToken}`;
       }
       const res = await fetch(constant.apiUrl + "api/main/new/vote", {
         method: "POST",
@@ -51,12 +50,11 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
       return await res.json();
     },
     async onSuccess() {
-      const userToken = localStorage.getItem("token");
       const headers: { [key: string]: string } = {};
-
-      if (userToken) {
-        headers.Authorization = userToken;
+      if (userInfo.jwtToken.accessToken) {
+        headers.Authorization = `Bearer ${userInfo.jwtToken.accessToken}`;
       }
+
       const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
         headers: headers,
       });
