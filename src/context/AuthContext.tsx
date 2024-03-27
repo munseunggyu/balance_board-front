@@ -33,6 +33,7 @@ const initialData: IAuth = {
 interface DataContextType {
   userInfo: IAuth;
   setUserData: (payload: IAuth) => void;
+  logoutContext: () => void;
 }
 
 // createContext를 사용하여 새로운 컨텍스트를 생성
@@ -55,11 +56,16 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     setUserInfo(payload);
   };
 
+  const logoutContext = () => {
+    setUserInfo({ ...initialData, isLogin: 2 });
+  };
+
   return (
     <DataContext.Provider
       value={{
         userInfo,
         setUserData,
+        logoutContext,
       }}
     >
       {children}
