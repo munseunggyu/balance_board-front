@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { useUserDataContext } from "@/context/AuthContext";
+import { constant } from "@/utils/constant";
 
 import directon_right from "../../../public/direction-right-md.svg";
 import SettingNav from "./_component/SettingNav";
@@ -14,8 +15,10 @@ export default function Page() {
 
   const { userInfo } = useUserDataContext();
 
-  const handleLogoutBtn = () => {
-    localStorage.removeItem("token");
+  const handleLogoutBtn = async () => {
+    await fetch(constant.baseUrl + "api/logout", {
+      method: "GET",
+    });
     userInfo.isLogin = 2;
     router.push("/");
   };

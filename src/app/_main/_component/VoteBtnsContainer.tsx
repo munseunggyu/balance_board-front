@@ -128,6 +128,8 @@ export default function VoteBtnsContainer({
 
   useEffect(() => {
     if (!post.selectedOption) {
+      setOption1BtnType(0);
+      setOption2BtnType(0);
       return;
     }
     if (post.selectedOption === option1) {

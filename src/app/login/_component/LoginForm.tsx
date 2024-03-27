@@ -6,7 +6,6 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import Input from "@/app/_component/Input";
 import { useUserDataContext } from "@/context/AuthContext";
-import { constant } from "@/utils/constant";
 
 import styles from "./loginForm.module.css";
 
@@ -49,7 +48,7 @@ export default function LoginForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch(constant.apiUrl + "api/user/login", {
+      const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
