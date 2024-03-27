@@ -79,7 +79,7 @@ export default function VoteBtnsContainer({
 
   const handleVote = useMutation({
     mutationFn: () => {
-      return doVote(postId, userInfo.userId, selectOption);
+      return doVote(postId, userInfo.userId, selectOption, userInfo.jwtToken.accessToken);
     },
     onSuccess() {
       const queryCache = queryClient.getQueryCache();
