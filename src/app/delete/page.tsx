@@ -20,7 +20,7 @@ export default function DeletePage() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(true);
   const [userPassword, setUserPassword] = useState<string>("");
-  const { userInfo } = useUserDataContext();
+  const { userInfo, logoutContext } = useUserDataContext();
 
   useEffect(() => {
     const handlePopstate = () => {
@@ -65,6 +65,7 @@ export default function DeletePage() {
         console.error("회원 탈퇴 오류", error);
       }
     } else {
+      logoutContext();
       router.push("/");
     }
   };
