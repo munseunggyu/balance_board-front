@@ -3,21 +3,6 @@
   padding: 0 20px;
 }
 
-.deleteHeader {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 36px;
-  color: var(--title-400);
-}
-
-.deleteSubTitle {
-  margin-top: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-  color: var(--body-950);
-}
-
 .deleteContent {
   height: calc(100% - 20px);
   margin-top: 14px;
