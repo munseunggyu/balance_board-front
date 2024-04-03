@@ -84,6 +84,7 @@ export default function DeletePage() {
     BtnContent = "탈퇴하기";
   } else if (step === 3) {
     pageContent = <DeleteLastPage />;
+    BtnContent = "홈으로 가기";
   }
 
   return (
@@ -101,11 +102,11 @@ export default function DeletePage() {
           </button>
         ) : step === 2 ? (
           <button className={`${styles.deleteBtn} ${userPassword ? styles.warningBtn : ""}`} onClick={handleNext}>
-            탈퇴하기
+            {BtnContent}
           </button>
         ) : (
           <button className={styles.deleteGoBtn} onClick={handleNext}>
-            홈으로 가기
+            {BtnContent}
           </button>
         )}
       </div>
