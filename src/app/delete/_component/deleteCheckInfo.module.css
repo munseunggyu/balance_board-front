@@ -1,14 +1,6 @@
 .deleteCheckContainer {
-  position: relative;
   margin-top: 30px;
   padding: 0 20px;
-}
-
-.deleteHeader {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 36px;
-  color: var(--title-400);
 }
 
 .deleteCheckPassword {
