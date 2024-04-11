@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: `https://balanceboard.swygbro.com/sitemap.xml`,
+    // sitemap: `https://balanceboard.swygbro.com/sitemap.xml`,
   };
 }
