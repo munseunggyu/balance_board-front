@@ -17,7 +17,7 @@ export default function UserInfo({ postData }: IUserInfoProps) {
         <Image src={userImgUrl(postData.imageType)} alt="유저 이미지" width={24} height={24} />
       </div>
       <div className={styles.userInfoContainer}>
-        <span className={styles.userName}>{postData.nickname}</span>
+        <span className="text-title-200 text-xs font-medium leading-4 mr-3">{postData.nickname}</span>
         <span className={styles.userPostTime}>{dateFormat(postData.created)}</span>
       </div>
       <div className={styles.topicContainer}>
