@@ -3,32 +3,24 @@ import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import React, { useEffect } from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { ILogin } from "@/modal/User";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
-// import { cookies } from "next/headers";
-
-export interface IToken {
-  email: string;
-  accessToken: string;
-  userId: number;
-  imageType: number;
-  nickname: string;
-  message: string;
-}
 interface IProps {
   accessToken: string | null;
   refreshToken: string | null;
 }
 
 export default function TokenLoginComponent({ accessToken, refreshToken }: IProps) {
-  const { setUserData, logoutContext } = useUserDataContext();
+  const storeLogin = useAuthStore((state) => state.storeLogin);
+  const storeLogout = useAuthStore((state) => state.storeLogout);
 
   const tokenLogin = async () => {
     if (!accessToken || !refreshToken) {
       await fetch(constant.baseUrl + "api/logout", {
         method: "GET",
       });
-      logoutContext();
+      storeLogout();
       return;
     }
     const res = await fetch(constant.baseUrl + "api/refresh/token", {
@@ -40,31 +32,21 @@ export default function TokenLoginComponent({ accessToken, refreshToken }: IProp
       },
       credentials: "include",
     });
-    const data: IToken = await res.json();
+    const data: ILogin = await res.json();
     if (data.message) {
       await fetch(constant.baseUrl + "api/logout", {
         method: "GET",
       });
-      logoutContext();
+      storeLogout();
       return;
     }
-    const userData = {
-      ...data,
-      jwtToken: {
-        accessToken: data.accessToken,
-        refreshToken,
-      },
-    };
     if (data.accessToken) {
-      setUserData({
-        ...userData,
+      storeLogin({
+        ...data,
         isLogin: 1,
       });
     } else {
-      setUserData({
-        ...userData,
-        isLogin: 2,
-      });
+      storeLogout();
     }
   };
 
@@ -91,7 +73,7 @@ export default function TokenLoginComponent({ accessToken, refreshToken }: IProp
       await fetch(constant.baseUrl + "api/logout", {
         method: "GET",
       });
-      logoutContext();
+      storeLogout();
       return;
     }
     // const tokenValidation = checktokenValidation(1, accessToken);
@@ -106,7 +88,7 @@ export default function TokenLoginComponent({ accessToken, refreshToken }: IProp
       void fetch(constant.baseUrl + "api/logout", {
         method: "GET",
       });
-      logoutContext();
+      storeLogout();
     } else {
       void tokenLogin();
     }

@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-import { ILogin } from "@/app/login/_component/LoginForm";
+import { ILogin } from "@/modal/User";
 import { constant } from "@/utils/constant";
 
 export async function POST(req: NextRequest) {
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     }),
   });
   const data: ILogin = await res.json();
-  if (data.message) {
+  if (data?.message || !data.jwtToken) {
     return NextResponse.json({ data });
   }
   const token = data.jwtToken.accessToken;
@@ -35,5 +35,8 @@ export async function POST(req: NextRequest) {
   cookies().set("token", token);
   cookies().set("refreshToken", refreshToken, { expires: refreshTokenTime });
 
-  return NextResponse.json(data);
+  return NextResponse.json({
+    ...data,
+    accessToken: data.jwtToken.accessToken,
+  });
 }

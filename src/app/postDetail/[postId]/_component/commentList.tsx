@@ -8,8 +8,8 @@ import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
 import DelAlertModal from "@/app/profile/[userId]/_component/DelAlertModal";
 import DeleteConfirmModal from "@/app/profile/[userId]/_component/DeleteConfirmModal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 import { formatDay, formatTime } from "@/utils/foramattime";
 import { userImgUrl } from "@/utils/userImgUrl";
@@ -84,7 +84,7 @@ function Comment({ comment, postId, handleOpenDelAlertMoal }: CommentProps) {
     handleOpenMoal: handleOpenDelConfirmMoal,
     handleCloseModal: handleCloseDelConfirmModal,
   } = useModal();
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const queryClient = useQueryClient();
   const delComment = useMutation({
     mutationFn: () => {
@@ -93,7 +93,7 @@ function Comment({ comment, postId, handleOpenDelAlertMoal }: CommentProps) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
         body: JSON.stringify({
           commentId: comment.commentId,

@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 import { userImgUrl } from "@/utils/userImgUrl";
 
 import profileImg from "../../../public/profile-md-test.png";
 
 export default function NavUserProfile() {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   if (userInfo.isLogin === 1) {
     return (

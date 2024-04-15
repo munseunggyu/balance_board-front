@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
 import WritingCategory from "./_component/WritingCategory";
 import WritingContent from "./_component/WritingContent";
@@ -14,7 +14,7 @@ import WritingVoteInput from "./_component/WritingVoteInput";
 import styles from "./writing.module.css";
 
 export default function Writing() {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [selectedCategory, setSelecteCategory] = useState<string | null>("");
   const [title, setTitle] = useState<string | null>("");
   const [content, setContent] = useState<string | null>("");

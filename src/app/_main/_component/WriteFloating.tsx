@@ -6,13 +6,13 @@ import React from "react";
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 
 import styles from "./writeFloating.module.css";
 export default function WriteFloating() {
   const router = useRouter();
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const handleClick = () => {
@@ -22,7 +22,7 @@ export default function WriteFloating() {
       handleOpenMoal();
     }
   };
-  // href={"/writing"}
+
   return (
     <>
       <button onClick={handleClick} className={styles.floating}>

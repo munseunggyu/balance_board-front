@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { IToken } from "@/app/_component/TokenLoginComponent";
+import { ILogin } from "@/modal/User";
 import { constant } from "@/utils/constant";
 
 export async function GET() {
@@ -25,7 +25,7 @@ export async function GET() {
     },
     credentials: "include",
   });
-  const data: IToken = await res.json();
+  const data: ILogin = await res.json();
   if (data.message) {
     cookies().delete("token");
     cookies().delete("refreshToken");

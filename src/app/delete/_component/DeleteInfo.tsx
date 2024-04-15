@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
 import checked_circle from "../../../../public/check-circle-1-lg.svg";
 import check_circle from "../../../../public/check-circle-2-lg.svg";
@@ -15,7 +15,7 @@ interface IDeleteInfoProps {
 }
 
 export default function DeleteInfo({ isChecked, setIsChecked }: IDeleteInfoProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
