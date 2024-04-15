@@ -8,8 +8,8 @@ import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
 import TextArea from "@/app/_component/TextArea";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 import { userImgUrl } from "@/utils/userImgUrl";
 
@@ -23,7 +23,7 @@ interface ICommentFormProps {
 
 export default function CommentForm({ userImage, postData }: ICommentFormProps) {
   const queryClient = useQueryClient();
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [newComment, setNewComment] = useState<string>("");
   const [isComment, setIsComment] = useState<boolean>(false);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
@@ -39,7 +39,7 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
         body: JSON.stringify({
           userId: userInfo.userId,
@@ -51,7 +51,7 @@ export default function CommentForm({ userImage, postData }: ICommentFormProps) 
       return data;
     },
     onSuccess(response) {
-      const userToken = userInfo.jwtToken.accessToken;
+      const userToken = userInfo.accessToken;
       const headers: { [key: string]: string } = {};
 
       if (userToken) {

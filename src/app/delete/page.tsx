@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 
 import DeleteCheckPage from "./_component/DeleteCheckPage";
@@ -20,7 +20,8 @@ export default function DeletePage() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(true);
   const [userPassword, setUserPassword] = useState<string>("");
-  const { userInfo, logoutContext } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
+  const storeLogout = useAuthStore((state) => state.storeLogout);
 
   useEffect(() => {
     const handlePopstate = () => {
@@ -46,7 +47,7 @@ export default function DeletePage() {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
+            Authorization: `Bearer ${userInfo.accessToken}`,
           },
           body: JSON.stringify({ password: userPassword }),
         });
@@ -65,7 +66,7 @@ export default function DeletePage() {
         console.error("회원 탈퇴 오류", error);
       }
     } else {
-      logoutContext();
+      storeLogout();
       router.push("/");
     }
   };

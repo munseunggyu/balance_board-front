@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 import NotContent from "@/app/_component/NotContent";
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
 import { useGetComments } from "../_hook/useGetComments";
 import { getPostDetailData } from "../_lib/getPostDetailData";
@@ -15,10 +15,10 @@ import ContentVote from "./contentVote";
 import PostContent from "./postContent";
 import UserInfo from "./userInfo";
 export default function PostDetailContainer({ postId }: { postId: number }) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   let token: null | string = null;
   if (userInfo.isLogin === 1) {
-    token = userInfo.jwtToken?.accessToken;
+    token = userInfo.accessToken;
   }
   const { data: postData } = useQuery<IPostData>({
     queryKey: ["post", "detail", postId, userInfo.isLogin],

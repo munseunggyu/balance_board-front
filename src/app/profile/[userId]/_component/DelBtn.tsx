@@ -6,8 +6,8 @@ import React from "react";
 
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 
 import { getProfilePostData } from "../_lib/getProfilePostData";
@@ -16,7 +16,7 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
 import styles from "./profilePostCard.module.css";
 
 export default function DelBtn({ postId, userId }: { postId: number; userId: number }) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const {
     openModal: openDelConfirmModal,
     handleOpenMoal: handleOpenDelConfirmMoal,
@@ -32,7 +32,7 @@ export default function DelBtn({ postId, userId }: { postId: number; userId: num
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo?.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
         body: JSON.stringify({
           postId,

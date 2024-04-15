@@ -1,5 +1,5 @@
-import { IAuth } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
+import { IUser } from "@/modal/User";
 import { constant } from "@/utils/constant";
 
 export const getPostList = async ({
@@ -8,12 +8,12 @@ export const getPostList = async ({
   size = 10,
 }: {
   pageParam: number;
-  userInfo: IAuth;
+  userInfo: IUser;
   size?: number;
 }) => {
   let res;
   if (userInfo.isLogin === 1) {
-    const token = userInfo?.jwtToken.accessToken;
+    const token = userInfo.accessToken;
     res = await fetch(constant.apiUrl + `api/main/posts?page=${pageParam}&size=${size}`, {
       method: "GET",
       headers: {
@@ -44,7 +44,7 @@ export const getCategoryPostList = async ({
 }: {
   pageParam: number;
   category: string;
-  userInfo: IAuth;
+  userInfo: IUser;
 }) => {
   let categoryParams = category;
   if (category === "정치・경제") {
@@ -52,7 +52,7 @@ export const getCategoryPostList = async ({
   }
   let res;
   if (userInfo.isLogin === 1) {
-    const token = userInfo?.jwtToken.accessToken;
+    const token = userInfo.accessToken;
     res = await fetch(constant.apiUrl + `api/main/${categoryParams}?page=${pageParam}&size=10`, {
       method: "GET",
       headers: {
