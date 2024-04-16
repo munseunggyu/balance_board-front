@@ -67,8 +67,6 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
     doVote.mutate();
   };
 
-  const UpVoted = postData.option1Count > postData.option2Count;
-  const DownVoted = postData.option2Count > postData.option1Count;
   const SumVoted = postData.option2Count + postData.option1Count;
   const UpPercent =
     postData.option1Count === 0
@@ -86,26 +84,19 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
   return (
     <div className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}>
       <button
-        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && UpVoted && styles.upVoted} ${!postData.selectedOption && userSelectedOption === postData.option1 ? styles.userSelected : ""}`}
-        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option1)}
+        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
+        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
         disabled={!!postData.selectedOption}
       >
         <div className={styles.voteButtonContainer}>
           {postData.selectedOption === postData.option1 ? (
-            UpVoted ? (
-              <div className={styles.voteButtonImageContainer}>
-                <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
-                {postData.option1}
-              </div>
-            ) : (
-              <div className={styles.voteButtonImageContainer}>
-                <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
-                {postData.option1}
-              </div>
-            )
+            <div className={styles.voteButtonImageContainer}>
+              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+              {postData.option1}
+            </div>
           ) : userSelectedOption === postData.option1 ? (
             <div className={styles.voteButtonImageContainer}>
-              <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
+              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option1}
             </div>
           ) : (
@@ -115,26 +106,24 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
         </div>
       </button>
       <button
-        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""} ${postData.selectedOption && DownVoted && styles.downVoted} ${!postData.selectedOption && userSelectedOption === postData.option2 ? styles.userSelected : ""}`}
+        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
         onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
         disabled={!!postData.selectedOption}
+        style={{
+          background: postData.selectedOption
+            ? `linear-gradient(to right, #01D066 ${DownPercent}%, transparent ${DownPercent}%)`
+            : "transparent",
+        }}
       >
         <div className={styles.voteButtonContainer}>
           {postData.selectedOption === postData.option2 ? (
-            DownVoted ? (
-              <div className={styles.voteButtonImageContainer}>
-                <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
-                {postData.option2}
-              </div>
-            ) : (
-              <div className={styles.voteButtonImageContainer}>
-                <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
-                {postData.option2}
-              </div>
-            )
+            <div className={styles.voteButtonImageContainer}>
+              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+              {postData.option2}
+            </div>
           ) : userSelectedOption === postData.option2 ? (
             <div className={styles.voteButtonImageContainer}>
-              <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
+              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
             </div>
           ) : (
