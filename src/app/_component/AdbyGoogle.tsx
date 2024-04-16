@@ -16,6 +16,8 @@ export default function AdbyGoogle() {
   };
   return (
     <>
+      <Script src="//developers.kakao.com/sdk/js/kakao.min.js"></Script>
+
       <Script
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1919598055512436"
         crossOrigin="anonymous"

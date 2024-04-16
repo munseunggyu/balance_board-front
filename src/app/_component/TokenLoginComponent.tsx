@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
@@ -94,6 +95,16 @@ export default function TokenLoginComponent({ accessToken, refreshToken }: IProp
     }
   };
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("hi");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const kakao = (window as any).Kakao;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      if (!kakao.isInitialized()) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+      }
+    }
     void tokenCheck();
     const interval = setInterval(
       () => {
