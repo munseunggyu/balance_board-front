@@ -15,7 +15,7 @@ export default function JoinNav() {
   const code = searchParams.get("code");
   const kakaoLogin = async () => {
     await fetch(constant.apiUrl + "api/user/kakao", {
-      method: "POST",
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
