@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
+import { constant } from "@/utils/constant";
 
 import directon_right from "../../../public/direction-right-md.svg";
 import SettingNav from "./_component/SettingNav";
@@ -12,16 +13,20 @@ import styles from "./setting.module.css";
 export default function Page() {
   const router = useRouter();
 
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
+  const storeLogout = useAuthStore((state) => state.storeLogout);
 
-  const handleLogoutBtn = () => {
-    localStorage.removeItem("token");
-    userInfo.isLogin = 2;
+  const handleLogoutBtn = async () => {
+    await fetch(constant.baseUrl + "api/logout", {
+      method: "GET",
+    });
+
+    storeLogout();
     router.push("/");
   };
 
   const handleGoToDeleteBtn = () => {
-    router.push("/delete/deleteInfo");
+    router.push("/delete");
   };
 
   return (

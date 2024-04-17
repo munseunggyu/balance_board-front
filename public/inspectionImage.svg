@@ -1,0 +1,32 @@
+<svg width="196" height="170" viewBox="0 0 196 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="37" cy="30" rx="37" ry="30" fill="#EBEBEB"/>
+<path d="M60 64C48 62 45.9444 53.6154 45 50.1538L58.2222 46C55 57 57 62 60 64Z" fill="#EBEBEB"/>
+<circle cx="21" cy="30" r="4" fill="#CCCCCC"/>
+<circle cx="37" cy="30" r="4" fill="#CCCCCC"/>
+<circle cx="53" cy="30" r="4" fill="#CCCCCC"/>
+<rect x="74" y="60" width="14" height="8" fill="#EBEBEB"/>
+<rect width="14" height="8" transform="matrix(0.866026 -0.499999 0.500001 0.866025 75 71)" fill="#EBEBEB"/>
+<ellipse cx="114.5" cy="72.4999" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="114.5" cy="114.5" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="140" cy="93.4999" rx="31.0424" ry="31.4999" fill="#63D001"/>
+<ellipse cx="162.5" cy="72.4999" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="162.5" cy="114.5" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="128" cy="84.5" rx="3" ry="2.99999" fill="#0D0D0D"/>
+<ellipse cx="149" cy="84.5" rx="3" ry="2.99999" fill="#0D0D0D"/>
+<rect x="81.5" y="93.5" width="114" height="68.9999" rx="5.99999" fill="#D6D6D6"/>
+<rect x="123.5" y="158" width="30" height="12" rx="3" fill="#D6D6D6"/>
+<mask id="mask0_3423_26714" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="83" y="41" width="111" height="105">
+<ellipse cx="114.5" cy="72.4999" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="114.5" cy="114.5" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="140" cy="93.4999" rx="31.0424" ry="31.4999" fill="#63D001"/>
+<ellipse cx="162.5" cy="72.4999" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="162.5" cy="114.5" rx="31.5" ry="31.4999" fill="#63D001"/>
+<ellipse cx="128" cy="84.5" rx="3" ry="2.99999" fill="#0D0D0D"/>
+<ellipse cx="149" cy="84.5" rx="3" ry="2.99999" fill="#0D0D0D"/>
+</mask>
+<g mask="url(#mask0_3423_26714)">
+<path d="M0.50035 54.21C3.51486 69.8349 36.951 76.5221 75.1821 69.1462C113.413 61.7703 141.962 43.1245 138.947 27.4996" stroke="#F5FFFA" stroke-width="8.99999"/>
+</g>
+<path d="M129.5 117.5H141.324C144.735 117.5 147.5 120.265 147.5 123.676C147.5 127.088 144.735 129.853 141.324 129.853H129.5V117.5Z" fill="#F5F5F5"/>
+<path d="M129.5 126.146H141.324C144.735 126.146 147.5 128.912 147.5 132.323C147.5 135.734 144.735 138.499 141.324 138.499H129.5V126.146Z" fill="#F5F5F5"/>
+</svg>

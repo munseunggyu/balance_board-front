@@ -5,8 +5,8 @@ import { useState } from "react";
 import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 
 import { IPostData } from "../interfaces";
@@ -20,7 +20,7 @@ interface IContentVoteProps {
 export default function ContentVote({ postData, postId }: IContentVoteProps) {
   const queryClient = useQueryClient();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [userSelectedOption, setUserSelectedOption] = useState<string | null>(null);
 
   const handleOptionClick = (option: string) => {
@@ -29,11 +29,10 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
 
   const doVote = useMutation({
     mutationFn: async () => {
-      const userToken = localStorage.getItem("token");
       const headers: { [key: string]: string } = {};
 
-      if (userToken) {
-        headers.Authorization = userToken;
+      if (userInfo.accessToken) {
+        headers.Authorization = `Bearer ${userInfo.accessToken}`;
       }
       const res = await fetch(constant.apiUrl + "api/main/new/vote", {
         method: "POST",
@@ -51,12 +50,11 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
       return await res.json();
     },
     async onSuccess() {
-      const userToken = localStorage.getItem("token");
       const headers: { [key: string]: string } = {};
-
-      if (userToken) {
-        headers.Authorization = userToken;
+      if (userInfo.accessToken) {
+        headers.Authorization = `Bearer ${userInfo.accessToken}`;
       }
+
       const updatedRes = await fetch(constant.apiUrl + `api/main/posts/${postId}`, {
         headers: headers,
       });

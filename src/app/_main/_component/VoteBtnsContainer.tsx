@@ -5,8 +5,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import Button, { IButton } from "@/app/_component/Button";
-import { useUserDataContext } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
+import { useAuthStore } from "@/stores/user";
 
 import { doVote } from "../_lib/doVote";
 import styles from "./voteBtnContainer.module.css";
@@ -36,7 +36,7 @@ export default function VoteBtnsContainer({
   const option1Percent = ((option1Count / (voteCount || 1)) * 100).toFixed(1);
   const option2Percent = ((option2Count / (voteCount || 1)) * 100).toFixed(1);
   const queryClient = useQueryClient();
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [option1BtnType, setOption1BtnType] = useState(0);
   const [option2BtnType, setOption2BtnType] = useState(0);
   const [disableVoteBtn, setDisableVoteBtnVoteBtn] = useState(false);
@@ -79,7 +79,7 @@ export default function VoteBtnsContainer({
 
   const handleVote = useMutation({
     mutationFn: () => {
-      return doVote(postId, userInfo.userId, selectOption);
+      return doVote(postId, userInfo.userId, selectOption, userInfo.accessToken);
     },
     onSuccess() {
       const queryCache = queryClient.getQueryCache();
@@ -128,6 +128,8 @@ export default function VoteBtnsContainer({
 
   useEffect(() => {
     if (!post.selectedOption) {
+      setOption1BtnType(0);
+      setOption2BtnType(0);
       return;
     }
     if (post.selectedOption === option1) {

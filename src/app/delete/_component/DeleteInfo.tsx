@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
-import checked_circle from "../../../../../public/check-circle-1-lg.svg";
-import check_circle from "../../../../../public/check-circle-2-lg.svg";
+import checked_circle from "../../../../public/check-circle-1-lg.svg";
+import check_circle from "../../../../public/check-circle-2-lg.svg";
+import DeleteHeader from "./DeleteHeader";
 import styles from "./deleteInfo.module.css";
 
 interface IDeleteInfoProps {
@@ -14,7 +15,7 @@ interface IDeleteInfoProps {
 }
 
 export default function DeleteInfo({ isChecked, setIsChecked }: IDeleteInfoProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
@@ -22,13 +23,11 @@ export default function DeleteInfo({ isChecked, setIsChecked }: IDeleteInfoProps
 
   return userInfo.isLogin === 1 ? (
     <div className={styles.deleteContainer}>
-      <div className={styles.deleteHeader}>
-        <p>밸런스 보드를</p>
-        <p>탈퇴하시겠어요?</p>
-      </div>
-      <div className={styles.deleteSubTitle}>
-        <span>아래 내용을 반드시 확인해주세요.</span>
-      </div>
+      <DeleteHeader
+        headerMainText="밸런스보드를"
+        headerSubText="탈퇴하시겠어요?"
+        subText="아래 내용을 반드시 확인해주세요."
+      />
       <div className={styles.deleteContent}>
         <div className={styles.deleteProcess}>
           <div className={styles.deleteProcessHeaderContainer}>

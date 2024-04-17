@@ -4,8 +4,8 @@ import Image from "next/image";
 import React, { ChangeEventHandler, FormEvent, useState } from "react";
 
 import TextArea from "@/app/_component/TextArea";
-import { useUserDataContext } from "@/context/AuthContext";
 import { IPost } from "@/modal/Post";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 import { userImgUrl } from "@/utils/userImgUrl";
 
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export default function CommentInput({ postId }: IProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [comment, setComment] = useState("");
   const queryClient = useQueryClient();
 
@@ -27,7 +27,7 @@ export default function CommentInput({ postId }: IProps) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.jwtToken.accessToken}`,
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
         body: JSON.stringify({
           postId,

@@ -1,15 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+
+import { constant } from "@/utils/constant";
 
 import backIco from "../../../../public/direction-left-md.svg";
 import { useJoinDataContext } from "../_context/JoinContext";
 import styles from "./joinNav.module.css";
 export default function JoinNav() {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
+  const kakaoLogin = async () => {
+    await fetch(constant.apiUrl + "api/user/kakao", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        code,
+      }),
+    });
+  };
   const {
     data: { processType },
   } = useJoinDataContext();
@@ -25,6 +40,7 @@ export default function JoinNav() {
           <Image src={backIco} alt="뒤로가기" width={24} height={24} />
           <h1 className={styles.title}>Join</h1>
         </button>
+        <button onClick={kakaoLogin}>카카오 인가코드 서버로 보내기</button>
       </div>
       <div className={styles.progress_container}>
         <div className={styles.progress}>

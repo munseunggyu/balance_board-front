@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useEffect } from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
-import x_circle from "../../../../../public/x-circle-md.svg";
+import x_circle from "../../../../public/x-circle-md.svg";
 import styles from "./deleteCheckInfo.module.css";
+import DeleteHeader from "./DeleteHeader";
 
 interface IDeleteCheckPageProps {
   isPasswordCorrect: boolean;
@@ -25,7 +26,7 @@ export default function DeleteCheckInfo({
   isError,
   setIsError,
 }: IDeleteCheckPageProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   useEffect(() => {
     setIsPasswordCorrect(false);
@@ -43,13 +44,11 @@ export default function DeleteCheckInfo({
 
   return (
     <div className={styles.deleteCheckContainer}>
-      <div className={styles.deleteHeader}>
-        <p>안전한 탈퇴를 위해</p>
-        <p>가입정보를 확인해주세요.</p>
-      </div>
-      <div className={styles.deleteCheckPassword}>
-        <span>비밀번호를 입력해주세요.</span>
-      </div>
+      <DeleteHeader
+        headerMainText="안전한 탈퇴를 위해"
+        headerSubText="가입정보를 확인해주세요."
+        subText="비밀번호를 입력해주세요."
+      />
       <div className={styles.userInfoContainer}>
         <input type="id" value={userInfo.email} readOnly className={styles.userInfoEmail} />
         <div className={styles.userInfoPasswordContainer}>

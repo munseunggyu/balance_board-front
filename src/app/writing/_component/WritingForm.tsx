@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 
 import styles from "./writingNav.module.css";
@@ -21,7 +21,7 @@ interface IWritingFormProps {
 }
 
 export default function WritingForm({ selectedCategory, title, content, option1, option2, tags }: IWritingFormProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const [contentFulfilled, setContentFulfilled] = useState(false);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
@@ -34,6 +34,7 @@ export default function WritingForm({ selectedCategory, title, content, option1,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.accessToken}`,
         },
         body: JSON.stringify({
           userId: userInfo.userId,

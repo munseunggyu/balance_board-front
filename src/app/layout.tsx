@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
 
@@ -37,6 +38,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let accessToken: string | null = null;
+  let refreshToken: string | null = null;
+  const cookieStore = cookies();
+  cookieStore.getAll().forEach((v) => {
+    if (v.name === "token") {
+      accessToken = v.value;
+    }
+    if (v.name === "refreshToken") {
+      refreshToken = v.value;
+    }
+  });
   return (
     <html lang="en">
       <Script src="https://cdn.swygbro.com/public/widget/swyg-widget.js" />
@@ -44,7 +56,7 @@ export default function RootLayout({
         <RQProvider>
           <AuthContextProvider>
             <Suspense fallback={<Loading />}>
-              <TokenLoginComponent />
+              <TokenLoginComponent accessToken={accessToken} refreshToken={refreshToken} />
               <div className="root_container">{children}</div>
             </Suspense>
           </AuthContextProvider>

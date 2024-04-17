@@ -5,30 +5,14 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import Input from "@/app/_component/Input";
-import { useUserDataContext } from "@/context/AuthContext";
-import { constant } from "@/utils/constant";
+import { ILogin } from "@/modal/User";
+import { useAuthStore } from "@/stores/user";
 
 import styles from "./loginForm.module.css";
 
-export interface ILogin {
-  email: string;
-  jwtToken: {
-    accessToken: string;
-    refreshToken: string;
-  };
-  accessToken?: string;
-  refreshToken?: string;
-  nickname: string;
-  userId: number;
-  isLogin: boolean;
-  message?: string;
-  imageType: number;
-  status?: number;
-}
-
 export default function LoginForm() {
   const router = useRouter();
-  const { setUserData } = useUserDataContext();
+  const storeLogin = useAuthStore((state) => state.storeLogin);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -49,7 +33,7 @@ export default function LoginForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch(constant.apiUrl + "api/user/login", {
+      const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -70,10 +54,7 @@ export default function LoginForm() {
         return false;
       }
       if (data.jwtToken) {
-        localStorage.setItem("token", data.jwtToken?.accessToken);
-        localStorage.setItem("refreshToken", data.jwtToken?.refreshToken);
-
-        setUserData({
+        storeLogin({
           ...data,
           isLogin: 1,
         });

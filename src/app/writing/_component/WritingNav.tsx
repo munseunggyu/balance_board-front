@@ -4,15 +4,15 @@ import Image from "next/image";
 
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
+import { useAuthStore } from "@/stores/user";
 
 import direction_left from "../../../../public/direction-left-md.svg";
 import styles from "./writingNav.module.css";
 import WritingQuestionModal from "./WritingQuestionModal";
 
 export default function WritingNav({ title, children }: { title?: string; children: React.ReactNode }) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const modalForm = {
