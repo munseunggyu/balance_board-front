@@ -14,16 +14,17 @@ export default function JoinNav() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const kakaoLogin = async () => {
-    await fetch(constant.apiUrl + "api/user/kakao", {
+    const res = await fetch(constant.apiUrl + "api/user/kakao?code=" + code, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        code,
-      }),
+      // body: JSON.stringify({
+      //   code,
+      // }),
     });
+    console.log(await res.json());
   };
   const {
     data: { processType },
