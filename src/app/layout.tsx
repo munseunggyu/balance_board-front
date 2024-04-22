@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 import AdbyGoogle from "./_component/AdbyGoogle";
+import KakaoScript from "./_component/KakaoScript";
 import Loading from "./_component/Loading";
 import RQProvider from "./_component/RQProvider";
 import TokenLoginComponent from "./_component/TokenLoginComponent";
@@ -62,6 +63,7 @@ export default function RootLayout({
           </AuthContextProvider>
         </RQProvider>
         <div id="portal" />
+        <KakaoScript />
         <AdbyGoogle />
       </body>
     </html>
