@@ -7,6 +7,7 @@
   gap: 20px;
   font-weight: 700;
   line-height: 150%;
+  border-bottom: 1px solid var(--line-100);
 }
 .back_btn {
   display: flex;
