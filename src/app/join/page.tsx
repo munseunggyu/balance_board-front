@@ -3,9 +3,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import { useModal } from "@/hook/useModal";
+import { ILogin } from "@/modal/User";
+import { useAuthStore } from "@/stores/user";
 import { constant } from "@/utils/constant";
 
 import JoinCompleteModal from "../_component/JoinCompleteModal";
+import Loading from "../_component/Loading";
 import ModalContainer from "../_component/ModalContainer";
 import ModalPortal from "../_component/ModalPortal";
 import JoinNav from "./_component/JoinNav";
@@ -14,12 +17,19 @@ import styles from "./join.module.css";
 interface IKakao {
   userId: number;
   result: number;
+  imageType: number;
+  jwtToken: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  nickname: string;
 }
 
 export default function Join() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+  const storeLogin = useAuthStore((state) => state.storeLogin);
   const {
     openModal: openJoinModal,
     handleOpenMoal: handleOpenJoinMoal,
@@ -167,11 +177,26 @@ export default function Join() {
         "Content-Type": "application/json",
       },
     });
-    const data: IKakao = await res.json();
-    console.log("kakao data", data);
+    const kakaoLoginData: IKakao = await res.json();
+    if (kakaoLoginData.result === 1) {
+      const nextResponse = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(kakaoLoginData),
+      });
+      const data: ILogin = await nextResponse.json();
+      storeLogin({
+        ...data,
+        isLogin: 1,
+      });
+      router.push("/");
+      return;
+    }
     router.replace("/join");
-    setKakaoData(data);
-    // console.log(await res.json());
+    setKakaoData(kakaoLoginData);
   };
 
   const handleJoin = async () => {
@@ -221,6 +246,10 @@ export default function Join() {
       setJoinStartBtnVisible(false);
     }
   }, [nicknameObj.duplication, nicknameObj.validation, gender, birthYearObj.errMsg]);
+
+  if (code) {
+    return <Loading />;
+  }
 
   return (
     <div className={styles.container_bgc}>

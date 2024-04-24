@@ -4,22 +4,9 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import { ILogin } from "@/modal/User";
-import { constant } from "@/utils/constant";
 
 export async function POST(req: NextRequest) {
-  const { email, password } = await req.json();
-  const res = await fetch(constant.apiUrl + "api/user/login", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
-  const data: ILogin = await res.json();
+  const data: ILogin = await req.json();
   if (data?.message || !data.jwtToken) {
     return NextResponse.json({ data });
   }
