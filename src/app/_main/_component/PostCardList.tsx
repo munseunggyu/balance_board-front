@@ -8,9 +8,9 @@ import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
 import PostCard from "@/app/_component/PostCard";
-import { useUserDataContext } from "@/context/AuthContext";
 import { useModal } from "@/hook/useModal";
 import { IPost } from "@/modal/Post";
+import { useAuthStore } from "@/stores/user";
 
 import { getCategoryPostList, getPostList } from "../_lib/getPosts";
 import styles from "./postCartList.module.css";
@@ -18,7 +18,7 @@ import WriteFloating from "./WriteFloating";
 
 // import styles from './post'
 export default function PostCardList() {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
 
   const openLoginModal = () => {

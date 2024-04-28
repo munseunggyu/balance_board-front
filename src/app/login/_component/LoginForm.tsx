@@ -5,29 +5,14 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import Input from "@/app/_component/Input";
-import { useUserDataContext } from "@/context/AuthContext";
+import { ILogin } from "@/modal/User";
+import { useAuthStore } from "@/stores/user";
 
 import styles from "./loginForm.module.css";
 
-export interface ILogin {
-  email: string;
-  jwtToken: {
-    accessToken: string;
-    refreshToken: string;
-  };
-  accessToken?: string;
-  refreshToken?: string;
-  nickname: string;
-  userId: number;
-  isLogin: boolean;
-  message?: string;
-  imageType: number;
-  status?: number;
-}
-
 export default function LoginForm() {
   const router = useRouter();
-  const { setUserData } = useUserDataContext();
+  const storeLogin = useAuthStore((state) => state.storeLogin);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -69,7 +54,7 @@ export default function LoginForm() {
         return false;
       }
       if (data.jwtToken) {
-        setUserData({
+        storeLogin({
           ...data,
           isLogin: 1,
         });

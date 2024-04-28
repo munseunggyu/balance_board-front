@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 
-import { useUserDataContext } from "@/context/AuthContext";
+import { useAuthStore } from "@/stores/user";
 
 import x_circle from "../../../../public/x-circle-md.svg";
 import styles from "./deleteCheckInfo.module.css";
@@ -26,7 +26,7 @@ export default function DeleteCheckInfo({
   isError,
   setIsError,
 }: IDeleteCheckPageProps) {
-  const { userInfo } = useUserDataContext();
+  const userInfo = useAuthStore((state) => state.userInfo);
 
   useEffect(() => {
     setIsPasswordCorrect(false);
