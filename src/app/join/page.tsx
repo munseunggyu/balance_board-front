@@ -146,7 +146,6 @@ export default function Join() {
 
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear + 1;
-    console.log(age);
     return age;
   };
   const handleBirthYearChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -199,6 +198,29 @@ export default function Join() {
     setKakaoData(kakaoLoginData);
   };
 
+  const handleLogin = async () => {
+    const nextResponse = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...kakaoData,
+        nickname: nicknameObj.value,
+        level: 1,
+      }),
+    });
+    const data: ILogin = await nextResponse.json();
+    storeLogin({
+      ...data,
+      isLogin: 1,
+    });
+    router.push("/");
+    handleCloseJoinModal();
+    return;
+  };
+
   const handleJoin = async () => {
     if (!joinStartBtnVisible) return;
     try {
@@ -217,7 +239,6 @@ export default function Join() {
       });
       // setProcessType(0)
       const data: { duplicate: boolean } = await res.json();
-      console.log(data);
       if (data.duplicate) {
         alert("회원가입에 실패하였습니다");
       } else {
@@ -332,12 +353,7 @@ export default function Join() {
       {openJoinModal && (
         <ModalPortal>
           <ModalContainer>
-            <JoinCompleteModal
-              handleCloseModal={() => {
-                router.push("/login");
-                handleCloseJoinModal();
-              }}
-            />
+            <JoinCompleteModal handleCloseModal={handleLogin} />
           </ModalContainer>
         </ModalPortal>
       )}
