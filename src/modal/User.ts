@@ -9,8 +9,10 @@ export interface IUser {
   nickname: string;
   userId: number;
   isLogin: number;
-  imageType: number;
   jwtToken?: IJwtToken;
+  level: number;
+  experiencePoints: number;
+  imageType: number;
 }
 
 export interface ILogin extends IUser {
