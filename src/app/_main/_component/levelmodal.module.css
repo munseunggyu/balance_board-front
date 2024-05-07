@@ -1,0 +1,51 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--body-200);
+  width: 290px;
+  border-radius: 26px;
+}
+
+.Header {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #000000;
+  margin: 40px 0 22px 0;
+}
+
+.LevelHeader {
+  margin-top: 22px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--main-primary-500);
+}
+
+.levelContent {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--body-950);
+}
+
+.button {
+  margin-top: 14px;
+  width: 250px;
+  height: 52px;
+  line-height: 21px;
+  background-color: var(--main-primary-500);
+  color: var(--body-100);
+  border-radius: 6px;
+}
+
+.close {
+  margin: 16px 0 16px 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--body-800);
+  border-bottom: 2px solid var(--body-800);
+}
