@@ -14,7 +14,7 @@ export default function NavUserProfile() {
   if (userInfo.isLogin === 1) {
     return (
       <Link href={`/profile/${userInfo.userId}`}>
-        <Image src={userImgUrl(userInfo.imageType)} width={24} height={24} alt="유저 이미지" />
+        <Image src={userImgUrl(userInfo.level)} width={24} height={24} alt="유저 이미지" />
       </Link>
     );
   } else {

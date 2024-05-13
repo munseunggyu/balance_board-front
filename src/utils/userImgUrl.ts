@@ -1,4 +1,4 @@
-import { userGrade } from "./userGrade";
+import { userGrade } from "./user/userGrade";
 
 export const userImgUrl = (level: number) => {
   const grade = userGrade(level);

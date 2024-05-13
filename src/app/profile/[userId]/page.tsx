@@ -30,6 +30,8 @@ export interface IProfileData {
   email: string;
   nickname: string;
   imageType: number;
+  level: number;
+  experiencePoints: number;
 }
 
 export default async function ProfilePage({ params: { userId } }: { params: { userId: number } }) {
