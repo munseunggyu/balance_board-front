@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import { experienceRange } from "@/utils/user/experienceRange";
@@ -43,7 +44,9 @@ export default function ProfileUserInfo({ userId }: { userId: number }) {
               <span className="font-bold">Lv.{data.level + 1} </span>까지 <span>{leftLevel}점</span>
               남았어요!
             </span>
-            <Image src={icoQuestion} alt="유저 레벨 안내 링크" />
+            <Link href={"/gradeinfo"}>
+              <Image src={icoQuestion} alt="유저 레벨 안내 링크" />
+            </Link>
           </div>
           <div className={styles.progress_container}>
             <div

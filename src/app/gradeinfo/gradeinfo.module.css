@@ -1,0 +1,13 @@
+.container {
+  max-width: 450px;
+  background-color: var(--background-100);
+  height: 100%;
+}
+.nav {
+  /* "border-b-[1px] border-black px-[13px] py-[20px]" */
+  border-bottom: 1px solid var(--line-100);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
