@@ -140,8 +140,8 @@
 
 .upButton.selectedOption,
 .downButton.selectedOption {
-  color: var(--main-primary-500);
-  background-color: var(--main-primary-50);
+  color: var(--main-primary-50);
+  background-color: var(--main-primary-500);
   border-color: var(--main-primary-600);
 }
 
