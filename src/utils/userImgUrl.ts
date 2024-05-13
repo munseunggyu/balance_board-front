@@ -1,3 +1,6 @@
-export const userImgUrl = (type: number) => {
-  return `/profile-${type}.png`;
+import { userGrade } from "./user/userGrade";
+
+export const userImgUrl = (level: number) => {
+  const grade = userGrade(level);
+  return `/profile-${grade}.png`;
 };

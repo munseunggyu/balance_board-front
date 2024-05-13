@@ -15,6 +15,8 @@ const initialData: IUser = {
   nickname: "",
   userId: 0,
   imageType: 1,
+  level: 0,
+  experiencePoints: 0,
   isLogin: 0, // 0. 로그인 api 실행 전, 1. 로그인 완료, 2. 로그인 실패
 };
 
