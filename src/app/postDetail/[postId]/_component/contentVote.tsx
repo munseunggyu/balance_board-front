@@ -67,6 +67,8 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
     doVote.mutate();
   };
 
+  const UpVoted = postData.option1Count > postData.option2Count;
+  const DownVoted = postData.option2Count > postData.option1Count;
   const SumVoted = postData.option2Count + postData.option1Count;
   const UpPercent =
     postData.option1Count === 0
@@ -84,52 +86,72 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
   return (
     <div className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}>
       <button
-        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
-        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
+        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""} ${
+          postData.selectedOption && UpVoted && styles.upVoted
+        } ${!postData.selectedOption && userSelectedOption === postData.option1 ? styles.userSelected : ""}`}
+        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option1)}
         disabled={!!postData.selectedOption}
+        style={{
+          background: postData.selectedOption
+            ? `linear-gradient(to right, #10FE84 ${UpPercent}%, transparent ${UpPercent}%)`
+            : "transparent",
+          color: postData.selectedOption ? "#01C15E" : "#9d9d9d",
+        }}
       >
         <div className={styles.voteButtonContainer}>
           {postData.selectedOption === postData.option1 ? (
-            <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
-              {postData.option1}
-            </div>
+            UpVoted ? (
+              <div className={styles.voteButtonImageContainer}>
+                <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+                {postData.option1}
+              </div>
+            ) : (
+              <div className={styles.voteButtonImageContainer}>
+                <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
+                {postData.option1}
+              </div>
+            )
           ) : userSelectedOption === postData.option1 ? (
             <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+              <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
               {postData.option1}
             </div>
           ) : (
             <div className={styles.buttonContentContainer}>{postData.option1}</div>
           )}
-          {postData.selectedOption ? `${UpPercent}%(${postData.option1Count}명)` : null}
+          {postData.selectedOption ? `${UpPercent}%` : null}
         </div>
       </button>
       <button
-        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
+        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""} ${
+          postData.selectedOption && DownVoted && styles.downVoted
+        } ${!postData.selectedOption && userSelectedOption === postData.option2 ? styles.userSelected : ""}`}
         onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
         disabled={!!postData.selectedOption}
         style={{
-          background: postData.selectedOption
-            ? `linear-gradient(to right, #01D066 ${DownPercent}%, transparent ${DownPercent}%)`
-            : "transparent",
+          background:
+            postData.selectedOption && userSelectedOption === postData.option2
+              ? `linear-gradient(to right, #EBEBEB ${DownPercent}%, transparent ${DownPercent}%)`
+              : `linear-gradient(to right, #10FE84 ${DownPercent}%, transparent ${DownPercent}%)`,
+          color: postData.selectedOption && userSelectedOption === postData.option2 ? "#9D9D9D" : "#019348",
+          borderColor: postData.selectedOption && userSelectedOption === postData.option2 ? "#EBEBEB" : "#D6D6D6",
         }}
       >
         <div className={styles.voteButtonContainer}>
           {postData.selectedOption === postData.option2 ? (
             <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+              <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
             </div>
           ) : userSelectedOption === postData.option2 ? (
             <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+              <Image src="/check-md.png" alt="초록색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
             </div>
           ) : (
             <div className={styles.buttonContentContainer}>{postData.option2}</div>
           )}
-          {postData.selectedOption ? `${DownPercent}%(${postData.option2Count}명)` : null}
+          {postData.selectedOption ? `${DownPercent}%` : null}
         </div>
       </button>
       {postData.selectedOption === null && (
