@@ -7,8 +7,8 @@ import { IPost } from "@/modal/Post";
 import { dateFormat } from "@/utils/dateFormat";
 import { userImgUrl } from "@/utils/userImgUrl";
 
-import CommentInput from "../_main/_component/CommentInput";
-import VoteBtnsContainer from "../_main/_component/VoteBtnsContainer";
+import CommentInput from "../home/_component/CommentInput";
+import VoteBtnsContainer from "../home/_component/VoteBtnsContainer";
 import styles from "./postCard.module.css";
 import Tag from "./Tag";
 import ThumbsBtns from "./ThumbsBtns";

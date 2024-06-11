@@ -1,7 +1,6 @@
 .card_container {
   padding: 20px;
-  margin-top: 104px;
-  background-color: var(--background-100);
+  margin-top: 132px;
   display: flex;
   flex-direction: column;
   gap: 30px;

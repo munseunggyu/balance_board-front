@@ -1,5 +1,7 @@
-import MainLayout from "./_main/MainLayout";
+import React from "react";
 
-export default function Home() {
-  return <MainLayout />;
+import MainLayout from "./_main/page";
+
+export default function Home({ children }: { children: React.ReactNode }) {
+  return <MainLayout isHome={false}>{children}</MainLayout>;
 }
