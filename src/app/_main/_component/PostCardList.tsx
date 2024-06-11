@@ -78,11 +78,12 @@ export default function PostCardList() {
           data?.pages &&
           data?.pages.map((v, i) => (
             <Fragment key={i}>
-              {v.map((post) => (
-                <li className={styles.card_list} key={post.postId}>
-                  <PostCard openLoginModal={openLoginModal} post={post} />
-                </li>
-              ))}
+              {v.length > 0 &&
+                v.map((post) => (
+                  <li className={styles.card_list} key={post.postId}>
+                    <PostCard openLoginModal={openLoginModal} post={post} />
+                  </li>
+                ))}
             </Fragment>
           ))}
       </ul>

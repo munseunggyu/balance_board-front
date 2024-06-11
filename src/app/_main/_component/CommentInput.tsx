@@ -53,8 +53,8 @@ export default function CommentInput({ postId }: IProps) {
           const obj = value.pages.flat().find((v) => v.postId === postId);
           if (obj) {
             const pageIndex = value.pages.findIndex((page) => {
-              const wow = page.includes(obj);
-              return wow;
+              const pageObj = page.includes(obj);
+              return pageObj;
             });
             const idx = value.pages[pageIndex].findIndex((v) => {
               return v.postId === postId;

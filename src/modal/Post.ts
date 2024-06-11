@@ -18,6 +18,10 @@ export interface IPost {
   commentCount: number;
   selectedOption?: string | null;
   imageType: number;
+  likeCount: number;
+  hateCount: number;
+  selectedLikeOption: string | null;
+  selectedVoteOption: string | null;
 }
 
 export interface ITag {

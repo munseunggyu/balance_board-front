@@ -11,6 +11,7 @@ import CommentInput from "../_main/_component/CommentInput";
 import VoteBtnsContainer from "../_main/_component/VoteBtnsContainer";
 import styles from "./postCard.module.css";
 import Tag from "./Tag";
+import ThumbsBtns from "./ThumbsBtns";
 
 interface IProps {
   post: IPost;
@@ -44,7 +45,7 @@ export default function PostCard({ post, openLoginModal }: IProps) {
         </div>
         <div className={styles.contents_bottom}>
           <ul className={styles.contents_bottom_ul}>
-            {post.tags.length > 0 &&
+            {post.tags?.length > 0 &&
               post.tags.slice(0, 2).map((v) => (
                 <li key={v.tagId}>
                   <Tag tagName={v.tagName} />
@@ -70,21 +71,23 @@ export default function PostCard({ post, openLoginModal }: IProps) {
         post={post}
         openLoginModal={openLoginModal}
       />
+      <ThumbsBtns post={post} />
       <div className={styles.divider} />
       <ul className={styles.chat_ul}>
-        {post.comments.map((comment) => (
-          <li className={styles.chat_list} key={comment.commentId}>
-            <Image
-              className={styles.card_user_img}
-              src={userImgUrl(comment.imageType)}
-              alt="프로필 이미지"
-              width={20}
-              height={20}
-            />
-            <span>{comment.nickname}</span>
-            <p className={styles.chat_contents}>{comment.content}</p>
-          </li>
-        ))}
+        {post.comments?.length > 0 &&
+          post.comments.map((comment) => (
+            <li className={styles.chat_list} key={comment.commentId}>
+              <Image
+                className={styles.card_user_img}
+                src={userImgUrl(comment.imageType)}
+                alt="프로필 이미지"
+                width={20}
+                height={20}
+              />
+              <span>{comment.nickname}</span>
+              <p className={styles.chat_contents}>{comment.content}</p>
+            </li>
+          ))}
       </ul>
       <div onClick={openLoginModal} className={styles.modal_btn}>
         <CommentInput postId={post.postId} />
