@@ -24,7 +24,7 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
   const queryClient = useQueryClient();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
   const userInfo = useAuthStore((state) => state.userInfo);
-  const { guestVoteCount, incrementGuestVoteCount, setVote, votes } = useVoteStore();
+  const { guestVoteCount, incrementGuestVoteCount } = useVoteStore();
   const [userSelectedOption, setUserSelectedOption] = useState<string | null>(null);
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const blurContainerRef = useRef<HTMLDivElement>(null);
@@ -109,8 +109,8 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
     }
   };
 
-  const UpVoted = postData.option1Count > postData.option2Count;
-  const DownVoted = postData.option2Count > postData.option1Count;
+  // const UpVoted = postData.option1Count > postData.option2Count;
+  // const DownVoted = postData.option2Count > postData.option1Count;
   const SumVoted = postData.option2Count + postData.option1Count;
   const UpPercent =
     postData.option1Count === 0
@@ -128,12 +128,12 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
   return (
     <div className={`${styles.voteContainer} ${postData.selectedVoteOption ? styles.selectedOptionContainer : ""} `}>
       <button
-        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
+        className={`${styles.upButton} ${postData.selectedVoteOption ? styles.selectedOption : ""}`}
         onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
-        disabled={!!postData.selectedOption}
+        disabled={!!postData.selectedVoteOption}
       >
         <div className={styles.voteButtonContainer}>
-          {postData.selectedOption === postData.option1 ? (
+          {postData.selectedVoteOption === postData.option1 ? (
             <div className={styles.voteButtonImageContainer}>
               <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option1}
@@ -151,21 +151,21 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
               {postData.option1}
             </div>
           )}
-          {postData.selectedOption ? `${UpPercent}%(${postData.option1Count}명)` : null}
+          {postData.selectedVoteOption ? `${UpPercent}%(${postData.option1Count}명)` : null}
         </div>
       </button>
       <button
-        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
+        className={`${styles.downButton} ${postData.selectedVoteOption ? styles.selectedOption : ""}`}
         onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
         disabled={hasVotedOption1 || hasVotedOption2 || !!postData.selectedVoteOption}
         style={{
-          background: postData.selectedOption
+          background: postData.selectedVoteOption
             ? `linear-gradient(to right, #01D066 ${DownPercent}%, transparent ${DownPercent}%)`
             : "transparent",
         }}
       >
         <div className={styles.voteButtonContainer}>
-          {postData.selectedOption === postData.option2 ? (
+          {postData.selectedVoteOption === postData.option2 ? (
             <div className={styles.voteButtonImageContainer}>
               <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
@@ -183,7 +183,7 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
               {postData.option2}
             </div>
           )}
-          {postData.selectedOption ? `${DownPercent}%(${postData.option2Count}명)` : null}
+          {postData.selectedVoteOption ? `${DownPercent}%(${postData.option2Count}명)` : null}
         </div>
       </button>
       {!postData.selectedVoteOption && !hasVotedOption1 && !hasVotedOption2 && (
