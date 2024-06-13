@@ -1,7 +1,4 @@
 "use client";
-
-import Image from "next/image";
-
 import { useAuthStore } from "@/stores/user";
 
 import DeleteHeader from "./DeleteHeader";
