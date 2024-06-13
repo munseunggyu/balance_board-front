@@ -28,6 +28,6 @@ export interface IPostData {
   tags: ITag[];
   commentCount: number;
   comments: IComment[];
-  selectedOption: string;
+  selectedVoteOption: string;
   imageType: number;
 }

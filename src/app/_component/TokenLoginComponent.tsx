@@ -45,6 +45,7 @@ export default function TokenLoginComponent({ accessToken, refreshToken }: IProp
       storeLogin({
         ...data,
         isLogin: 1,
+        withoutLogin: 0,
       });
     } else {
       storeLogout();

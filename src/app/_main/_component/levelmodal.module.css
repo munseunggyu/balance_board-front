@@ -25,10 +25,12 @@
 }
 
 .levelContent {
+  text-align: center;
   margin-top: 10px;
   font-weight: 500;
   font-size: 14px;
   color: var(--body-950);
+  white-space: pre-line;
 }
 
 .button {
@@ -48,4 +50,5 @@
   line-height: 21px;
   color: var(--body-800);
   border-bottom: 2px solid var(--body-800);
+  cursor: pointer;
 }

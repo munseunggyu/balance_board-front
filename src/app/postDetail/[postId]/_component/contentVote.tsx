@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import LoginModal from "@/app/_component/LoginModal";
 import ModalContainer from "@/app/_component/ModalContainer";
 import ModalPortal from "@/app/_component/ModalPortal";
 import { useModal } from "@/hook/useModal";
@@ -11,6 +11,8 @@ import { constant } from "@/utils/constant";
 
 import { IPostData } from "../interfaces";
 import styles from "../postDetail.module.css";
+import DetailModal from "./DetailModal";
+import { useVoteStore } from "./store/voteStore";
 
 interface IContentVoteProps {
   postData: IPostData;
@@ -18,14 +20,35 @@ interface IContentVoteProps {
 }
 
 export default function ContentVote({ postData, postId }: IContentVoteProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
   const userInfo = useAuthStore((state) => state.userInfo);
+  const { guestVoteCount, incrementGuestVoteCount, setVote, votes } = useVoteStore();
   const [userSelectedOption, setUserSelectedOption] = useState<string | null>(null);
+  const [isBlurred, setIsBlurred] = useState<boolean>(false);
+  const blurContainerRef = useRef<HTMLDivElement>(null);
+
+  const hasVotedOption1 = useVoteStore((state) => state.votes[postId]?.option1);
+  const hasVotedOption2 = useVoteStore((state) => state.votes[postId]?.option2);
 
   const handleOptionClick = (option: string) => {
     setUserSelectedOption(option);
   };
+
+  useEffect(() => {
+    if (blurContainerRef.current) {
+      blurContainerRef.current.style.display = guestVoteCount >= 3 ? "block" : "none";
+    }
+  }, [guestVoteCount]);
+
+  useEffect(() => {
+    if (guestVoteCount >= 3) {
+      setIsBlurred(true);
+    } else {
+      setIsBlurred(false);
+    }
+  }, [guestVoteCount]);
 
   const doVote = useMutation({
     mutationFn: async () => {
@@ -34,22 +57,32 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
       if (userInfo.accessToken) {
         headers.Authorization = `Bearer ${userInfo.accessToken}`;
       }
+
+      const requestBody = userInfo.accessToken
+        ? {
+            postId,
+            voteId: postId,
+            userId: userInfo.userId,
+            selectedOption: userSelectedOption,
+          }
+        : {
+            postId,
+            voteId: postId,
+            selectedOption: userSelectedOption,
+          };
+
       const res = await fetch(constant.apiUrl + "api/main/new/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           ...headers,
         },
-        body: JSON.stringify({
-          postId,
-          voteId: postId,
-          userId: userInfo.userId,
-          selectedOption: userSelectedOption,
-        }),
+        body: JSON.stringify(requestBody),
       });
+
       return await res.json();
     },
-    async onSuccess() {
+    onSuccess: async () => {
       const headers: { [key: string]: string } = {};
       if (userInfo.accessToken) {
         headers.Authorization = `Bearer ${userInfo.accessToken}`;
@@ -59,12 +92,21 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
         headers: headers,
       });
       const data = await updatedRes.json();
-      queryClient.setQueryData(["post", "detail", postId, userInfo.isLogin], data);
+      queryClient.setQueryData(["post", "detail", postId], data);
     },
   });
 
   const handleVote = () => {
-    doVote.mutate();
+    if ((!userInfo.accessToken && userSelectedOption !== null) || guestVoteCount < 3) {
+      if (!userInfo.accessToken) {
+        incrementGuestVoteCount();
+        useVoteStore.getState().setVote(postId, userSelectedOption || "", true);
+      }
+      doVote.mutate();
+      if (!userInfo.accessToken) {
+        handleOpenMoal();
+      }
+    }
   };
 
   const SumVoted = postData.option2Count + postData.option1Count;
@@ -82,78 +124,134 @@ export default function ContentVote({ postData, postId }: IContentVoteProps) {
         : ((postData.option2Count / SumVoted) * 100).toFixed(1);
 
   return (
-    <div className={`${styles.voteContainer} ${postData.selectedOption ? styles.selectedOptionContainer : ""}`}>
+    <div className={`${styles.voteContainer} ${postData.selectedVoteOption ? styles.selectedOptionContainer : ""} `}>
       <button
-        className={`${styles.upButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
-        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
-        disabled={!!postData.selectedOption}
+        className={`${styles.upButton} ${postData.selectedVoteOption ? styles.selectedOption : ""} ${isBlurred ? styles.blurred : ""}`}
+        onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option1)}
+        disabled={hasVotedOption1 || hasVotedOption2 || !!postData.selectedVoteOption}
+        style={{
+          background: !postData.selectedVoteOption
+            ? `linear-gradient(to right, #ffffff 100%, transparent 100%)`
+            : userSelectedOption === postData.option1 || postData.selectedVoteOption === postData.option1
+              ? `linear-gradient(to right, #E5FFF1 ${UpPercent}%, transparent ${UpPercent}%)`
+              : `linear-gradient(to right, #ebebeb ${UpPercent}%, transparent ${UpPercent}%)`,
+          borderColor:
+            userSelectedOption === postData.option1 ||
+            postData.selectedVoteOption === postData.option1 ||
+            hasVotedOption1
+              ? `#01D066`
+              : "#CCCCCC",
+        }}
       >
-        <div className={styles.voteButtonContainer}>
-          {postData.selectedOption === postData.option1 ? (
-            <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+        <div className={`${styles.voteButtonContainer} ${isBlurred ? styles.blurred : ""}`}>
+          {postData.selectedVoteOption === postData.option1 ? (
+            <div className={styles.voteButtonImageContainer} style={{ color: "#01C15E" }}>
+              <Image src="/check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option1}
             </div>
           ) : userSelectedOption === postData.option1 ? (
-            <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+            <div className={styles.voteButtonImageContainer} style={{ color: "#01C15E" }}>
+              <Image src="/check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option1}
             </div>
           ) : (
-            <div className={styles.buttonContentContainer}>{postData.option1}</div>
+            <div
+              className={styles.buttonContentContainer}
+              style={{ color: userSelectedOption === postData.option1 ? "#01C15E" : "#9D9D9D" }}
+            >
+              {postData.option1}
+            </div>
           )}
-          {postData.selectedOption ? `${UpPercent}%(${postData.option1Count}명)` : null}
+          {postData.selectedVoteOption ? (
+            <span style={{ color: userSelectedOption === postData.option1 ? "#01C15E" : "#9D9D9D" }}>
+              {`${UpPercent}%(${postData.option1Count}명)`}
+            </span>
+          ) : null}
         </div>
       </button>
       <button
-        className={`${styles.downButton} ${postData.selectedOption ? styles.selectedOption : ""}`}
+        className={`${styles.downButton} ${postData.selectedVoteOption ? styles.selectedOption : ""} ${isBlurred ? styles.blurred : ""}`}
         onClick={userInfo.isLogin !== 1 ? handleOpenMoal : () => handleOptionClick(postData.option2)}
-        disabled={!!postData.selectedOption}
+        disabled={hasVotedOption1 || hasVotedOption2 || !!postData.selectedVoteOption}
         style={{
-          background: postData.selectedOption
-            ? `linear-gradient(to right, #01D066 ${DownPercent}%, transparent ${DownPercent}%)`
-            : "transparent",
+          background: !postData.selectedVoteOption
+            ? `linear-gradient(to right, #ffffff 100%, transparent 100%)`
+            : userSelectedOption === postData.option2 ||
+                postData.selectedVoteOption === postData.option2 ||
+                hasVotedOption2
+              ? `linear-gradient(to right, #E5FFF1 ${DownPercent}%, transparent ${DownPercent}%)`
+              : `linear-gradient(to right, #ebebeb ${DownPercent}%, transparent ${DownPercent}%)`,
+          borderColor:
+            userSelectedOption === postData.option2 || postData.selectedVoteOption === postData.option2
+              ? `#01D066`
+              : "#CCCCCC",
         }}
       >
-        <div className={styles.voteButtonContainer}>
-          {postData.selectedOption === postData.option2 ? (
-            <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+        <div className={`${styles.voteButtonContainer} ${isBlurred ? styles.blurred : ""}`}>
+          {postData.selectedVoteOption === postData.option2 ? (
+            <div className={styles.voteButtonImageContainer} style={{ color: "#01C15E" }}>
+              <Image src="/check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
             </div>
           ) : userSelectedOption === postData.option2 ? (
-            <div className={styles.voteButtonImageContainer}>
-              <Image src="/white-check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
+            <div className={styles.voteButtonImageContainer} style={{ color: "#01C15E" }}>
+              <Image src="/check-md.png" alt="하얀색 체크버튼 이미지" width={24} height={24} />
               {postData.option2}
             </div>
           ) : (
-            <div className={styles.buttonContentContainer}>{postData.option2}</div>
+            <div
+              className={styles.buttonContentContainer}
+              style={{ color: userSelectedOption === postData.option2 ? "#01C15E" : "#9D9D9D" }}
+            >
+              {postData.option2}
+            </div>
           )}
-          {postData.selectedOption ? `${DownPercent}%(${postData.option2Count}명)` : null}
+          {postData.selectedVoteOption ? (
+            <span style={{ color: userSelectedOption === postData.option2 ? "#01C15E" : "#9D9D9D" }}>
+              {`${DownPercent}%(${postData.option2Count}명)`}
+            </span>
+          ) : null}
         </div>
       </button>
-      {postData.selectedOption === null && (
+      {!postData.selectedVoteOption && !hasVotedOption1 && !hasVotedOption2 && (
         <button
-          className={`${styles.voteSubmitButton} ${userSelectedOption ? styles.selectedOption : ""}`}
+          className={`${styles.voteSubmitButton} ${userSelectedOption ? styles.selectedOption : ""} ${isBlurred ? styles.blurred : ""}`}
           onClick={handleVote}
           disabled={!userSelectedOption}
         >
           투표하기
         </button>
       )}
-
       <div className={styles.sumVoterContainer}>
         <div className={styles.sumVoterImageContainer}>
-          <Image src="/participate-sm.svg" alt="참여자 이미지" width={18} height={18} />
+          <Image
+            src="/participate-sm.svg"
+            alt="참여자 이미지"
+            width={18}
+            height={18}
+            className={`${isBlurred ? styles.blurred : ""}`}
+          />
         </div>
-        <div className={styles.sumVoter}>
+        <div className={`${styles.sumVoter} ${isBlurred ? styles.blurred : ""}`}>
           <span>참여 {SumVoted}</span>
         </div>
       </div>
+      <div className={`${styles.BlurContainer} ${isBlurred ? styles.visible : ""}`} ref={blurContainerRef}>
+        <p className={styles.BlurHeader}>투표 결과가 궁금하다면?</p>
+        <p className={styles.BlurContent}>지금 바로 회원가입해보세요!</p>
+        <button
+          className={styles.BlurBtn}
+          onClick={() => {
+            router.push("../login");
+          }}
+        >
+          3초만에 회원가입
+        </button>
+      </div>
       {openModal && (
         <ModalPortal>
-          <ModalContainer handleCloseModal={handleCloseModal}>
-            <LoginModal handleCloseModal={handleCloseModal} />
+          <ModalContainer>
+            <DetailModal handleCloseModal={handleCloseModal} />
           </ModalContainer>
         </ModalPortal>
       )}
