@@ -9,6 +9,8 @@
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 19.5px */
+  position: relative;
+  overflow: hidden;
 }
 .btn:first-child {
   margin-bottom: 8px;
@@ -21,11 +23,13 @@
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .btn_left {
   display: flex;
   align-items: center;
+  z-index: 2;
 }
 
 .vote_btn {
@@ -48,4 +52,20 @@
 }
 .ico_check {
   margin-left: -8px;
+}
+
+.text_body_950 {
+  color: var(--body-950);
+}
+.text_title_100 {
+  color: var(--title-100);
+}
+
+.progress {
+  position: absolute;
+  min-width: 10%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
 }

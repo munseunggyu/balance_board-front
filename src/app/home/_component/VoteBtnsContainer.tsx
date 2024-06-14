@@ -46,11 +46,11 @@ export default function VoteBtnsContainer({
       openLoginModal && openLoginModal();
       return;
     } else {
-      if (post.selectedOption) return;
+      if (post.selectedVoteOption) return;
     }
     setDisableVoteBtnVoteBtn(true);
 
-    if (post.selectedOption) return;
+    if (post.selectedVoteOption) return;
     setSelectOption(value);
     if (value === option1) {
       setOption2BtnType(0);
@@ -61,21 +61,29 @@ export default function VoteBtnsContainer({
     }
   };
 
-  // const btnType = 1; // 0. 미선택(미투표), 1. 선택(미투표), 2. 더 적음 또는 같음(투표완), 3. 더 많음(투표완)
+  // 0. 미선택(미투 표), 1. 선택(미투표), 2. 미선택(투표 완), 3. 선택(투표 완)
   const Option1BtnStyle: IButton = {
-    bgColor: option1BtnType === 3 ? "primary" : option1BtnType === 2 ? "primary_50" : "body_100",
-    border: option1BtnType === 1 || option1BtnType === 2 ? "primary_600" : "gray",
+    bgColor: option1BtnType === 3 ? "primary" : option1BtnType === 2 ? "body_600" : "body_100",
+    border: option1BtnType === 1 || option1BtnType === 3 ? "primary" : "gray",
   };
   const Option2BtnStyle: IButton = {
-    bgColor: option2BtnType === 3 ? "primary" : option2BtnType === 2 ? "primary_50" : "body_100",
-    border: option2BtnType === 1 || option2BtnType === 2 ? "primary_600" : "gray",
+    bgColor: option2BtnType === 3 ? "primary" : option2BtnType === 2 ? "body_600" : "body_100",
+    border: option2BtnType === 1 || option2BtnType === 3 ? "primary" : "gray",
   };
 
   const option1FontColor =
-    option1BtnType === 1 || option1BtnType === 2 ? styles.primary : option1BtnType === 3 ? styles.white : "";
+    option1BtnType === 1 || option1BtnType === 3
+      ? styles.primary
+      : option1BtnType === 2
+        ? styles.text_body_950
+        : styles.text_title_100;
 
   const option2FontColor =
-    option2BtnType === 1 || option2BtnType === 2 ? styles.primary : option2BtnType === 3 ? styles.white : "";
+    option2BtnType === 1 || option2BtnType === 3
+      ? styles.primary
+      : option2BtnType === 2
+        ? styles.text_body_950
+        : styles.text_title_100;
 
   const handleVote = useMutation({
     mutationFn: () => {
@@ -104,7 +112,7 @@ export default function VoteBtnsContainer({
             });
             if (idx >= 0) {
               const data = produce(value, (draftData) => {
-                draftData.pages[pageIndex][idx].selectedOption = selectOption;
+                draftData.pages[pageIndex][idx].selectedVoteOption = selectOption;
                 draftData.pages[pageIndex][idx].voteCount = draftData.pages[pageIndex][idx].voteCount + 1;
                 if (selectOption === option1) {
                   draftData.pages[pageIndex][idx].option1Count = draftData.pages[pageIndex][idx].option1Count + 1;
@@ -127,52 +135,36 @@ export default function VoteBtnsContainer({
   };
 
   useEffect(() => {
-    if (!post.selectedOption) {
+    if (!post.selectedVoteOption) {
       setOption1BtnType(0);
       setOption2BtnType(0);
       return;
     }
-    if (post.selectedOption === option1) {
-      if (option1Count > option2Count) {
-        setOption1BtnType(3);
-        setOption2BtnType(2);
-      } else if (option2Count === option1Count) {
-        setOption1BtnType(2);
-        setOption2BtnType(2);
-      } else {
-        setOption1BtnType(2);
-        setOption2BtnType(3);
-      }
-    } else if (post.selectedOption === option2) {
-      if (option2Count > option1Count) {
-        setOption1BtnType(2);
-        setOption2BtnType(3);
-      } else if (option2Count === option1Count) {
-        setOption1BtnType(2);
-        setOption2BtnType(2);
-      } else {
-        setOption1BtnType(3);
-        setOption2BtnType(2);
-      }
+    if (post.selectedVoteOption === option1) {
+      setOption1BtnType(3);
+      setOption2BtnType(2);
+    } else if (post.selectedVoteOption === option2) {
+      setOption1BtnType(2);
+      setOption2BtnType(3);
     }
-  }, [post.selectedOption]);
+  }, [post.selectedVoteOption]);
 
   return (
     <div className={styles.container}>
       <Button
         onClick={() => clickOption(option1)}
-        bgColor={Option1BtnStyle.bgColor}
+        bgColor={"body_100"}
         border={Option1BtnStyle.border}
-        className={`${styles.btn} ${option1FontColor}`}
-        rounded={"large"}
+        className={`${styles.btn} ${option1FontColor} relative`}
+        rounded={"rounded"}
       >
         <div className={styles.btn_contents}>
           <div className={styles.btn_left}>
-            {(selectOption === option1 || post.selectedOption === option1) &&
-              (option1BtnType === 1 || option1BtnType === 2) && (
+            {(selectOption === option1 || post.selectedVoteOption === option1) &&
+              (option1BtnType === 1 || option1BtnType === 3) && (
                 <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={24} height={24} />
               )}
-            {option1BtnType === 3 && post.selectedOption === option1 && (
+            {option1BtnType === 2 && post.selectedVoteOption === option1 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}
@@ -183,27 +175,35 @@ export default function VoteBtnsContainer({
             )}
             <span>{option1}</span>
           </div>
-          {post.selectedOption && (
-            <div>
+          {post.selectedVoteOption && (
+            <div className="z-[2]">
               {option1Percent}%({option1Count}명)
             </div>
           )}
         </div>
+        {post.selectedVoteOption && (
+          <div
+            className={`${styles.progress} ${option1BtnType === 2 ? "bg-body-200" : "bg-[#E1FFEF]"}`}
+            style={{
+              width: option1Percent + "%",
+            }}
+          />
+        )}
       </Button>
       <Button
         onClick={() => clickOption(option2)}
-        bgColor={Option2BtnStyle.bgColor}
+        bgColor={"body_100"}
         border={Option2BtnStyle.border}
-        className={`${styles.btn} ${option2FontColor}`}
-        rounded={"large"}
+        className={`${styles.btn} ${option2FontColor} relative`}
+        rounded={"rounded"}
       >
         <div className={styles.btn_contents}>
           <div className={styles.btn_left}>
-            {(selectOption === option2 || post.selectedOption === option2) &&
-              (option2BtnType === 1 || option2BtnType === 2) && (
+            {(selectOption === option2 || post.selectedVoteOption === option2) &&
+              (option2BtnType === 1 || option2BtnType === 3) && (
                 <Image className={styles.ico_check} src={"/check-md.svg"} alt="체크 아이콘" width={24} height={24} />
               )}
-            {option2BtnType === 3 && post.selectedOption === option2 && (
+            {option2BtnType === 2 && post.selectedVoteOption === option2 && (
               <Image
                 className={styles.ico_check}
                 src={"/check-white-md.svg"}
@@ -214,19 +214,27 @@ export default function VoteBtnsContainer({
             )}
             <span>{option2}</span>
           </div>
-          {post.selectedOption && (
-            <div>
+          {post.selectedVoteOption && (
+            <div className="z-[2]">
               {option2Percent}%({option2Count}명)
             </div>
           )}
         </div>
+        {post.selectedVoteOption && (
+          <div
+            className={`${styles.progress} ${option2BtnType === 2 ? "bg-body-200" : "bg-[#E1FFEF]"}`}
+            style={{
+              width: option2Percent + "%",
+            }}
+          />
+        )}
       </Button>
-      {!post.selectedOption && (
+      {!post.selectedVoteOption && (
         <Button
           onClick={onClickVotedBtn}
           className={styles.vote_btn}
           border={"gray"}
-          bgColor={!disableVoteBtn ? "body_200" : "title_400"}
+          bgColor={!disableVoteBtn ? "body_200" : "primary"}
         >
           투표하기
         </Button>
