@@ -7,8 +7,8 @@ import { IPost } from "@/modal/Post";
 import { dateFormat } from "@/utils/dateFormat";
 import { userImgUrl } from "@/utils/userImgUrl";
 
-import CommentInput from "../_main/_component/CommentInput";
-import VoteBtnsContainer from "../_main/_component/VoteBtnsContainer";
+import CommentInput from "../home/_component/CommentInput";
+import VoteBtnsContainer from "../home/_component/VoteBtnsContainer";
 import styles from "./postCard.module.css";
 import Tag from "./Tag";
 import ThumbsBtns from "./ThumbsBtns";
@@ -27,16 +27,8 @@ export default function PostCard({ post, openLoginModal }: IProps) {
   return (
     <div className={styles.container}>
       <div className={styles.card_top}>
-        <Image
-          width={24}
-          height={24}
-          className={styles.card_user_img}
-          src={userImgUrl(post.imageType)}
-          alt="프로필 이미지"
-        />
-        <span className={styles.user_name}>{post.nickname}</span>
-        <span className={styles.time}>{dateFormat(post.created)}</span>
         <Tag tagName={post.category} color={"primary"} className={styles.tag_right} />
+        <span className="ml-auto text-body-900">{dateFormat(post.created)}</span>
       </div>
       <div className={styles.contents_container} onClick={goDetailPage}>
         <div>

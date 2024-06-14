@@ -16,7 +16,6 @@ import { getCategoryPostList, getPostList } from "../_lib/getPosts";
 import styles from "./postCartList.module.css";
 import WriteFloating from "./WriteFloating";
 
-// import styles from './post'
 export default function PostCardList() {
   const userInfo = useAuthStore((state) => state.userInfo);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();

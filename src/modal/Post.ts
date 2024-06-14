@@ -16,7 +16,6 @@ export interface IPost {
   comments: IComment[];
   content: string;
   commentCount: number;
-  selectedOption?: string | null;
   imageType: number;
   likeCount: number;
   hateCount: number;

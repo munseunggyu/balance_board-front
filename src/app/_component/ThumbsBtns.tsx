@@ -12,7 +12,7 @@ import thumbsDownBlack from "../../../public/thumb_down_black-sm.svg";
 import thumbsDown from "../../../public/thumb_down-sm.svg";
 import thumbsUpPrimary from "../../../public/thumb_up_primary-sm.svg";
 import thumbsUp from "../../../public/thumb_up-sm.svg";
-import { doLikes } from "../_main/_lib/doLikes";
+import { doLikes } from "../home/_lib/doLikes";
 import LoginModal from "./LoginModal";
 import ModalContainer from "./ModalContainer";
 import ModalPortal from "./ModalPortal";

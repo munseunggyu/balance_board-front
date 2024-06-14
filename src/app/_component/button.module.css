@@ -30,6 +30,10 @@
   background-color: var(--body-200);
   color: var(--body-800);
 }
+.bg_body_600 {
+  background-color: var(--body-600);
+  color: var(--body-950);
+}
 .bg_title_400 {
   background-color: var(--title-400);
   color: var(--body-400);
