@@ -1,0 +1,65 @@
+.DetailModalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 290px;
+  height: 390px;
+  background-color: var(--body-200);
+  border-radius: 26px;
+  border-color: var(--body-200);
+}
+
+.ContentContainer {
+  margin-top: 36px;
+  justify-content: center;
+}
+
+.DetailImageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.ContentHeader {
+  margin-top: 30px;
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--title-400);
+  text-align: center;
+  font-weight: 700;
+}
+
+.Share {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  color: var(--body-900);
+}
+
+.BtnContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.BtnFirst,
+.BtnSecond {
+  width: 250px;
+  height: 52px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 6px;
+}
+
+.BtnFirst {
+  background-color: var(--main-primary-500);
+  color: var(--body-200);
+}
+
+.BtnSecond {
+  background-color: var(--body-200);
+  color: var(--main-primary-500);
+}

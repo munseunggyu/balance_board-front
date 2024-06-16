@@ -14,8 +14,8 @@ import RQProvider from "./_component/RQProvider";
 import TokenLoginComponent from "./_component/TokenLoginComponent";
 
 export const metadata: Metadata = {
-  title: "밸런스 보드",
-  description: "개인적인 고민부터 사회적인 이슈까지, 세상의 모든 이슈에 투표할 수 있는 투표 특화 커뮤니티 사이트",
+  title: "쇼터디 - 딱 맞는 온라인 스터디메이트 찾기",
+  description: "나와 딱 맞는 온라인 스터디메이트를 만나 매일 할일을 공유하고 함께 목표를 달성하세요",
   openGraph: {
     title: "밸런스 보드",
     description: "개인적인 고민부터 사회적인 이슈까지, 세상의 모든 이슈에 투표할 수 있는 투표 특화 커뮤니티 사이트",
