@@ -1,5 +1,9 @@
 import PostCardList from "./_component/PostCardList";
 
 export default function page() {
-  return <PostCardList />;
+  return (
+    <div className="mt-[120px]">
+      <PostCardList />
+    </div>
+  );
 }
