@@ -1,10 +1,8 @@
 .card_container {
   padding: 20px;
-  margin-top: 132px;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   gap: 30px;
-}
-.card_list {
-  /* padding */
+  background-color: #fff;
 }
