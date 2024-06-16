@@ -97,11 +97,10 @@ SNS에서도, 주위에서도, 심지어 나조차도!
 
 **메인 홈**
 <br />
-게시글 리스트가 보이며 하단에는 구글 광고가 노출된다. <br />
+핫 게시글과 카테고리별 게시글 리스트가 노출된다.<br />
 로그인 된 유저는 투표, 댓글을 작성할 수 있으며 비로그인 유저는 로그인 화면으로 이동하는 모달이 노출된다.
-
-<br />
-<img width="300" height="400" alt="스크린샷 2024-06-14 오후 10 43 01" src="https://github.com/munseunggyu/sundae_modum/assets/84954439/a351e87a-5b9e-4fe5-b450-6d6185272297">
+<br>
+<img width="300" alt="#2 메인화면" src="https://github.com/chabssaltteog/balance_board-front/assets/84954439/76f51a00-332a-40c4-b25b-d9e201e05bf6">
 <br />
 <br />
 
@@ -122,6 +121,7 @@ SNS에서도, 주위에서도, 심지어 나조차도!
 <br />
 
 **프로필**
+<br />
 프로필 이미지, 투표한 글, 작성한 글이 리스트 형태로 보여줍니다.
 <br />
 <img width="300" alt="#12 Profile_1 (1)" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/e5aaae96-6bd3-4a99-aec2-b674d55e055d">
