@@ -42,25 +42,88 @@ SNS에서도, 주위에서도, 심지어 나조차도!
 
 \*2주 단위로 KPI 목표 설정 > 회고
 
-## 프로젝트 구조
+## 사용 기술
 
-```
-.
-├── public
-│    ├── ...svg, ...png
-├── src
-│    ├── app
-│    |
-│    |── context
-│    |
-│    │── hook
-│    │
-│    │── modal
-│    │
-│    │── stores
-│    │
-│    └── utils
+<div><img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
+  <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
+  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white">
+<img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=react&logoColor=white">
+  </div>
 
-```
+<br>
 
-## UI
+## 4. 역할분담
+
+**문승규**
+
+- UI
+  - 페이지 : 로그인, 회원가입, 메인 홈, 프로필 페이지
+- 기능
+  - 카카오 로그인, 회원가임(리팩토링)
+  - 메인 홈 게시글 리스트
+  - 좋아요, 싫어요
+  - 댓글
+    <br>
+
+**신현수**
+
+- UI
+  - 페이지 : 게시글 상세, 게시글 작성, 회원 탈퇴 페이지
+- 기능
+  - 게시글 상세
+  - 게시글 작성
+  - 투표
+  - 회원 탈퇴(리팩토링)
+
+## 기능 설명
+
+**로그인**
+<br />
+카카오 로그인 기능으로 로그인 가능합니다.
+<br>
+<img width="300" alt="#5 이메일 로그인_1" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/7deb378a-50e5-441d-b52a-3cff2aee4f7a">
+<br /><br />
+
+**회원가입**
+<br />
+비회원인 경우 닉네임, 성별, 출생연도 등 추가적으로 정보를 입력해야 합니다.
+<br />
+<img width="300" alt="#1 회원가입_1" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/830119fa-a157-4f04-a9f4-d016e181af6c">
+
+<br />
+<br />
+
+**메인 홈**
+<br />
+게시글 리스트가 보이며 하단에는 구글 광고가 노출된다. <br />
+로그인 된 유저는 투표, 댓글을 작성할 수 있으며 비로그인 유저는 로그인 화면으로 이동하는 모달이 노출된다.
+
+<br />
+<img width="300" height="400" alt="스크린샷 2024-06-14 오후 10 43 01" src="https://github.com/munseunggyu/sundae_modum/assets/84954439/a351e87a-5b9e-4fe5-b450-6d6185272297">
+<br />
+<br />
+
+**게시글 상세**
+<br />
+게시글 작성자, 카테고리, 태그, 콘텐츠, 댓글, 좋아요, 싫어요, 참여자수 등이 화면에 표기됩니다.
+<br />
+<img width="300" alt="#8 게시물 상세_1" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/a4af2f66-391b-4a18-bc38-c14806943394">
+
+<br /><br />
+
+**게시글 작성**
+<br />
+카테고리, 제목, 상세 내용, 투표, 태그 등을 입력할 수 있습니다.
+<br />
+<img width="300" alt="#11 게시물 작성_1" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/b5176129-05d8-4277-a641-8ef879a5be81">
+<br />
+<br />
+
+**프로필**
+프로필 이미지, 투표한 글, 작성한 글이 리스트 형태로 보여줍니다.
+<br />
+<img width="300" alt="#12 Profile_1 (1)" src="https://github.com/munseunggyu/Secret-Lion/assets/84954439/e5aaae96-6bd3-4a99-aec2-b674d55e055d">
+<br />
+<br />
