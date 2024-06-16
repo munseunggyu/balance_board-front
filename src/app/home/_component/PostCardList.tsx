@@ -16,10 +16,9 @@ import { getCategoryPostList, getPostList } from "../_lib/getPosts";
 import styles from "./postCartList.module.css";
 import WriteFloating from "./WriteFloating";
 
-export default function PostCardList() {
+export default function PostCardList({ noVoteBtn = false }: { noVoteBtn?: boolean }) {
   const userInfo = useAuthStore((state) => state.userInfo);
   const { openModal, handleOpenMoal, handleCloseModal } = useModal();
-
   const openLoginModal = () => {
     if (userInfo.isLogin !== 1) {
       handleOpenMoal();
@@ -75,12 +74,13 @@ export default function PostCardList() {
       <ul className={styles.card_container}>
         {mounted &&
           data?.pages &&
+          data?.pages.length > 0 &&
           data?.pages.map((v, i) => (
             <Fragment key={i}>
               {v.length > 0 &&
                 v.map((post) => (
                   <li className={styles.card_list} key={post.postId}>
-                    <PostCard openLoginModal={openLoginModal} post={post} />
+                    <PostCard openLoginModal={openLoginModal} post={post} noVoteBtn={noVoteBtn} />
                   </li>
                 ))}
             </Fragment>

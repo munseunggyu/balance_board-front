@@ -1,6 +1,5 @@
 .tabsMenuContainer {
   display: flex;
-  margin-top: 76px;
   justify-content: space-around;
   border-top: 1px solid var(--background-200);
   border-bottom: 1px solid var(--background-200);

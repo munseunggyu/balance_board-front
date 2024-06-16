@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { useQueryGetProfilePostData } from "../profile/[userId]/_hook/useQueryGetProfilePostData";
@@ -10,24 +10,25 @@ import styles from "./tabs.module.css";
 function Maintab() {
   const searchParams = useSearchParams();
   const category = searchParams.get("tab");
+  const pathname = usePathname();
   const tabs = [
     { value: 0, label: "전체" },
-    { value: 1, label: "이슈" },
+    { value: 1, label: "연애" },
     { value: 2, label: "라이프" },
-    { value: 3, label: "정치・경제" },
-    { value: 4, label: "기타" },
+    { value: 3, label: "사회이슈" },
+    { value: 4, label: "재미" },
   ];
   const [activeTab, setActiveTab] = useState<number>(0);
 
   useEffect(() => {
     setActiveTab(() => {
-      if (category === "이슈") {
+      if (category === "연애") {
         return 1;
       } else if (category === "라이프") {
         return 2;
-      } else if (category === "정치・경제") {
+      } else if (category === "사회이슈") {
         return 3;
-      } else if (category === "기타") {
+      } else if (category === "재미") {
         return 4;
       }
       return 0;
@@ -35,11 +36,10 @@ function Maintab() {
   }, [category]);
 
   return (
-    <div className={styles.tabsMenuContainer}>
+    <div className={`${styles.tabsMenuContainer} ${pathname === "/" ? "mt-[10px]" : "mt-[76px]"}`}>
       {tabs.map((tab, index) => (
         <Link
           href={{
-            pathname: "/",
             query: { tab: tab.label },
           }}
           key={index}

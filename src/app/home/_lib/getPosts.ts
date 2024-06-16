@@ -87,3 +87,18 @@ export const getOnePost = async (postId: number) => {
   const data: IPost = await res.json();
   return data;
 };
+
+export const getHotPosts = async (userInfo: IUser) => {
+  const headers: { [key: string]: string } = {};
+  const token = userInfo.accessToken;
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const res = await fetch(constant.apiUrl + "api/main/posts/hot", {
+    method: "GET",
+    headers,
+  });
+  const data = await res.json();
+  return [...data, ...data, ...data];
+};

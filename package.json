@@ -20,6 +20,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.8.1",
+    "react-multi-carousel": "^2.8.5",
     "react-spinner": "^0.2.7",
     "react-spinners": "^0.13.8",
     "react-textarea-autosize": "^8.5.3",

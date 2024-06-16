@@ -6,6 +6,7 @@
 @import url("./variable.css");
 
 body {
+  background-color: aqua;
 }
 
 .root_container {
@@ -53,4 +54,9 @@ textarea {
 }
 .adsbygoogle-noablate {
   transform: none !important;
+}
+
+.divider {
+  background-color: var(--body-200);
+  height: 8px;
 }
